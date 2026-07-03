@@ -47,8 +47,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <span style="font-family:'Marcellus',serif;font-size:42px;line-height:1;color:#F4F8FF;text-shadow:0 0 34px rgba(122,180,255,.35)">EchoLab</span>
     <span style="font-family:'Marcellus',serif;font-size:17px;letter-spacing:2.5px;color:#FFCB6B">THE TIME HEART REGISTRY</span>
   </div>
-  <div style="position:relative;width:128px;height:128px;border-radius:50%;padding:4px;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.25));box-shadow:0 0 34px rgba(245,184,74,.3);animation:floaty 6s ease-in-out infinite">
-    <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:120px;height:120px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+  <div style="position:relative;width:128px;height:128px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.25));border:4px solid rgba(255,203,107,.72);box-shadow:0 0 34px rgba(245,184,74,.3);animation:floaty 6s ease-in-out infinite">
+    <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
   </div>
   <span style="position:relative;font-size:13.5px;line-height:1.55;color:rgba(210,228,255,.78);max-width:300px">The TARDIS learning engine is running the Doctor's memories in reverse — and it needs a companion who can read a heart.</span>
   <div onClick="{{ beginSplash }}" style="position:relative;display:flex;align-items:center;justify-content:center;height:54px;min-width:250px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:15px;font-weight:900;letter-spacing:.4px;box-shadow:0 10px 30px rgba(240,169,60,.38);cursor:pointer">{{ beginLabel }}</div>
@@ -60,8 +60,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <sc-if value="{{ obShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Onboarding" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px 24px;overflow:hidden">
   <div style="position:absolute;left:50%;top:44%;width:820px;height:820px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 40%, rgba(245,184,74,.08) 65%, rgba(30,111,217,0));filter:blur(16px);animation:{{ vortexAnim }};pointer-events:none"></div>
-  <div style="position:relative;width:104px;height:104px;border-radius:50%;padding:4px;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.4), rgba(30,111,217,.28));box-shadow:0 0 30px rgba(59,214,198,.28)">
-    <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:96px;height:96px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+  <div style="position:relative;width:104px;height:104px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.4), rgba(30,111,217,.28));border:4px solid rgba(59,214,198,.65);box-shadow:0 0 30px rgba(59,214,198,.28)">
+    <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
   </div>
   <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;background:rgba(13,28,56,.72);border:1px solid rgba(122,180,255,.26);border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(3,8,20,.5);animation:popIn .3s ease">
     <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#FFD98F">{{ obSpeaker }}</span>
@@ -142,8 +142,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <!-- lower stack -->
   <div style="position:relative;z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px 96px;margin-top:auto">
     <div style="display:flex;gap:11px;align-items:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:12px 13px;backdrop-filter:blur(8px)">
-      <div style="flex:none;width:46px;height:46px;border-radius:50%;padding:2px;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3))">
-        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:42px;height:42px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+      <div style="flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.55)">
+        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#7FE7DB">{{ doctorName }} · {{ doctorAct }}</span>
@@ -245,8 +245,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
   <div style="display:flex;flex-direction:column;gap:12px;padding:4px 16px 0">
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.3);border-radius:20px;padding:13px">
-      <div style="flex:none;width:40px;height:40px;border-radius:50%;padding:2px;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3))">
-        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:36px;height:36px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+      <div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
+        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="display:flex;flex-direction:column;gap:3px">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#FFD98F">{{ doctorName }}</span>
@@ -758,8 +758,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">COMPANION FILE</span>
   </div>
   <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px">
-    <div style="position:relative;width:148px;height:148px;border-radius:50%;padding:5px;overflow:hidden;background:radial-gradient(60% 60% at 50% 32%, rgba(255,203,107,.5), rgba(30,111,217,.28));box-shadow:0 0 40px rgba(245,184,74,.3)">
-      <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:138px;height:138px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+    <div style="position:relative;width:148px;height:148px;border-radius:50%;overflow:visible;background:radial-gradient(60% 60% at 50% 32%, rgba(255,203,107,.5), rgba(30,111,217,.28));border:5px solid rgba(255,203,107,.72);box-shadow:0 0 40px rgba(245,184,74,.3)">
+      <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       <span style="position:absolute;bottom:2px;right:2px;width:38px;height:38px;border-radius:50%;background:linear-gradient(180deg,#FFCB6B,#F0A93C);border:2.5px solid #060D1B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#2A2008">{{ levelNum }}</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
@@ -776,8 +776,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="position:relative;display:flex;gap:9px;margin-bottom:16px">
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="3">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;background:{{ d.bg }};border:1.5px solid {{ d.bd }};border-radius:18px;padding:12px 8px;text-align:center">
-        <div style="width:56px;height:56px;border-radius:50%;padding:2px;overflow:hidden;background:{{ d.ringBg }}">
-          <img src="{{ d.src }}" alt="{{ d.name }} Doctor headshot" style="width:52px;height:52px;display:block;border-radius:50%;object-fit:cover;object-position:50% 50%;overflow:hidden;clip-path:circle(50% at 50% 50%)">
+        <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;background:{{ d.ringBg }};border:2px solid rgba(245,184,74,.55)">
+          <img src="{{ d.src }}" alt="{{ d.name }} Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
         </div>
         <span style="font-size:11px;font-weight:900;color:{{ d.tc }}">{{ d.name }}</span>
         <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:{{ d.actC }}">{{ d.act }}</span>
