@@ -50,7 +50,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="position:relative;width:128px;height:128px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.25));border:4px solid rgba(255,203,107,.72);box-shadow:0 0 34px rgba(245,184,74,.3);animation:floaty 6s ease-in-out infinite">
     <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
   </div>
-  <span style="position:relative;font-size:13.5px;line-height:1.55;color:rgba(210,228,255,.78);max-width:300px">The TARDIS learning engine is running the Doctor's memories in reverse — and it needs a companion who can read a heart.</span>
+  <span style="position:relative;font-size:13.5px;line-height:1.55;color:rgba(210,228,255,.78);max-width:300px">The TARDIS learning engine has opened a hidden registry of hearts — and it needs a companion curious enough to read them.</span>
   <div onClick="{{ beginSplash }}" style="position:relative;display:flex;align-items:center;justify-content:center;height:54px;min-width:250px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:15px;font-weight:900;letter-spacing:.4px;box-shadow:0 10px 30px rgba(240,169,60,.38);cursor:pointer">{{ beginLabel }}</div>
   <span style="position:relative;font-size:9.5px;line-height:1.5;color:rgba(190,212,245,.42);max-width:330px">{{ disclaimer }}</span>
 </div>
@@ -61,7 +61,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <div data-screen-label="Onboarding" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px 24px;overflow:hidden">
   <div style="position:absolute;left:50%;top:44%;width:820px;height:820px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 40%, rgba(245,184,74,.08) 65%, rgba(30,111,217,0));filter:blur(16px);animation:{{ vortexAnim }};pointer-events:none"></div>
   <div style="position:relative;width:104px;height:104px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.4), rgba(30,111,217,.28));border:4px solid rgba(59,214,198,.65);box-shadow:0 0 30px rgba(59,214,198,.28)">
-    <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+    <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
   </div>
   <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;background:rgba(13,28,56,.72);border:1px solid rgba(122,180,255,.26);border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(3,8,20,.5);animation:popIn .3s ease">
     <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#FFD98F">{{ obSpeaker }}</span>
@@ -121,38 +121,19 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </div>
   </div>
 
-  <!-- pin layer -->
-  <div style="position:relative;z-index:2;flex:none;height:47dvh;min-height:330px">
-    <sc-for list="{{ pins }}" as="pin" hint-placeholder-count="5">
-      <div onClick="{{ pin.go }}" style="position:absolute;left:{{ pin.x }}%;top:{{ pin.y }}%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;z-index:2">
-        <span style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center">
-          <span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,203,107,.75);animation:{{ pin.ringAnim }}"></span>
-          <span style="width:16px;height:16px;border-radius:50%;background:radial-gradient(60% 60% at 50% 35%, #FFE9B8, #F0A93C);box-shadow:0 0 16px rgba(255,203,107,.95), 0 0 4px rgba(255,255,255,.9)"></span>
-          <sc-if value="{{ pin.badgeShow }}" hint-placeholder-val="{{ false }}">
-            <span style="position:absolute;top:-7px;right:-9px;min-width:17px;height:17px;border-radius:99px;background:#F4795B;border:1.5px solid rgba(4,8,17,.8);color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ pin.badge }}</span>
-          </sc-if>
-        </span>
-        <sc-if value="{{ pin.labelShow }}" hint-placeholder-val="{{ true }}">
-          <span style="font-size:9px;font-weight:900;letter-spacing:1.2px;color:#FFE9C4;background:rgba(7,14,28,.78);border:1px solid rgba(245,184,74,.4);border-radius:999px;padding:4px 9px;backdrop-filter:blur(4px);text-shadow:0 1px 2px rgba(0,0,0,.6);white-space:nowrap">{{ pin.label }}</span>
-        </sc-if>
-      </div>
-    </sc-for>
-  </div>
+  <!-- open console art space: pins removed -->
+  <div style="position:relative;z-index:2;flex:1;min-height:56dvh;pointer-events:none"></div>
 
   <!-- lower stack -->
   <div style="position:relative;z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px 96px;margin-top:auto">
     <div style="display:flex;gap:11px;align-items:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:12px 13px;backdrop-filter:blur(8px)">
       <div style="flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.55)">
-        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+        <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#7FE7DB">{{ doctorName }} · {{ doctorAct }}</span>
         <span style="font-size:12px;line-height:1.45;font-style:italic;color:rgba(224,238,255,.88)">{{ doctorDaily }}</span>
       </div>
-    </div>
-    <div onClick="{{ continueGo }}" style="display:flex;align-items:center;justify-content:space-between;height:56px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;padding:0 18px;box-shadow:0 10px 30px rgba(240,169,60,.4);cursor:pointer">
-      <span style="font-size:14.5px;font-weight:900;letter-spacing:.3px">{{ continueLabel }}</span>
-      <span style="font-size:17px;font-weight:900">→</span>
     </div>
     <div style="display:flex;gap:9px">
       <div onClick="{{ openSheet }}" style="flex:1.2;display:flex;align-items:center;gap:9px;background:rgba(9,19,38,.82);border:1px solid rgba(59,214,198,.32);border-radius:16px;padding:10px 12px;backdrop-filter:blur(8px);cursor:pointer">
@@ -207,7 +188,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </sc-for>
   </div>
   <div style="position:relative;display:flex;flex-direction:column;gap:9px;margin-top:6px">
-    <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.5)">FUTURE TIMELINES — UNLOCK WITH THE NEXT REGENERATIONS</span>
+    <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.5)">SEALED TIMELINES</span>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
       <sc-for list="{{ roadmap }}" as="rm" hint-placeholder-count="8">
         <div style="display:flex;flex-direction:column;gap:3px;background:rgba(9,18,36,.55);border:1px dashed rgba(122,180,255,.22);border-radius:14px;padding:10px 12px">
@@ -246,7 +227,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="display:flex;flex-direction:column;gap:12px;padding:4px 16px 0">
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.3);border-radius:20px;padding:13px">
       <div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
-        <img src="art/doctor-10-headshot.webp" alt="The 10th Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+        <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="display:flex;flex-direction:column;gap:3px">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#FFD98F">{{ doctorName }}</span>
@@ -607,6 +588,34 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 </div>
 </sc-if>
 
+<!-- ===================== ARCHIVE ===================== -->
+<sc-if value="{{ archiveShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Archive" style="position:relative;min-height:100dvh;padding:16px 16px 100px;overflow:hidden">
+  <div style="position:absolute;left:50%;top:180px;width:760px;height:760px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.12), transparent 70%);filter:blur(16px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">TARDIS ARCHIVE</span>
+      <span style="font-family:'Marcellus',serif;font-size:27px;color:#F4F8FF;line-height:1">Archive</span>
+    </div>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:14px">
+    <div onClick="{{ goMemory }}" style="position:relative;border-radius:24px;overflow:hidden;border:1.5px solid rgba(59,214,198,.45);box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-memory-core.webp" alt="Memory Core" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+      <sc-if value="{{ archiveMemoryBadgeShow }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;right:14px;bottom:14px;min-width:30px;height:30px;border-radius:999px;background:#F4795B;color:#fff;border:2px solid rgba(4,8,17,.85);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;box-shadow:0 0 18px rgba(244,121,91,.75)">{{ archiveMemoryBadge }}</span>
+      </sc-if>
+    </div>
+    <div onClick="{{ goJournal }}" style="position:relative;border-radius:24px;overflow:hidden;border:1.5px solid rgba(245,184,74,.45);box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-companion-journal.webp" alt="Companion Journal" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+    </div>
+    <div onClick="{{ goBadges }}" style="position:relative;border-radius:24px;overflow:hidden;border:1.5px solid rgba(245,184,74,.45);box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-badge-vault.webp" alt="Badge Vault" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+    </div>
+  </div>
+</div>
+</sc-if>
+
 <!-- ===================== MEMORY CORE ===================== -->
 <sc-if value="{{ memShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Memory Core" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
@@ -772,7 +781,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       <span style="font-size:9.5px;color:rgba(200,220,250,.5);text-align:center">Next rank: {{ nextRank }}</span>
     </div>
   </div>
-  <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">THE REGENERATION TIMELINE</span>
+  <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">MENTOR FILES</span>
   <div style="position:relative;display:flex;gap:9px;margin-bottom:16px">
     <sc-for list="{{ doctors }}" as="d" hint-placeholder-count="3">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;background:{{ d.bg }};border:1.5px solid {{ d.bd }};border-radius:18px;padding:12px 8px;text-align:center">
@@ -787,7 +796,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   </div>
   <div style="position:relative;display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(59,214,198,.3);border-radius:18px;padding:13px;margin-bottom:16px">
     <span style="flex:none;font-size:12px;color:#7FE7DB">❝</span>
-    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,238,255,.85)">{{ mentorQuote }}<br><span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:#7FE7DB;font-style:normal">— {{ doctorName }}, YOUR CURRENT MENTOR</span></span>
+    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,238,255,.85)">{{ mentorQuote }}<br><span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:#7FE7DB;font-style:normal">— THE DOCTOR, YOUR CURRENT MENTOR</span></span>
   </div>
   <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">BADGES · {{ bvEarned }}/{{ bvTotal }}</span>
   <div style="position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
@@ -965,12 +974,27 @@ class Component extends DCLogic {
   // ---------- lifecycle ----------
   componentDidMount() {
     import("./game-data.js").then((D) => {
-      // EchoLab app build: use the 10th/11th/12th Doctor progression and the shipped 10th Doctor headshot.
+      // EchoLab app build: internal Doctor progression stays 10/11/12, but the learner only sees The Doctor.
       if (D.DOCTORS && D.DOCTORS.length >= 3) {
-        Object.assign(D.DOCTORS[0], { n: 10, name: "The Tenth Doctor", act: "Act I", tone: "Warm · fast · brilliant · encouraging", quote: "Twenty focused minutes bends the whole timeline. I've seen it. I've *caused* it." });
-        Object.assign(D.DOCTORS[1], { n: 11, name: "The Eleventh Doctor", act: "Act II", tone: "Playful · curious · energetic", quote: "Right then, new window, new wonder. Let's investigate!" });
-        Object.assign(D.DOCTORS[2], { n: 12, name: "The Twelfth Doctor", act: "Act III", tone: "Brilliant · blunt · demanding · caring", quote: "Don't guess. Guessing is just being wrong with confidence. Explain it." });
+        Object.assign(D.DOCTORS[0], { n: 10, name: "The Doctor", act: "Act I", tone: "Warm · fast · brilliant · encouraging", quote: "Twenty focused minutes bends the whole timeline. I've seen it. I've *caused* it." });
+        Object.assign(D.DOCTORS[1], { n: 11, name: "The Doctor", act: "Act II", tone: "Playful · curious · energetic", quote: "Right then, new window, new wonder. Let's investigate!" });
+        Object.assign(D.DOCTORS[2], { n: 12, name: "The Doctor", act: "Act III", tone: "Brilliant · blunt · demanding · caring", quote: "Don't guess. Guessing is just being wrong with confidence. Explain it." });
       }
+      if (D.ONBOARDING && D.ONBOARDING.length >= 4) {
+        D.ONBOARDING[0].sp = "The Doctor";
+        D.ONBOARDING[1].sp = "The Doctor";
+        D.ONBOARDING[2].sp = "The Doctor";
+        D.ONBOARDING[3].sp = "The Doctor";
+        D.ONBOARDING[1].t = "Welcome to the TARDIS. Time And Relative Dimension In Space — and, after a small accident with the learning core, a fully operational echocardiography academy.";
+      }
+      if (D.LINES && D.LINES.levelup) {
+        D.LINES.levelup = [
+          "Level up! The TARDIS is showing off for you — ignore the sparks, that's affection.",
+          "Look at you. New rank, same brilliant curiosity.",
+          "That glow is progress. Yours. Keep going."
+        ];
+      }
+      if (D.REGIONS) D.REGIONS.forEach((r) => { if (r.unlock && r.unlock.label && String(r.unlock.label).toLowerCase().includes("regener")) r.unlock.label = "Sealed for a future act"; });
       this.D = D;
       this.p = this.load();
       this.rollover();
@@ -1238,7 +1262,7 @@ class Component extends DCLogic {
     const h = p.hist[this.today()] || {};
     // tasks
     const tasks = [];
-    tasks.push({ t: next ? "Lesson: " + D.LESSONS[next].title : "All MVP lessons complete", sub: next ? D.REGIONS.find((r) => r.id === D.LESSONS[next].region).name : "Act II arrives in the roadmap", done: !!h.lesson || !next, go: () => next && this.startLesson(next) , cta: !!next });
+    tasks.push({ t: next ? "Lesson: " + D.LESSONS[next].title : "All MVP lessons complete", sub: next ? D.REGIONS.find((r) => r.id === D.LESSONS[next].region).name : "The archive is complete for now", done: !!h.lesson || !next, go: () => next && this.startLesson(next) , cta: !!next });
     tasks.push({ t: due.length ? "Clear the Memory Core" : "Memory Core is clear", sub: due.length ? due.length + " echoes due for review" : "Nothing due — nicely done", done: !due.length, go: () => this.memStart(), cta: !!due.length });
     const wd = this.weakestDomain();
     tasks.push({ t: "Weak-signal drill", sub: "5 questions · " + D.DOMAINS.find((d) => d.id === wd).name, done: !!h.drill, go: () => this.startDrill(wd, "weak"), cta: !h.drill });
@@ -1275,7 +1299,7 @@ class Component extends DCLogic {
       pins: pinDefs.map((pin) => ({ x: String(pin.x), y: String(pin.y), label: pin.label, go: pin.go,
         ringAnim: motion ? "pulseRing 2.6s ease-out infinite" : "none",
         badge: String(pin.badge || ""), badgeShow: !!pin.badge, labelShow: this.props.pinLabels ?? true })),
-      doctorName: doc.name.toUpperCase(), doctorAct: doc.act.toUpperCase(), doctorDaily: daily,
+      doctorName: "THE DOCTOR", doctorAct: doc.act.toUpperCase(), doctorDaily: daily,
       continueLabel: cLabel, continueGo: cGo,
       openSheet: () => this.setState({ sheet: true }),
       missionsDone: String(doneN), missionsTotal: "4",
@@ -1300,7 +1324,7 @@ class Component extends DCLogic {
         const [ml, mc] = this.masteryLabel(m);
         const answered = Object.keys(p.q).some((k) => D.QUESTIONS[k] && D.QUESTIONS[k].d === r.domain);
         return {
-          name: r.name, weightLabel: r.weightLabel.toUpperCase(), tagline: r.tagline || "Sealed behind a future regeneration.",
+          name: r.name, weightLabel: r.weightLabel.toUpperCase(), tagline: r.tagline || "Sealed behind a future act.",
           glyph: r.icon === "cross" ? "✚" : r.icon === "gear" ? "⚙" : r.icon === "frame" ? "▣" : r.icon === "shield" ? "⛨" : "◎",
           accent: r.accent,
           medBg: un ? "rgba(7,15,30,.75)" : "rgba(7,15,30,.5)",
@@ -1764,8 +1788,8 @@ class Component extends DCLogic {
       nextRank: nextRankRow ? nextRankRow[1] + " at Level " + nextRankRow[0] : "You hold the highest rank",
       doctors: D.DOCTORS.map((d) => {
         const active = this.doctorFor(li.level).n === d.n;
-        const ordinal = d.n === 10 ? "10th" : d.n === 11 ? "11th" : d.n === 12 ? "12th" : d.n + "th";
-        return { name: ordinal, src: d.n === 10 ? "art/doctor-10-headshot.webp" : "art/doctor-10-headshot.webp", act: d.act.toUpperCase(), tone: d.tone,
+        const src = d.n === 11 ? "art/doctor-11-headshot.png" : d.n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+        return { name: "The Doctor", src, act: d.act.toUpperCase(), tone: active ? "Current mentor" : "Sealed file",
           bg: active ? "rgba(13,28,56,.78)" : "rgba(10,20,40,.45)",
           bd: active ? d.color + "99" : "rgba(122,180,255,.14)",
           ringBg: active ? "radial-gradient(60% 60% at 50% 35%, " + d.color + "66, rgba(30,111,217,.25))" : "rgba(122,180,255,.1)",
@@ -1843,16 +1867,18 @@ class Component extends DCLogic {
     const due = this.dueList().length;
     const tabs = [
       { k: "home", label: "HOME", glyph: "◉" }, { k: "map", label: "MAP", glyph: "❖" },
-      { k: "bosses", label: "BOSSES", glyph: "◈" }, { k: "memory", label: "MEMORY", glyph: "❂", badge: due },
-      { k: "journal", label: "JOURNAL", glyph: "✎" },
+      { k: "bosses", label: "BOSSES", glyph: "◈" }, { k: "archive", label: "ARCHIVE", glyph: "▣", badge: due },
+      { k: "character", label: "LIZZIE", glyph: "◉" },
     ];
     return {
       goHome: () => this.go("home"), goMap: () => this.go("map"), goBosses: () => this.go("bosses"),
+      archiveShow: s.screen === "archive",
+      archiveMemoryBadge: String(due), archiveMemoryBadgeShow: due > 0,
       goMemory: () => this.go("memory"), goJournal: () => this.go("journal"), goBadges: () => this.go("badges"),
-      goCharacter: () => this.go("character"), goAdmin: () => this.go("admin"),
+      goArchive: () => this.go("archive"), goCharacter: () => this.go("character"), goAdmin: () => this.go("admin"),
       back: () => this.back(), boRetry: () => this.bossStart(),
       toastShow: !!s.toast, toastT: s.toast ? s.toast.t : "", toastSub: s.toast ? s.toast.sub : "",
-      navShow: ["home", "map", "bosses", "memory", "journal", "badges", "character"].includes(s.screen),
+      navShow: ["home", "map", "bosses", "archive", "memory", "journal", "badges", "character"].includes(s.screen),
       navItems: tabs.map((t) => {
         const active = s.screen === t.k;
         return { label: t.label, glyph: t.glyph, go: () => this.go(t.k),
