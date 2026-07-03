@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Alegreya:ital,wght@0,500..800;1,400..700&amp;family=Nunito+Sans:opsz,wght@6..12,400..1000&amp;family=Chakra+Petch:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ece7dc;font-family:system-ui,sans-serif}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+@keyframes elGlow{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes elFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">TARDIS Dashboard — three art directions (Day-1 new save, Act I: the 14th Doctor)</span></div>
+  <div class="dv-opts">
+
+    <!-- ============ 1a CONSOLE GLOW ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Console Glow — cinematic dark hub, roundel walls, gold panels · Marcellus</div>
+      <div class="dv-card" style="width:390px;border-radius:34px;border:1px solid rgba(0,0,0,.18);box-shadow:0 18px 44px rgba(10,20,40,.28)">
+        <div style="position:relative;width:390px;height:844px;overflow:hidden;background:radial-gradient(120% 55% at 50% -8%, rgba(59,214,198,.26), transparent 55%), radial-gradient(140% 70% at 50% 114%, rgba(30,111,217,.28), transparent 60%), linear-gradient(180deg,#0C1830,#0A1428 55%,#081020);font-family:'Nunito Sans',system-ui,sans-serif;color:#EAF2FF">
+          <!-- roundel wall texture -->
+          <div style="position:absolute;inset:0;background-image:radial-gradient(circle at 36px 36px, rgba(160,200,255,.05) 0 15px, transparent 16px);background-size:72px 72px;pointer-events:none"></div>
+          <!-- warm light beam -->
+          <div style="position:absolute;top:-90px;left:50%;width:280px;height:260px;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 50%, rgba(255,203,107,.28), transparent 70%);filter:blur(6px);animation:elGlow 5s ease-in-out infinite;pointer-events:none"></div>
+
+          <div style="position:relative;display:flex;flex-direction:column;gap:13px;padding:14px 18px 0">
+            <!-- status -->
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:rgba(214,230,255,.55)"><span>9:41</span><span style="letter-spacing:2px">•••</span></div>
+            <!-- header -->
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:10px;font-weight:800;letter-spacing:2.2px;color:#F5B84A">DAY 1 · ERA OF THE 14TH DOCTOR</span>
+                <span style="font-family:'Marcellus',serif;font-size:26px;line-height:1.05;color:#F4F8FF">Hello, Lizzie.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:rgba(245,184,74,.12);border:1px solid rgba(245,184,74,.5)">
+                <span style="width:8px;height:8px;background:#F5B84A;border-radius:2px;transform:rotate(45deg);box-shadow:0 0 8px rgba(245,184,74,.9)"></span>
+                <span style="font-size:10.5px;font-weight:900;letter-spacing:1.4px;color:#FFD98F">STREAK 1</span>
+              </div>
+            </div>
+
+            <!-- Lizzie hero -->
+            <div style="display:flex;gap:14px;align-items:center;padding:14px;border-radius:22px;background:linear-gradient(160deg, rgba(30,111,217,.32), rgba(14,29,58,.72));border:1px solid rgba(122,180,255,.28);box-shadow:0 8px 26px rgba(4,10,26,.45)">
+              <div style="flex:none;width:76px;height:76px;border-radius:50%;border:2px solid rgba(245,184,74,.85);box-shadow:0 0 18px rgba(245,184,74,.35);background:repeating-linear-gradient(45deg, rgba(255,255,255,.07) 0 7px, transparent 7px 14px), radial-gradient(80% 80% at 50% 30%, #2c5a9e, #14294f);display:flex;align-items:center;justify-content:center;text-align:center">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:7.5px;line-height:1.5;color:rgba(230,240,255,.8)">lizzie<br>art</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:7px;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-family:'Marcellus',serif;font-size:20px;color:#F4F8FF">Lizzie</span>
+                  <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#FFD98F;border:1px solid rgba(245,184,74,.55);border-radius:999px;padding:3px 8px">NEW COMPANION</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:800;letter-spacing:1px;color:rgba(200,220,250,.75)"><span>LEVEL 1</span><span>15 / 100 XP</span></div>
+                <div style="height:8px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden"><div style="width:15%;height:100%;border-radius:99px;background:linear-gradient(90deg,#F5B84A,#FFCB6B);box-shadow:0 0 10px rgba(255,203,107,.8)"></div></div>
+                <div style="display:flex;align-items:center;gap:5px">
+                  <span style="width:7px;height:7px;border-radius:50%;background:#FFCB6B;box-shadow:0 0 6px rgba(255,203,107,.9)"></span><span style="width:7px;height:7px;border-radius:50%;background:#FFCB6B"></span><span style="width:7px;height:7px;border-radius:50%;background:#FFCB6B"></span><span style="width:7px;height:7px;border-radius:50%;background:#FFCB6B"></span><span style="width:7px;height:7px;border-radius:50%;background:#FFCB6B"></span>
+                  <span style="font-size:8.5px;font-weight:800;letter-spacing:1.4px;color:rgba(200,220,250,.6);margin-left:4px">TIME ENERGY 5/5</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Doctor mentor -->
+            <div style="display:flex;flex-direction:column;gap:11px;padding:14px;border-radius:22px;background:rgba(13,28,56,.66);border:1px solid rgba(59,214,198,.28)">
+              <div style="display:flex;gap:12px;align-items:center">
+                <div style="flex:none;width:58px;height:58px;border-radius:16px;background:repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 7px, transparent 7px 14px), linear-gradient(160deg,#1E6FD9,#123F8C);border:1px solid rgba(122,180,255,.4);display:flex;align-items:center;justify-content:center;text-align:center">
+                  <span style="font-family:ui-monospace,Menlo,monospace;font-size:7.5px;line-height:1.5;color:rgba(230,240,255,.85)">doctor<br>art</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                  <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">YOUR MENTOR</span>
+                  <span style="font-family:'Marcellus',serif;font-size:16.5px;color:#F4F8FF">The Fourteenth Doctor</span>
+                  <span style="font-size:12px;font-style:italic;color:rgba(210,228,255,.72);line-height:1.4">“Every echo image is a fixed point — if you know where to look.”</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:center;height:46px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:13.5px;font-weight:900;letter-spacing:.4px;box-shadow:0 6px 18px rgba(240,169,60,.35)">Continue: Welcome Aboard</div>
+            </div>
+
+            <!-- daily mission -->
+            <div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:22px;background:rgba(10,24,48,.6);border:1px solid rgba(59,214,198,.35);box-shadow:0 0 22px rgba(59,214,198,.08)">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#3BD6C6;box-shadow:0 0 8px rgba(59,214,198,.9)"></span><span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">TODAY'S MISSION</span></div>
+                <span style="font-size:10.5px;font-weight:800;color:rgba(200,220,250,.6)">1 / 3</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:18px;height:18px;border-radius:6px;background:#F5B84A;color:#22314F;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center">✓</span><span style="font-size:12.5px;color:rgba(214,230,255,.55);text-decoration:line-through">Meet your mentor in the Console Room</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:18px;height:18px;border-radius:6px;border:1.5px solid rgba(150,190,240,.5)"></span><span style="font-size:12.5px;font-weight:700;color:#E7F0FF">Lesson: What the registry exam covers</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:18px;height:18px;border-radius:6px;border:1.5px solid rgba(150,190,240,.5)"></span><span style="font-size:12.5px;font-weight:700;color:#E7F0FF">Warm-up: 5 patient-care questions</span></div>
+            </div>
+
+            <!-- stats -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="display:flex;align-items:center;gap:11px;padding:12px;border-radius:20px;background:rgba(13,28,56,.6);border:1px solid rgba(122,180,255,.2)">
+                <svg width="56" height="56" viewBox="0 0 56 56" style="transform:rotate(-90deg)">
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"></circle>
+                  <circle cx="28" cy="28" r="24" fill="none" stroke="#3BD6C6" stroke-width="6" stroke-linecap="round" stroke-dasharray="12 138.8"></circle>
+                </svg>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <span style="font-family:'Marcellus',serif;font-size:19px;color:#F4F8FF">8%</span>
+                  <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">EXAM READY</span>
+                  <span style="font-size:9.5px;font-weight:800;color:#F4795B">Unstable Timeline</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;justify-content:center;gap:2px;padding:12px 14px;border-radius:20px;background:rgba(13,28,56,.6);border:1px solid rgba(122,180,255,.2)">
+                <span style="font-family:'Marcellus',serif;font-size:19px;color:#FFCB6B">0 min</span>
+                <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">STUDY TODAY</span>
+                <span style="font-size:9.5px;color:rgba(200,220,250,.55)">Goal 20m · TARDIS warming up</span>
+              </div>
+            </div>
+
+            <!-- boss teaser -->
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;background:linear-gradient(120deg, rgba(94,34,24,.55), rgba(20,16,40,.6));border:1px solid rgba(244,121,91,.4)">
+              <span style="flex:none;width:30px;height:30px;transform:rotate(45deg);border:2px solid #F4795B;border-radius:7px;display:flex;align-items:center;justify-content:center"><span style="transform:rotate(-45deg);color:#FFB49E;font-weight:900;font-size:14px">!</span></span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:10px;font-weight:900;letter-spacing:1.8px;color:#FFB49E">NEXT BOSS · WEEPING ANGELS</span>
+                <span style="font-size:11.5px;color:rgba(230,220,240,.7)">Timed trial · don't blink</span>
+              </div>
+              <span style="font-size:9px;font-weight:900;letter-spacing:1.2px;color:rgba(230,220,240,.55);border:1px dashed rgba(230,220,240,.35);border-radius:999px;padding:5px 9px">LV 3</span>
+            </div>
+          </div>
+
+          <!-- bottom nav -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:76px;display:flex;align-items:stretch;background:linear-gradient(180deg, rgba(8,16,32,.4), #081020 45%);border-top:1px solid rgba(122,180,255,.16);backdrop-filter:blur(8px)">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="width:20px;height:8px;border-radius:99px;background:#F5B84A;box-shadow:0 0 12px rgba(245,184,74,.8)"></span><span style="font-size:9px;font-weight:900;letter-spacing:1.2px;color:#FFD98F">HOME</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="width:8px;height:8px;transform:rotate(45deg);border:1.5px solid rgba(190,212,245,.5);border-radius:2px"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(190,212,245,.55)">MAP</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(190,212,245,.5)"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(190,212,245,.55)">STUDY</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="width:9px;height:9px;transform:rotate(45deg);border:1.5px solid rgba(190,212,245,.5)"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(190,212,245,.55)">BOSSES</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="width:8px;height:10px;border:1.5px solid rgba(190,212,245,.5);border-radius:2px"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(190,212,245,.55)">JOURNAL</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b COMPANION'S LEDGER ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Companion's Ledger — warm painterly storybook, ink &amp; stamps · Alegreya</div>
+      <div class="dv-card" style="width:390px;border-radius:34px;border:1px solid rgba(0,0,0,.14);box-shadow:0 18px 44px rgba(90,70,30,.22)">
+        <div style="position:relative;width:390px;height:844px;overflow:hidden;background:radial-gradient(95% 50% at 88% -6%, rgba(245,184,74,.55), transparent 62%), radial-gradient(70% 42% at -12% 32%, rgba(245,184,74,.3), transparent 55%), radial-gradient(60% 35% at 105% 68%, rgba(244,121,91,.16), transparent 60%), #F8EFDC;font-family:'Nunito Sans',system-ui,sans-serif;color:#22314F">
+          <div style="position:relative;display:flex;flex-direction:column;gap:13px;padding:14px 18px 0">
+            <!-- status -->
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:rgba(34,49,79,.5)"><span>9:41</span><span style="letter-spacing:2px">•••</span></div>
+            <!-- header -->
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#B4762A">THE COMPANION'S LEDGER</span>
+                <span style="font-family:'Alegreya',Georgia,serif;font-size:29px;font-weight:700;line-height:1">Day One.</span>
+                <span style="font-family:'Alegreya',Georgia,serif;font-style:italic;font-size:13.5px;color:rgba(34,49,79,.7)">A new name enters the Time Heart Registry.</span>
+              </div>
+              <div style="flex:none;width:52px;height:52px;border-radius:50%;background:radial-gradient(90% 90% at 35% 30%, #2C6FD1, #123F8C);color:#FFF6E3;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 5px 12px rgba(18,63,140,.35), inset 0 0 0 3px rgba(255,246,227,.25)">
+                <span style="font-size:8px;font-weight:900;letter-spacing:1.5px">LEVEL</span><span style="font-family:'Alegreya',Georgia,serif;font-size:20px;font-weight:700;line-height:1">1</span>
+              </div>
+            </div>
+
+            <!-- polaroid hero -->
+            <div style="align-self:center;width:330px;transform:rotate(-1.6deg);background:#FFFDF6;border-radius:6px;padding:10px 10px 11px;box-shadow:0 10px 26px rgba(90,70,30,.25), 0 2px 6px rgba(90,70,30,.15)">
+              <div style="height:148px;border-radius:4px;background:repeating-linear-gradient(45deg, rgba(180,118,42,.1) 0 8px, transparent 8px 16px), linear-gradient(160deg,#F6C662,#E8973F);display:flex;align-items:center;justify-content:center">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:rgba(70,40,10,.65);background:rgba(255,253,246,.7);padding:4px 8px;border-radius:4px">drop lizzie art here</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 2px 0">
+                <span style="font-family:'Alegreya',Georgia,serif;font-style:italic;font-size:15.5px">Lizzie — New Companion</span>
+                <span style="transform:rotate(3deg);font-size:8px;font-weight:900;letter-spacing:1.4px;color:#C24E2E;border:1.5px dashed #C24E2E;border-radius:6px;padding:4px 7px">FRESH RECRUIT</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px;padding:8px 2px 0">
+                <span style="font-size:9px;font-weight:900;letter-spacing:1.2px;color:rgba(34,49,79,.6)">XP 15/100</span>
+                <div style="flex:1;height:10px;border:1.5px solid #22314F;border-radius:99px;padding:1.5px"><div style="width:15%;height:100%;border-radius:99px;background:linear-gradient(90deg,#E9A93C,#F6C662)"></div></div>
+              </div>
+            </div>
+
+            <!-- mentor journal entry -->
+            <div style="display:flex;flex-direction:column;gap:10px;background:#FFFBF0;border:1.5px solid rgba(34,49,79,.75);border-radius:18px 26px 20px 24px;padding:13px 14px;box-shadow:3px 4px 0 rgba(34,49,79,.14)">
+              <div style="display:flex;gap:11px;align-items:center">
+                <div style="flex:none;width:46px;height:46px;border-radius:50%;background:repeating-linear-gradient(45deg, rgba(255,255,255,.12) 0 6px, transparent 6px 12px), linear-gradient(160deg,#2C6FD1,#123F8C);border:1.5px solid #22314F;display:flex;align-items:center;justify-content:center;text-align:center">
+                  <span style="font-family:ui-monospace,Menlo,monospace;font-size:6.5px;line-height:1.5;color:rgba(255,246,227,.9)">doctor<br>art</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:1px">
+                  <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#B4762A">TODAY'S MENTOR</span>
+                  <span style="font-family:'Alegreya',Georgia,serif;font-size:17.5px;font-weight:700">The Fourteenth Doctor</span>
+                </div>
+              </div>
+              <span style="font-family:'Alegreya',Georgia,serif;font-style:italic;font-size:14.5px;line-height:1.45;color:rgba(34,49,79,.85)">“You brought curiosity. Brilliant — that's the only kit you'll ever need. Now, chapter one.”</span>
+              <div style="display:flex;align-items:center;justify-content:center;height:46px;border-radius:12px;background:#22314F;color:#F8EFDC;font-size:13.5px;font-weight:900">Open today's chapter →</div>
+            </div>
+
+            <!-- quests checklist -->
+            <div style="display:flex;flex-direction:column;gap:9px;padding:2px 4px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <span style="font-family:'Alegreya',Georgia,serif;font-size:17px;font-weight:700">Today's quests</span>
+                <span style="font-size:10px;font-weight:900;letter-spacing:1px;color:rgba(34,49,79,.55)">1 OF 3 COMPLETE</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:19px;height:19px;border:1.5px solid #22314F;border-radius:5px;background:#E9A93C;color:#22314F;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center">✓</span><span style="font-size:13px;color:rgba(34,49,79,.5);text-decoration:line-through">Meet your mentor in the Console Room</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:19px;height:19px;border:1.5px solid #22314F;border-radius:5px;background:#FFFBF0"></span><span style="font-size:13px;font-weight:700">Lesson: What the registry exam covers</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="flex:none;width:19px;height:19px;border:1.5px solid #22314F;border-radius:5px;background:#FFFBF0"></span><span style="font-size:13px;font-weight:700">Warm-up: 5 patient-care questions</span></div>
+            </div>
+
+            <!-- ticket stats -->
+            <div style="display:flex;gap:9px;justify-content:center">
+              <div style="transform:rotate(-1.4deg);display:flex;flex-direction:column;gap:1px;align-items:center;background:#FFF7E4;border:1.5px dashed rgba(34,49,79,.6);border-radius:10px;padding:8px 13px"><span style="font-family:'Alegreya',Georgia,serif;font-size:16px;font-weight:700">8%</span><span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(34,49,79,.6)">READINESS</span></div>
+              <div style="transform:rotate(1.2deg);display:flex;flex-direction:column;gap:1px;align-items:center;background:#FFF7E4;border:1.5px dashed rgba(34,49,79,.6);border-radius:10px;padding:8px 13px"><span style="font-family:'Alegreya',Georgia,serif;font-size:16px;font-weight:700">1 day</span><span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(34,49,79,.6)">STREAK</span></div>
+              <div style="transform:rotate(-.8deg);display:flex;flex-direction:column;gap:1px;align-items:center;background:#FFF7E4;border:1.5px dashed rgba(34,49,79,.6);border-radius:10px;padding:8px 13px"><span style="font-family:'Alegreya',Georgia,serif;font-size:16px;font-weight:700">0 min</span><span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(34,49,79,.6)">STUDIED</span></div>
+            </div>
+
+            <!-- boss strip -->
+            <div style="display:flex;align-items:center;gap:11px;background:#22314F;color:#F8EFDC;border-radius:14px;padding:11px 13px">
+              <span style="flex:none;width:22px;height:22px;transform:rotate(45deg);border:2px solid #F4795B;border-radius:5px"></span>
+              <span style="flex:1;font-size:12px;line-height:1.35"><b>The Weeping Angels</b> wait at Level 3.<br><span style="opacity:.65">Chapter sealed — keep reading.</span></span>
+              <span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;border:1.5px dashed rgba(248,239,220,.5);border-radius:999px;padding:5px 9px">SEALED</span>
+            </div>
+          </div>
+
+          <!-- bottom nav -->
+          <div style="position:absolute;left:0;right:0;bottom:0;height:74px;display:flex;background:#F8EFDC;border-top:1.5px solid rgba(34,49,79,.2)">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:22px;height:7px;border-radius:99px;background:#E9A93C"></span><span style="font-size:9px;font-weight:900;letter-spacing:1.2px;color:#22314F">HOME</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:8px;transform:rotate(45deg);border:1.5px solid rgba(34,49,79,.45);border-radius:2px"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(34,49,79,.5)">MAP</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(34,49,79,.45)"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(34,49,79,.5)">STUDY</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:9px;height:9px;transform:rotate(45deg);border:1.5px solid rgba(34,49,79,.45)"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(34,49,79,.5)">BOSSES</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:10px;border:1.5px solid rgba(34,49,79,.45);border-radius:2px"></span><span style="font-size:9px;font-weight:800;letter-spacing:1.2px;color:rgba(34,49,79,.5)">JOURNAL</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c TIME ROTOR HUD ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Time Rotor HUD — game-forward energy core, orbiting exam domains · Chakra Petch</div>
+      <div class="dv-card" style="width:390px;border-radius:34px;border:1px solid rgba(0,0,0,.2);box-shadow:0 18px 44px rgba(6,20,30,.35)">
+        <div style="position:relative;width:390px;height:844px;overflow:hidden;background:radial-gradient(78% 42% at 50% 33%, rgba(59,214,198,.3), transparent 62%), radial-gradient(110% 60% at 50% 112%, rgba(18,63,140,.55), transparent 65%), linear-gradient(180deg,#082129,#071A2E 58%,#060F1E);font-family:'Nunito Sans',system-ui,sans-serif;color:#EAF6FF">
+          <div style="position:relative;display:flex;flex-direction:column;gap:10px;padding:14px 18px 0;height:100%;box-sizing:border-box">
+            <!-- status -->
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:rgba(214,240,250,.5)"><span>9:41</span><span style="letter-spacing:2px">•••</span></div>
+            <!-- top chips -->
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:10px;font-weight:900;letter-spacing:1.6px;color:#FFD98F;border:1px solid rgba(245,184,74,.5);border-radius:999px;padding:6px 11px;background:rgba(245,184,74,.1)">STREAK 1</span>
+              <span style="font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;color:rgba(190,235,240,.75)">TIME ROTOR</span>
+              <span style="font-size:10px;font-weight:900;letter-spacing:1.6px;color:#8FF0E4;border:1px solid rgba(59,214,198,.5);border-radius:999px;padding:6px 11px;background:rgba(59,214,198,.08)">ENERGY 5/5</span>
+            </div>
+
+            <!-- rotor -->
+            <div style="position:relative;width:344px;height:344px;align-self:center;flex:none">
+              <div style="position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(59,214,198,.22)"></div>
+              <div style="position:absolute;inset:32px;border-radius:50%;border:1px solid rgba(59,214,198,.12)"></div>
+              <div style="position:absolute;inset:62px;border-radius:50%;border:1px dashed rgba(255,203,107,.25)"></div>
+              <!-- XP arc -->
+              <svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;left:72px;top:72px;transform:rotate(-90deg)">
+                <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="5"></circle>
+                <circle cx="100" cy="100" r="92" fill="none" stroke="#FFCB6B" stroke-width="5" stroke-linecap="round" stroke-dasharray="86.7 491.3"></circle>
+              </svg>
+              <!-- core -->
+              <div style="position:absolute;left:97px;top:97px;width:150px;height:150px;border-radius:50%;background:radial-gradient(70% 70% at 50% 38%, rgba(255,225,160,.5), rgba(245,184,74,.16) 55%, rgba(10,26,46,.2)), rgba(9,26,44,.75);border:2px solid rgba(255,203,107,.65);box-shadow:0 0 42px rgba(255,203,107,.3), inset 0 0 26px rgba(255,203,107,.22);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;animation:elGlow 4.5s ease-in-out infinite">
+                <span style="font-size:9px;font-weight:900;letter-spacing:2.4px;color:rgba(255,229,178,.8)">LEVEL</span>
+                <span style="font-family:'Chakra Petch',sans-serif;font-size:52px;font-weight:700;line-height:.95;color:#FFF3D8;text-shadow:0 0 18px rgba(255,203,107,.7)">1</span>
+                <span style="font-size:8px;font-weight:900;letter-spacing:1.8px;color:#8FF0E4">NEW COMPANION</span>
+                <span style="font-size:8.5px;font-weight:800;color:rgba(255,229,178,.65);margin-top:3px">15 / 100 XP</span>
+              </div>
+              <!-- orbit nodes: 5 domains -->
+              <div style="position:absolute;left:142px;top:-4px;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="width:48px;height:48px;border-radius:50%;background:rgba(245,184,74,.16);border:1.5px solid #F5B84A;box-shadow:0 0 16px rgba(245,184,74,.45);display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:700;color:#FFE3A6">5%</span>
+                <span style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:#FFE3A6">MED BAY</span>
+              </div>
+              <div style="position:absolute;left:295px;top:96px;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="width:44px;height:44px;border-radius:50%;background:rgba(12,30,52,.7);border:1.5px dashed rgba(150,200,220,.35);display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;color:rgba(190,225,240,.55)">24%</span>
+                <span style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:rgba(190,225,240,.5)">VIEWS</span>
+              </div>
+              <div style="position:absolute;left:257px;top:250px;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="width:44px;height:44px;border-radius:50%;background:rgba(12,30,52,.7);border:1.5px dashed rgba(150,200,220,.35);display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;color:rgba(190,225,240,.55)">25%</span>
+                <span style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:rgba(190,225,240,.5)">VALVES</span>
+              </div>
+              <div style="position:absolute;left:27px;top:250px;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="width:44px;height:44px;border-radius:50%;background:rgba(12,30,52,.7);border:1.5px dashed rgba(150,200,220,.35);display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;color:rgba(190,225,240,.55)">29%</span>
+                <span style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:rgba(190,225,240,.5)">HEMO</span>
+              </div>
+              <div style="position:absolute;left:-11px;top:96px;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="width:44px;height:44px;border-radius:50%;background:rgba(12,30,52,.7);border:1.5px dashed rgba(150,200,220,.35);display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:700;color:rgba(190,225,240,.55)">13%</span>
+                <span style="font-size:7.5px;font-weight:900;letter-spacing:1px;color:rgba(190,225,240,.5)">PHYSICS</span>
+              </div>
+            </div>
+
+            <!-- doctor chip -->
+            <div style="display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:18px;background:rgba(10,28,48,.62);border:1px solid rgba(122,190,220,.25);backdrop-filter:blur(6px);animation:elFloat 6s ease-in-out infinite">
+              <div style="flex:none;width:44px;height:44px;border-radius:50%;background:repeating-linear-gradient(45deg, rgba(255,255,255,.07) 0 6px, transparent 6px 12px), linear-gradient(160deg,#1E6FD9,#123F8C);border:1px solid rgba(140,200,255,.45);display:flex;align-items:center;justify-content:center;text-align:center">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:6.5px;line-height:1.5;color:rgba(230,244,255,.85)">doctor<br>art</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                <span style="font-size:12px;font-style:italic;line-height:1.35;color:rgba(220,240,252,.85)">“Level one. Everyone starts somewhere — even Time Lords.”</span>
+                <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#8FF0E4">THE FOURTEENTH DOCTOR</span>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#EFA83A);color:#2A2008;font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.2px;box-shadow:0 8px 26px rgba(239,168,58,.4)">BEGIN MISSION 01 · WELCOME ABOARD</div>
+
+            <!-- stat chips -->
+            <div style="display:flex;gap:8px;justify-content:center">
+              <span style="font-size:9.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,235,245,.75);background:rgba(12,30,52,.6);border:1px solid rgba(122,190,220,.22);border-radius:999px;padding:7px 12px">READINESS 8%</span>
+              <span style="font-size:9.5px;font-weight:900;letter-spacing:1.2px;color:#F4998077;background:rgba(12,30,52,.6);border:1px solid rgba(122,190,220,.22);border-radius:999px;padding:7px 12px"><span style="color:#FFB49E">UNSTABLE TIMELINE</span></span>
+              <span style="font-size:9.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,235,245,.75);background:rgba(12,30,52,.6);border:1px solid rgba(122,190,220,.22);border-radius:999px;padding:7px 12px">TODAY 0M</span>
+            </div>
+          </div>
+
+          <!-- floating nav -->
+          <div style="position:absolute;left:18px;right:18px;bottom:14px;height:62px;display:flex;border-radius:22px;background:rgba(9,22,40,.78);border:1px solid rgba(122,190,220,.25);backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(4,10,22,.5)">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:18px;height:7px;border-radius:99px;background:#FFCB6B;box-shadow:0 0 10px rgba(255,203,107,.9)"></span><span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:#FFE3A6">HOME</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:8px;transform:rotate(45deg);border:1.5px solid rgba(180,220,240,.5);border-radius:2px"></span><span style="font-size:8.5px;font-weight:800;letter-spacing:1.2px;color:rgba(180,220,240,.55)">MAP</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(180,220,240,.5)"></span><span style="font-size:8.5px;font-weight:800;letter-spacing:1.2px;color:rgba(180,220,240,.55)">STUDY</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:9px;height:9px;transform:rotate(45deg);border:1.5px solid rgba(180,220,240,.5)"></span><span style="font-size:8.5px;font-weight:800;letter-spacing:1.2px;color:rgba(180,220,240,.55)">BOSSES</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:8px;height:10px;border:1.5px solid rgba(180,220,240,.5);border-radius:2px"></span><span style="font-size:8.5px;font-weight:800;letter-spacing:1.2px;color:rgba(180,220,240,.55)">JOURNAL</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Try next: “build the app on <a class="dv-oid" href="#1a">1a</a>” · “<a class="dv-oid" href="#1a">1a</a> layout with the warm gold of <a class="dv-oid" href="#1b">1b</a>” · “put the rotor from <a class="dv-oid" href="#1c">1c</a> on the map screen instead”</p>
+</section>
+
+</x-dc>
+</body>
+</html>
