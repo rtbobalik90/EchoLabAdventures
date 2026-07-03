@@ -618,10 +618,13 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <!-- ===================== MEMORY CORE ===================== -->
 <sc-if value="{{ memShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Memory Core" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
-  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
-    <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#B48CF2">TARDIS MEMORY CORE</span>
-    <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Spaced Repetition</span>
-    <span style="font-size:12px;line-height:1.55;color:rgba(200,220,250,.6)">Everything you miss is caught here — and returned to you at exactly the right moment.</span>
+  <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+    <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#B48CF2">TARDIS MEMORY CORE</span>
+      <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Spaced Repetition</span>
+      <span style="font-size:12px;line-height:1.55;color:rgba(200,220,250,.6)">Everything you miss is caught here — and returned to you at exactly the right moment.</span>
+    </div>
   </div>
   <div style="display:flex;gap:9px;margin-bottom:14px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.66);border:1px solid rgba(180,140,242,.35);border-radius:16px;padding:11px">
@@ -664,7 +667,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <sc-if value="{{ badgesShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Badge Vault" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <span onClick="{{ goArchive }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="display:flex;flex-direction:column">
       <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF">Badge Vault</span>
       <span style="font-size:11px;color:rgba(200,220,250,.6)">{{ bvEarned }} of {{ bvTotal }} recovered</span>
@@ -688,9 +691,12 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <!-- ===================== JOURNAL ===================== -->
 <sc-if value="{{ journalShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Companion Journal" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
-  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
-    <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">COMPANION JOURNAL</span>
-    <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Lizzie's Log</span>
+  <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+    <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">COMPANION JOURNAL</span>
+      <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Lizzie's Log</span>
+    </div>
   </div>
   <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.07);border:1px solid rgba(245,184,74,.3);border-radius:18px;padding:13px;margin-bottom:13px">
     <span style="flex:none;font-size:13px;color:#FFCB6B">✎</span>
@@ -896,7 +902,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <sc-if value="{{ sheetShow }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end">
   <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(3,7,16,.6);backdrop-filter:blur(3px)"></div>
-  <div data-screen-label="Daily Missions" style="position:relative;max-width:430px;width:100%;margin:0 auto;background:linear-gradient(180deg,#0E1D3A,#081226);border-radius:26px 26px 0 0;border:1px solid rgba(122,180,255,.24);border-bottom:none;padding:14px 18px 26px;display:flex;flex-direction:column;gap:12px;animation:popIn .26s ease">
+  <div data-screen-label="Daily Missions" style="position:relative;box-sizing:border-box;max-width:430px;width:100%;margin:0 auto;background:linear-gradient(180deg,#0E1D3A,#081226);border-radius:26px 26px 0 0;border:1px solid rgba(122,180,255,.24);border-bottom:none;padding:14px 18px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;animation:popIn .26s ease;max-height:82dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch">
     <div style="width:44px;height:5px;border-radius:99px;background:rgba(190,212,245,.3);margin:0 auto"></div>
     <div style="display:flex;align-items:center;justify-content:space-between">
       <span style="font-size:10.5px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">TODAY'S MISSIONS</span>
@@ -904,7 +910,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </div>
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.08);border:1px solid rgba(245,184,74,.35);border-radius:16px;padding:12px">
       <span style="flex:none;width:8px;height:8px;margin-top:5px;border-radius:2px;transform:rotate(45deg);background:#F5B84A;box-shadow:0 0 8px rgba(245,184,74,.9)"></span>
-      <span style="font-size:12.5px;line-height:1.55;font-style:italic;color:#FFE3B0">{{ doctorDaily }}</span>
+      <span style="min-width:0;font-size:12.5px;line-height:1.55;font-style:italic;color:#FFE3B0;overflow-wrap:anywhere">{{ doctorDaily }}</span>
     </div>
     <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
       <div style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.2);border-radius:18px;padding:12px 13px">
