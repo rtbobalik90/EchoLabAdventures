@@ -788,7 +788,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   </div>
   <div style="position:relative;display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(59,214,198,.3);border-radius:18px;padding:13px;margin-bottom:16px">
     <span style="flex:none;font-size:12px;color:#7FE7DB">❝</span>
-    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,238,255,.85)">{{ mentorQuote }}<br><span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:#7FE7DB;font-style:normal">— THE DOCTOR, YOUR CURRENT MENTOR</span></span>
+    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,238,255,.85)">{{ mentorQuote }}<br><span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:#7FE7DB;font-style:normal">— THE DOCTOR</span></span>
   </div>
   <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">BADGES · {{ bvEarned }}/{{ bvTotal }}</span>
   <div style="position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
@@ -812,6 +812,59 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
     </sc-for>
   </div>
+</div>
+</sc-if>
+
+
+<!-- ===================== THE DOCTOR CHAT ===================== -->
+<sc-if value="{{ doctorShow }}" hint-placeholder-val="false">
+<div data-screen-label="The Doctor" style="position:relative;min-height:100dvh;padding:16px 16px 100px;display:flex;flex-direction:column;gap:12px;overflow:hidden">
+  <div style="position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.22), transparent 70%);filter:blur(12px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:10px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="flex:1;display:flex;align-items:center;gap:10px;min-width:0">
+      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.7);box-shadow:0 0 18px rgba(245,184,74,.25)"><img src="art/doctor-10-headshot.webp" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+      <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+        <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF;line-height:1">The Doctor</span>
+        <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7FE7DB">ECHOLAB STUDY MENTOR</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch">
+    <sc-for list="{{ doctorLevels }}" as="lv" hint-placeholder-count="4">
+      <div onClick="{{ lv.pick }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:34px;border-radius:999px;padding:0 12px;background:{{ lv.bg }};border:1.5px solid {{ lv.bd }};color:{{ lv.c }};font-size:9.5px;font-weight:900;letter-spacing:1px;cursor:pointer;white-space:nowrap">{{ lv.label }}</div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(7,15,30,.48);border:1px solid rgba(122,180,255,.18);border-radius:22px;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+    <sc-for list="{{ doctorMsgs }}" as="m" hint-placeholder-count="4">
+      <div style="display:flex;gap:9px;align-items:flex-start;justify-content:{{ m.justify }}">
+        <sc-if value="{{ m.doc }}" hint-placeholder-val="true">
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="art/doctor-10-headshot.webp" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+        </sc-if>
+        <div style="max-width:78%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:{{ m.radius }};padding:11px 12px;box-shadow:{{ m.sh }}">
+          <span style="display:block;font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:{{ m.nameC }};margin-bottom:4px">{{ m.name }}</span>
+          <span style="font-size:12.5px;line-height:1.55;color:{{ m.c }};white-space:pre-wrap">{{ m.text }}</span>
+        </div>
+        <sc-if value="{{ m.liz }}" hint-placeholder-val="false">
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(59,214,198,.6);background:#081226"><img src="art/lizzie-headshot.webp" alt="Lizzie" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;display:flex;flex-wrap:wrap;gap:7px">
+    <sc-for list="{{ doctorPrompts }}" as="q" hint-placeholder-count="3">
+      <div onClick="{{ q.go }}" style="display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(122,180,255,.28);background:rgba(13,28,56,.6);color:rgba(224,238,255,.82);font-size:10.5px;font-weight:800;padding:7px 10px;cursor:pointer">{{ q.t }}</div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;display:flex;gap:8px;align-items:flex-end;background:rgba(13,28,56,.78);border:1px solid rgba(59,214,198,.24);border-radius:18px;padding:9px">
+    <textarea value="{{ doctorInput }}" onInput="{{ doctorTyping }}" placeholder="Ask The Doctor..." style="flex:1;min-height:44px;max-height:110px;resize:none;border:0;outline:none;background:transparent;color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;line-height:1.45;padding:8px;box-sizing:border-box"></textarea>
+    <div onClick="{{ doctorSend }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:54px;height:44px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">SEND</div>
+  </div>
+  <span style="position:relative;font-size:9.5px;line-height:1.45;color:rgba(190,212,245,.45);text-align:center">The Doctor teaches EchoLab study content and test-prep patterns. For real symptoms or patient-care decisions, follow clinical protocol and appropriate medical care.</span>
 </div>
 </sc-if>
 
@@ -961,7 +1014,10 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 class Component extends DCLogic {
   state = { ready: false, screen: "boot", ob: 0, sheet: false, beat: 0, tryPick: -1,
     battle: null, mm: null, duel: null, boss: null, toast: null, resetArm: false,
-    regionId: null, lessonId: null };
+    regionId: null, lessonId: null, doctorInput: "", doctorLevel: "intermediate",
+    doctorMsgs: [
+      { who: "doctor", text: "Ah, Lizzie — there you are. Ask me about a view, a Doppler trap, a missed question, or anything in the echo universe. We’ll stabilize it together." }
+    ] };
 
   // ---------- lifecycle ----------
   componentDidMount() {
@@ -1154,6 +1210,46 @@ class Component extends DCLogic {
     if (s === "mm" || s === "duel") return this.go("region");
     if (s === "bossBrief" || s === "boss") { clearInterval(this._bt); return this.go("bosses"); }
     return this.go("home");
+  }
+
+
+  // ---------- The Doctor chat ----------
+  doctorPromptText(raw) {
+    return String(raw || "").trim();
+  }
+  doctorQuick(text) {
+    this.setState({ doctorInput: text }, () => this.doctorSend());
+  }
+  doctorAnswer(q) {
+    const level = this.state.doctorLevel || "intermediate";
+    const lower = q.toLowerCase();
+    const intro = "Ah, there it is — a little echo signal asking to be decoded. Brilliant question, Lizzie.";
+    const close = level === "expert" ? "Quick check: what single detail would the exam try to trick you with here?" : "Want to try one quick practice question on that?";
+    if (lower.includes("doppler") || lower.includes("nyquist") || lower.includes("alias")) {
+      return intro + "\n\nDirect answer: Doppler questions usually test direction, velocity, sampling limits, and whether PW or CW is the correct tool. PW tells you where the velocity is measured, but it can alias. CW handles very high velocities, but it cannot localize exactly where along the beam the velocity came from.\n\nWhy it matters: this is a favorite CCI-style trap because both answers can sound useful — the exam wants the best tool for the clinical question.\n\nMemory hook: PW knows WHERE. CW knows HOW FAST.\n\n" + close;
+    }
+    if (lower.includes("view") || lower.includes("parasternal") || lower.includes("apical") || lower.includes("subcostal")) {
+      return intro + "\n\nDirect answer: echo views are really windows. Parasternal gives the long-axis and short-axis landmarks, apical lines up beautifully with flow, and subcostal is your rescue window for septum, IVC, and effusion clues.\n\nWhy it matters: the exam often asks which view best shows a structure, measurement, or Doppler alignment.\n\nMemory hook: parasternal maps the anatomy, apical follows the flow, subcostal saves the day.\n\n" + close;
+    }
+    if (lower.includes("formula") || lower.includes("bernoulli") || lower.includes("gradient")) {
+      return intro + "\n\nDirect answer: the simplified Bernoulli equation is pressure gradient = 4V². V is peak velocity in meters per second.\n\nExample: if a jet is 3 m/s, gradient = 4 × 3² = 36 mmHg.\n\nWhy it matters: velocity turns into pressure difference, which helps grade stenosis and estimate pressures.\n\nMemory hook: square the speed, then multiply by four.\n\n" + close;
+    }
+    if (lower.includes("miss") || lower.includes("memory") || lower.includes("weak")) {
+      return "Good. That’s exactly what the Memory Core is for. A missed question is not a failure — it’s a coordinate.\n\nDirect answer: bring me the topic or the question stem, and I’ll break down what the exam was really testing, why the right answer works, why the other choices are traps, and how to remember it next time.\n\nMemory hook: missed today means protected tomorrow.\n\nWhat topic slipped?";
+    }
+    if (lower.includes("quiz") || lower.includes("practice")) {
+      return "Right then — practice question.\n\nQuestion:\nWhich Doppler mode is best for measuring a high-velocity aortic stenosis jet?\n\nA. Color Doppler\nB. Pulsed-wave Doppler\nC. Continuous-wave Doppler\nD. M-mode\n\nCorrect Answer:\nC. Continuous-wave Doppler\n\nDoctor’s Explanation:\nCW Doppler can record high velocities without aliasing, which makes it the best choice for fast stenotic jets.\n\nWhy the others are wrong:\nA: Color shows flow direction and turbulence, but not the best peak velocity measurement.\nB: PW localizes flow but aliases at high velocity.\nD: M-mode tracks motion over time, not jet velocity.\n\nMemory Hook:\nCW catches speed. PW picks place.\n\nNext Step:\nWant a harder one on Nyquist limit?";
+    }
+    return intro + "\n\nDirect answer: I can help with that. Give me the echo topic, a question stem, or the part that feels foggy, and I’ll turn it into a clear test-prep pattern.\n\nWhy it matters: the CCI exam rewards recognition — view, structure, Doppler choice, measurement, artifact, or safety step.\n\nTeach the concept: start with what the question is asking, identify the tool or view, then eliminate the tempting trap answer.\n\nExam angle: most questions are not asking for trivia; they are asking whether you can choose the safest, cleanest, most accurate next step.\n\nMemory hook: find the window, choose the tool, explain the why.\n\n" + close;
+  }
+  doctorSend() {
+    const q = this.doctorPromptText(this.state.doctorInput);
+    if (!q) { this.toast("Ask The Doctor", "Type a question first."); return; }
+    const msgs = [...(this.state.doctorMsgs || []), { who: "lizzie", text: q }];
+    const reply = this.doctorAnswer(q);
+    msgs.push({ who: "doctor", text: reply });
+    this.setState({ doctorMsgs: msgs, doctorInput: "" });
+    this.sClick();
   }
 
   // ---------- onboarding ----------
@@ -1752,7 +1848,7 @@ class Component extends DCLogic {
       "Rough edges today — " + (weak[0] ? weak[0].topic.toLowerCase() + " keeps slipping" : "a few topics keep slipping") + ". But missed questions aren't failures, they're coordinates. Tomorrow I fly at them.";
     return {
       badgesShow: s.screen === "badges", journalShow: s.screen === "journal",
-      charShow: s.screen === "character", adminShow: s.screen === "admin", bossesShow: s.screen === "bosses",
+      charShow: s.screen === "character", doctorShow: s.screen === "doctor", adminShow: s.screen === "admin", bossesShow: s.screen === "bosses",
       bvEarned: String(earned), bvTotal: String(mvpB.length),
       badgeList: mvpB.map((b) => {
         const got = !!p.badges[b.id];
@@ -1824,6 +1920,31 @@ class Component extends DCLogic {
       rstLabel: s.resetArm ? "Tap again to confirm reset" : "Reset progress",
       rstSub: s.resetArm ? "This erases Lizzie's entire save. No take-backs." : "Wipe all progress and start from Day 1",
       jMinsGoal: "20",
+      doctorInput: s.doctorInput || "",
+      doctorMsgs: (s.doctorMsgs || []).map((m) => {
+        const doc = m.who !== "lizzie";
+        return { text: m.text, doc, liz: !doc, justify: doc ? "flex-start" : "flex-end",
+          name: doc ? "THE DOCTOR" : "LIZZIE",
+          bg: doc ? "rgba(13,28,56,.78)" : "linear-gradient(180deg, rgba(59,214,198,.18), rgba(30,111,217,.16))",
+          bd: doc ? "rgba(245,184,74,.3)" : "rgba(59,214,198,.38)",
+          radius: doc ? "16px 16px 16px 6px" : "16px 16px 6px 16px",
+          c: doc ? "rgba(224,238,255,.92)" : "#EAF2FF",
+          nameC: doc ? "#FFD98F" : "#7FE7DB",
+          sh: doc ? "0 8px 22px rgba(0,0,0,.18)" : "0 8px 22px rgba(0,0,0,.16)" };
+      }),
+      doctorLevels: [
+        ["beginner", "BEGINNER"], ["intermediate", "INTERMEDIATE"], ["pro", "PRO"], ["expert", "EXPERT"]
+      ].map(([k, label]) => ({ label, pick: () => this.setState({ doctorLevel: k }),
+        bg: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.18)" : "rgba(13,28,56,.55)",
+        bd: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.7)" : "rgba(122,180,255,.22)",
+        c: (s.doctorLevel || "intermediate") === k ? "#FFD98F" : "rgba(200,220,250,.65)" })),
+      doctorPrompts: [
+        { t: "Explain my missed question", q: "Explain a missed question from the Memory Core." },
+        { t: "Quiz me", q: "Quiz me with one CCI-style echo question." },
+        { t: "Doppler help", q: "Help me understand Doppler and aliasing." }
+      ].map((x) => ({ t: x.t, go: () => this.doctorQuick(x.q) })),
+      doctorTyping: (e) => this.setState({ doctorInput: e.target.value }),
+      doctorSend: () => this.doctorSend(),
     };
   }
 
@@ -1838,7 +1959,7 @@ class Component extends DCLogic {
       splashShow: false, obShow: false, sheetShow: false, toastShow: false, navShow: false,
       homeShow: false, mapShow: false, regionShow: false, lessonShow: false, battleShow: false,
       mmShow: false, duelShow: false, bossBriefShow: false, bossShow: false, memShow: false,
-      badgesShow: false, journalShow: false, charShow: false, adminShow: false, bossesShow: false,
+      badgesShow: false, journalShow: false, charShow: false, doctorShow: false, adminShow: false, bossesShow: false,
       beginSplash: () => this.beginSplash(),
       beginLabel: "Knock four times",
     };
@@ -1860,17 +1981,17 @@ class Component extends DCLogic {
     const tabs = [
       { k: "home", label: "HOME", glyph: "◉" }, { k: "map", label: "MAP", glyph: "❖" },
       { k: "bosses", label: "BOSSES", glyph: "◈" }, { k: "archive", label: "ARCHIVE", glyph: "▣", badge: due },
-      { k: "character", label: "LIZZIE", glyph: "◉" },
+      { k: "doctor", label: "THE DOCTOR", glyph: "✚" },
     ];
     return {
       goHome: () => this.go("home"), goMap: () => this.go("map"), goBosses: () => this.go("bosses"),
       archiveShow: s.screen === "archive",
       archiveMemoryBadge: String(due), archiveMemoryBadgeShow: due > 0,
       goMemory: () => this.go("memory"), goJournal: () => this.go("journal"), goBadges: () => this.go("badges"),
-      goArchive: () => this.go("archive"), goCharacter: () => this.go("character"), goAdmin: () => this.go("admin"),
+      goArchive: () => this.go("archive"), goCharacter: () => this.go("character"), goDoctor: () => this.go("doctor"), goAdmin: () => this.go("admin"),
       back: () => this.back(), boRetry: () => this.bossStart(),
       toastShow: !!s.toast, toastT: s.toast ? s.toast.t : "", toastSub: s.toast ? s.toast.sub : "",
-      navShow: ["home", "map", "bosses", "archive", "memory", "journal", "badges", "character"].includes(s.screen),
+      navShow: ["home", "map", "bosses", "archive", "memory", "journal", "badges", "character", "doctor"].includes(s.screen),
       navItems: tabs.map((t) => {
         const active = s.screen === t.k;
         return { label: t.label, glyph: t.glyph, go: () => this.go(t.k),
