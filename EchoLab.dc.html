@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Nunito+Sans:opsz,wght@6..12,400..1000&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#04070F;touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;touch-action:manipulation}
+*{-webkit-tap-highlight-color:transparent}
+input,textarea,select,button{font-size:16px !important;touch-action:manipulation}
+@keyframes vx{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes pulseRing{0%{transform:scale(.55);opacity:.9}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
+@keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes popIn{from{transform:scale(.92) translateY(6px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+input[type="date"]{color-scheme:dark}
+x-dc{display:block}
+image-slot{display:block !important;width:100% !important;height:100% !important}
+</style>
+</helmet>
+
+<div style="max-width:430px;margin:0 auto;min-height:100dvh;position:relative;overflow-x:hidden;background:#060D1B;box-shadow:0 0 90px rgba(0,0,0,.65);font-family:'Nunito Sans',system-ui,sans-serif;color:#EAF2FF">
+
+<!-- ===================== SPLASH ===================== -->
+<sc-if value="{{ splashShow }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Splash" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px 26px 24px;overflow:hidden;text-align:center">
+  <div style="position:absolute;left:50%;top:50%;width:920px;height:920px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 0deg, rgba(30,111,217,.0), rgba(59,214,198,.14), rgba(30,111,217,.0) 30%, rgba(245,184,74,.1) 55%, rgba(30,111,217,.0) 75%, rgba(59,214,198,.12), rgba(30,111,217,.0));filter:blur(14px);animation:{{ vortexAnim }};pointer-events:none"></div>
+  <div style="position:absolute;top:-120px;left:50%;width:340px;height:320px;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 50%, rgba(255,203,107,.26), transparent 70%);filter:blur(8px);animation:glowPulse 5s ease-in-out infinite;pointer-events:none"></div>
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:7px">
+    <div style="width:34px;height:46px;border-radius:5px;background:linear-gradient(180deg,#1E6FD9,#123F8C);border:1.5px solid rgba(170,210,255,.6);box-shadow:0 0 26px rgba(59,140,240,.65);position:relative;display:flex;align-items:center;justify-content:center">
+      <div style="position:absolute;top:-9px;width:8px;height:8px;border-radius:3px;background:#FFE9B8;box-shadow:0 0 14px rgba(255,229,178,.95);animation:glowPulse 2.2s ease-in-out infinite"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5px;padding:3px">
+        <span style="width:9px;height:12px;background:rgba(220,238,255,.28);border-radius:1.5px"></span><span style="width:9px;height:12px;background:rgba(220,238,255,.18);border-radius:1.5px"></span>
+        <span style="width:9px;height:12px;background:rgba(220,238,255,.18);border-radius:1.5px"></span><span style="width:9px;height:12px;background:rgba(255,229,178,.5);border-radius:1.5px"></span>
+      </div>
+    </div>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:6px;align-items:center">
+    <span style="font-size:10px;font-weight:900;letter-spacing:3px;color:#7FE7DB">A FAN-MADE STUDY ADVENTURE</span>
+    <span style="font-family:'Marcellus',serif;font-size:42px;line-height:1;color:#F4F8FF;text-shadow:0 0 34px rgba(122,180,255,.35)">EchoLab</span>
+    <span style="font-family:'Marcellus',serif;font-size:17px;letter-spacing:2.5px;color:#FFCB6B">THE TIME HEART REGISTRY</span>
+  </div>
+  <div style="position:relative;width:128px;height:128px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.25));border:4px solid rgba(255,203,107,.72);box-shadow:0 0 34px rgba(245,184,74,.3);animation:floaty 6s ease-in-out infinite">
+    <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+  </div>
+  <span style="position:relative;font-size:13.5px;line-height:1.55;color:rgba(210,228,255,.78);max-width:300px">The TARDIS learning engine has opened a hidden registry of hearts — and it needs a companion curious enough to read them.</span>
+  <div onClick="{{ beginSplash }}" style="position:relative;display:flex;align-items:center;justify-content:center;height:54px;min-width:250px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:15px;font-weight:900;letter-spacing:.4px;box-shadow:0 10px 30px rgba(240,169,60,.38);cursor:pointer">{{ beginLabel }}</div>
+  <span style="position:relative;font-size:9.5px;line-height:1.5;color:rgba(190,212,245,.42);max-width:330px">{{ disclaimer }}</span>
+</div>
+</sc-if>
+
+<!-- ===================== ONBOARDING ===================== -->
+<sc-if value="{{ obShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Onboarding" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px 24px;overflow:hidden">
+  <div style="position:absolute;left:50%;top:44%;width:820px;height:820px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 40%, rgba(245,184,74,.08) 65%, rgba(30,111,217,0));filter:blur(16px);animation:{{ vortexAnim }};pointer-events:none"></div>
+  <div style="position:relative;width:104px;height:104px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.4), rgba(30,111,217,.28));border:4px solid rgba(59,214,198,.65);box-shadow:0 0 30px rgba(59,214,198,.28)">
+    <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;background:rgba(13,28,56,.72);border:1px solid rgba(122,180,255,.26);border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(3,8,20,.5);animation:popIn .3s ease">
+    <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#FFD98F">{{ obSpeaker }}</span>
+    <span style="font-size:15px;line-height:1.62;color:#EAF2FF">{{ obText }}</span>
+  </div>
+  <div style="position:relative;display:flex;gap:7px">
+    <sc-for list="{{ obDots }}" as="d" hint-placeholder-count="5">
+      <span style="width:8px;height:8px;border-radius:50%;background:{{ d.bg }};box-shadow:{{ d.sh }}"></span>
+    </sc-for>
+  </div>
+  <sc-if value="{{ obDateShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;display:flex;flex-direction:column;gap:11px;width:100%;max-width:360px;background:rgba(10,24,48,.7);border:1px solid rgba(59,214,198,.35);border-radius:22px;padding:16px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">SET YOUR EXAM COORDINATES</span>
+      <input type="date" value="{{ examDate }}" onChange="{{ onDate }}" style="height:50px;border-radius:14px;border:1.5px solid rgba(122,180,255,.35);background:rgba(6,13,27,.8);color:#EAF2FF;font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:700;padding:0 14px;outline:none">
+      <span style="font-size:11.5px;line-height:1.5;color:rgba(200,220,250,.6)">The TARDIS paces your whole training to land on this date. You can change it anytime in TARDIS Admin.</span>
+      <div onClick="{{ obFinish }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14.5px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Lock the coordinates</div>
+      <div onClick="{{ obSkip }}" style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:14px;border:1.5px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:13px;font-weight:800;cursor:pointer">Skip for now</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ obNextShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px">
+      <div onClick="{{ obNext }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14.5px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Next</div>
+      <div onClick="{{ obJumpDate }}" style="display:flex;align-items:center;justify-content:center;height:40px;color:rgba(190,212,245,.55);font-size:12px;font-weight:800;cursor:pointer">Skip intro →</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== HOME / TARDIS DASHBOARD ===================== -->
+<sc-if value="{{ homeShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="TARDIS Dashboard" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden">
+  <div style="position:absolute;inset:0">
+    <img src="art/console-room.png" onerror="this.onerror=null;this.src='./console-room.png';" alt="TARDIS console room" style="width:100%;height:100%;object-fit:cover;object-position:50% 38%;display:block">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(4,8,18,.62) 0%, rgba(4,8,18,.08) 22%, rgba(4,8,18,.02) 45%, rgba(5,10,22,.55) 68%, rgba(4,8,17,.94) 88%)"></div>
+  </div>
+
+  <!-- top HUD chips -->
+  <div style="position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 0">
+    <div onClick="{{ goCharacter }}" style="display:flex;align-items:center;gap:8px;padding:7px 11px 7px 7px;border-radius:999px;background:rgba(7,15,30,.72);border:1px solid rgba(245,184,74,.45);backdrop-filter:blur(6px);cursor:pointer">
+      <span style="width:26px;height:26px;border-radius:50%;background:linear-gradient(160deg,#2c5a9e,#14294f);border:1.5px solid rgba(245,184,74,.8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#FFE3B0">{{ levelNum }}</span>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:10.5px;font-weight:900;color:#FFE3B0;line-height:1.2">Lizzie</span>
+        <span style="font-size:8px;font-weight:800;letter-spacing:.8px;color:rgba(210,228,255,.65);line-height:1.2">{{ rankName }}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:7px">
+      <span style="display:flex;align-items:center;gap:6px;padding:8px 11px;border-radius:999px;background:rgba(7,15,30,.72);border:1px solid rgba(245,184,74,.4);backdrop-filter:blur(6px)">
+        <span style="width:7px;height:7px;transform:rotate(45deg);border-radius:2px;background:#F5B84A;box-shadow:0 0 8px rgba(245,184,74,.9)"></span>
+        <span style="font-size:10px;font-weight:900;letter-spacing:1px;color:#FFD98F">{{ streak }}</span>
+      </span>
+      <span style="display:flex;align-items:center;gap:4px;padding:8px 11px;border-radius:999px;background:rgba(7,15,30,.72);border:1px solid rgba(59,214,198,.4);backdrop-filter:blur(6px)">
+        <sc-for list="{{ energyPips }}" as="e" hint-placeholder-count="5">
+          <span style="width:6px;height:6px;border-radius:50%;background:{{ e.bg }};box-shadow:{{ e.sh }}"></span>
+        </sc-for>
+      </span>
+      <span onClick="{{ goAdmin }}" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:999px;background:rgba(7,15,30,.72);border:1px solid rgba(122,180,255,.35);backdrop-filter:blur(6px);font-size:13px;color:rgba(210,228,255,.8);cursor:pointer">⚙</span>
+    </div>
+  </div>
+
+  <!-- open console art space: pins removed -->
+  <div style="position:relative;z-index:2;flex:1;min-height:56dvh;pointer-events:none"></div>
+
+  <!-- lower stack -->
+  <div style="position:relative;z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px 96px;margin-top:auto">
+    <div style="display:flex;gap:11px;align-items:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:12px 13px;backdrop-filter:blur(8px)">
+      <div style="flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.55)">
+        <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#7FE7DB">{{ doctorName }}</span>
+        <span style="font-size:12px;line-height:1.45;font-style:italic;color:rgba(224,238,255,.88)">{{ doctorDaily }}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:9px">
+      <div onClick="{{ openSheet }}" style="flex:1.2;display:flex;align-items:center;gap:9px;background:rgba(9,19,38,.82);border:1px solid rgba(59,214,198,.32);border-radius:16px;padding:10px 12px;backdrop-filter:blur(8px);cursor:pointer">
+        <span style="width:7px;height:7px;border-radius:50%;background:#3BD6C6;box-shadow:0 0 8px rgba(59,214,198,.9)"></span>
+        <div style="display:flex;flex-direction:column">
+          <span style="font-size:10.5px;font-weight:900;color:#BDEDE6">MISSIONS {{ missionsDone }}/{{ missionsTotal }}</span>
+          <span style="font-size:9px;color:rgba(200,220,250,.55)">Tap for today's orders</span>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:10px 12px;backdrop-filter:blur(8px)">
+        <span style="font-size:12.5px;font-weight:900;color:{{ readyColor }}">{{ readiness }}% ready</span>
+        <span style="font-size:9px;font-weight:800;color:rgba(200,220,250,.55)">{{ paceChip }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== CURRICULUM MAP ===================== -->
+<sc-if value="{{ mapShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Curriculum Map" style="position:relative;min-height:100dvh;padding:16px 16px 100px;overflow:hidden">
+  <div style="position:absolute;left:50%;top:280px;width:900px;height:900px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 40deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 35%, rgba(245,184,74,.09) 60%, rgba(30,111,217,0) 80%, rgba(180,140,242,.08), rgba(30,111,217,0));filter:blur(18px);animation:{{ vortexAnim }};pointer-events:none"></div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
+    <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">THE TIME VORTEX</span>
+    <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Curriculum Map</span>
+    <span style="font-size:12px;color:rgba(200,220,250,.6)">Five exam domains. Five worlds. Weighted like the registry itself.</span>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column">
+    <sc-for list="{{ regions }}" as="r" hint-placeholder-count="5">
+      <div style="display:flex;gap:13px">
+        <div style="flex:none;display:flex;flex-direction:column;align-items:center">
+          <div style="width:54px;height:54px;border-radius:50%;background:{{ r.medBg }};border:2px solid {{ r.medBd }};box-shadow:{{ r.medSh }};display:flex;align-items:center;justify-content:center;font-size:22px;color:{{ r.medC }}">{{ r.glyph }}</div>
+          <sc-if value="{{ r.connShow }}" hint-placeholder-val="{{ true }}">
+            <div style="width:2px;flex:1;min-height:26px;background:linear-gradient(180deg, rgba(122,180,255,.4), rgba(122,180,255,.08))"></div>
+          </sc-if>
+        </div>
+        <div onClick="{{ r.open }}" style="flex:1;display:flex;flex-direction:column;gap:8px;background:rgba(11,24,48,.72);border:1px solid {{ r.cardBd }};border-radius:20px;padding:13px 14px;margin-bottom:14px;cursor:pointer;backdrop-filter:blur(4px)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+              <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:{{ r.accent }}">{{ r.weightLabel }}</span>
+              <span style="font-family:'Marcellus',serif;font-size:17.5px;color:{{ r.titleC }}">{{ r.name }}</span>
+            </div>
+            <span style="flex:none;font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ r.stC }};border:1.5px {{ r.stBdStyle }} {{ r.stBd }};border-radius:999px;padding:5px 9px;white-space:nowrap">{{ r.status }}</span>
+          </div>
+          <span style="font-size:11.5px;line-height:1.5;color:rgba(205,224,250,.62)">{{ r.tagline }}</span>
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden"><div style="width:{{ r.masteryPct }}%;height:100%;border-radius:99px;background:{{ r.accent }};box-shadow:0 0 8px {{ r.accent }}"></div></div>
+            <span style="font-size:9.5px;font-weight:900;color:{{ r.mlC }};white-space:nowrap">{{ r.masteryLabel }}</span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:9px;margin-top:6px">
+    <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.5)">LOCKED STUDY ROOMS</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+      <sc-for list="{{ roadmap }}" as="rm" hint-placeholder-count="8">
+        <div style="display:flex;flex-direction:column;gap:3px;background:rgba(9,18,36,.55);border:1px dashed rgba(122,180,255,.22);border-radius:14px;padding:10px 12px">
+          <span style="font-size:12px;font-weight:800;color:rgba(214,230,255,.75)">{{ rm.name }}</span>
+          <span style="font-size:9.5px;color:rgba(200,220,250,.45)">{{ rm.note }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== REGION ===================== -->
+<sc-if value="{{ regionShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Region" style="position:relative;min-height:100dvh;padding:0 0 40px">
+  <div style="position:relative;padding:16px 16px 18px;background:linear-gradient(180deg, {{ rgAccentSoft }}, rgba(6,13,27,0));overflow:hidden">
+    <div style="position:absolute;top:-70px;right:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, {{ rgAccentGlow }}, transparent 70%);filter:blur(10px);pointer-events:none"></div>
+    <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+      <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:{{ rgAccent }}">{{ rgWeight }}</span>
+    </div>
+    <div style="position:relative;display:flex;align-items:center;gap:13px">
+      <div style="flex:none;width:60px;height:60px;border-radius:18px;background:rgba(7,15,30,.66);border:1.5px solid {{ rgAccent }};box-shadow:0 0 22px {{ rgAccentGlow }};display:flex;align-items:center;justify-content:center;font-size:26px;color:{{ rgAccent }}">{{ rgGlyph }}</div>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-family:'Marcellus',serif;font-size:23px;line-height:1.1;color:#F4F8FF">{{ rgName }}</span>
+        <span style="font-size:11.5px;font-style:italic;color:rgba(210,228,255,.68)">{{ rgTagline }}</span>
+      </div>
+    </div>
+    <div style="position:relative;display:flex;align-items:center;gap:9px;margin-top:14px">
+      <div style="flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden"><div style="width:{{ rgMasteryPct }}%;height:100%;border-radius:99px;background:{{ rgAccent }};box-shadow:0 0 10px {{ rgAccentGlow }}"></div></div>
+      <span style="font-size:10px;font-weight:900;color:{{ rgMlC }}">{{ rgMasteryLabel }}</span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:4px 16px 0">
+    <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.3);border-radius:20px;padding:13px">
+      <div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
+        <img src="art/doctor-10-headshot.webp" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#FFD98F">{{ doctorName }}</span>
+        <span style="font-size:12.5px;line-height:1.55;font-style:italic;color:rgba(224,238,255,.85)">{{ rgDoctorIntro }}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(122,180,255,.22);border-radius:20px;padding:13px">
+      <span style="flex:none;width:40px;height:40px;border-radius:14px;background:{{ rgNpcBg }};border:1.5px solid {{ rgAccent }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:{{ rgAccent }}">{{ rgNpcInit }}</span>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:11.5px;font-weight:900;color:#EAF2FF">{{ rgNpcName }} <span style="font-weight:700;color:rgba(200,220,250,.5)">· {{ rgNpcRole }}</span></span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(210,228,255,.75)">{{ rgNpcIntro }}</span>
+      </div>
+    </div>
+
+    <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">LESSONS</span>
+    <sc-for list="{{ rgLessons }}" as="l" hint-placeholder-count="3">
+      <div onClick="{{ l.open }}" style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid {{ l.bd }};border-radius:18px;padding:12px 13px;cursor:pointer">
+        <span style="flex:none;width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:{{ l.nBg }};color:{{ l.nC }};border:1.5px solid {{ l.nBd }}">{{ l.mark }}</span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+          <span style="font-size:13.5px;font-weight:800;color:#EAF2FF">{{ l.title }}</span>
+          <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ l.sub }} · {{ l.qCount }} battle questions</span>
+        </div>
+        <span style="font-size:15px;color:rgba(190,212,245,.5)">›</span>
+      </div>
+    </sc-for>
+
+    <sc-if value="{{ rgGameShow }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">MINI-GAME</span>
+      <div onClick="{{ rgGameGo }}" style="display:flex;align-items:center;gap:12px;background:linear-gradient(120deg, {{ rgAccentSoft }}, rgba(13,28,56,.66));border:1.5px solid {{ rgGameBd }};border-radius:20px;padding:14px 13px;cursor:pointer;box-shadow:0 0 24px {{ rgGameSh }}">
+        <span style="flex:none;width:44px;height:44px;border-radius:16px;background:rgba(7,15,30,.72);border:1.5px solid {{ rgAccent }};display:flex;align-items:center;justify-content:center;font-size:20px;color:{{ rgAccent }}">{{ rgGameGlyph }}</span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:14px;font-weight:900;color:#F4F8FF">{{ rgGameName }}</span>
+          <span style="font-size:11px;line-height:1.45;color:rgba(210,228,255,.65)">{{ rgGameDesc }}</span>
+        </div>
+        <span style="flex:none;font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ rgGameStC }};border:1.5px {{ rgGameStBdStyle }} {{ rgGameStBd }};border-radius:999px;padding:5px 9px;white-space:nowrap">{{ rgGameStatus }}</span>
+      </div>
+    </sc-if>
+
+    <div onClick="{{ rgDrill }}" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:16px;border:1.5px solid rgba(122,180,255,.32);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer;background:rgba(13,28,56,.4)">⚡ Quick drill — 5 random questions</div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== LESSON ===================== -->
+<sc-if value="{{ lessonShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Lesson" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;min-width:0">
+      <span style="font-size:12.5px;font-weight:900;color:#EAF2FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ lsTitle }}</span>
+      <span style="font-size:9.5px;color:rgba(200,220,250,.55)">{{ lsSub }}</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:5px">
+      <sc-for list="{{ lsDots }}" as="d" hint-placeholder-count="4">
+        <span style="width:7px;height:7px;border-radius:50%;background:{{ d.bg }}"></span>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;animation:popIn .3s ease">
+    <span style="align-self:flex-start;font-size:9.5px;font-weight:900;letter-spacing:2px;color:{{ lsKickC }};background:{{ lsKickBg }};border:1px solid {{ lsKickBd }};border-radius:999px;padding:6px 12px">{{ lsKicker }}</span>
+    <span style="font-family:'Marcellus',serif;font-size:24px;line-height:1.15;color:#F4F8FF">{{ lsBeatTitle }}</span>
+    <sc-if value="{{ lsBodyShow }}" hint-placeholder-val="{{ true }}">
+      <div style="background:{{ lsCardBg }};border:1px solid {{ lsCardBd }};border-radius:22px;padding:17px">
+        <span style="font-size:14.5px;line-height:1.7;color:{{ lsBodyC }}">{{ lsBody }}</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ lsTryShow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:9px;background:rgba(13,28,56,.66);border:1px solid rgba(59,214,198,.35);border-radius:22px;padding:15px">
+        <span style="font-size:13.5px;font-weight:800;line-height:1.55;color:#EAF2FF">{{ lsTryStem }}</span>
+        <sc-for list="{{ tryChoices }}" as="c" hint-placeholder-count="3">
+          <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:14px;padding:12px;cursor:pointer">
+            <span style="flex:none;width:20px;height:20px;border-radius:7px;border:1.5px solid {{ c.bd }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:{{ c.markC }}">{{ c.mark }}</span>
+            <span style="font-size:13px;font-weight:700;line-height:1.4;color:#EAF2FF">{{ c.t }}</span>
+          </div>
+        </sc-for>
+        <sc-if value="{{ tryRevealed }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:9px;align-items:flex-start;background:rgba(6,13,27,.6);border-radius:14px;padding:11px">
+            <span style="flex:none;font-size:13px">{{ tryIcon }}</span>
+            <span style="font-size:12px;line-height:1.55;color:rgba(214,232,255,.85)">{{ tryWhy }}</span>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:8px">
+    <div onClick="{{ lsNext }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:{{ lsNextBg }};color:{{ lsNextC }};font-size:14.5px;font-weight:900;letter-spacing:.3px;box-shadow:{{ lsNextSh }};cursor:pointer;border:{{ lsNextBd }}">{{ lsNextLabel }}</div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== BATTLE ===================== -->
+<sc-if value="{{ battleShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Question Battle" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <sc-if value="{{ btLive }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <div style="flex:1;height:9px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden"><div style="width:{{ btPct }}%;height:100%;border-radius:99px;background:linear-gradient(90deg,#3BD6C6,#7FE7DB);box-shadow:0 0 10px rgba(59,214,198,.7);transition:width .3s"></div></div>
+      <span style="font-size:11px;font-weight:900;color:rgba(200,220,250,.7)">{{ btI }}/{{ btN }}</span>
+      <sc-if value="{{ btStreakShow }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:10px;font-weight:900;color:#FFD98F;border:1px solid rgba(245,184,74,.5);border-radius:999px;padding:4px 8px;background:rgba(245,184,74,.1)">⚡{{ btStreak }}</span>
+      </sc-if>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
+      <span style="font-size:9px;font-weight:900;letter-spacing:1.6px;color:{{ btModeC }}">{{ btMode }}</span>
+      <span style="font-size:9px;color:rgba(200,220,250,.4)">·</span>
+      <span style="font-size:9px;font-weight:800;letter-spacing:1px;color:rgba(200,220,250,.55)">{{ btTopic }}</span>
+      <span style="margin-left:auto;font-size:9px;font-weight:900;letter-spacing:1.5px;color:#F5B84A">{{ btDiff }}</span>
+    </div>
+    <div style="background:rgba(13,28,56,.7);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:17px;margin-bottom:12px;animation:popIn .25s ease">
+      <span style="font-size:15.5px;font-weight:800;line-height:1.6;color:#F4F8FF">{{ btQ }}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <sc-for list="{{ btChoices }}" as="c" hint-placeholder-count="4">
+        <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:11px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:16px;padding:13px;cursor:pointer;animation:{{ c.anim }}">
+          <span style="flex:none;width:26px;height:26px;border-radius:9px;background:{{ c.lBg }};border:1.5px solid {{ c.bd }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:{{ c.lC }}">{{ c.letter }}</span>
+          <span style="flex:1;font-size:13.5px;font-weight:700;line-height:1.45;color:#EAF2FF">{{ c.t }}</span>
+          <span style="flex:none;font-size:13px;color:{{ c.mkC }}">{{ c.mk }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ btRevealed }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(9,19,38,.85);border:1px solid {{ btFbBd }};border-radius:20px;padding:15px;margin-top:12px;animation:popIn .3s ease">
+        <span style="font-size:11px;font-weight:900;letter-spacing:1.6px;color:{{ btFbC }}">{{ btFbTitle }}</span>
+        <span style="font-size:13px;line-height:1.6;color:rgba(224,238,255,.9)">{{ btExp }}</span>
+        <sc-if value="{{ btWhyShow }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:12px;line-height:1.55;color:rgba(255,180,158,.85)"><b>Your pick:</b> {{ btWhy }}</span>
+        </sc-if>
+        <sc-if value="{{ btPearlShow }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:8px;align-items:flex-start;background:rgba(245,184,74,.08);border:1px solid rgba(245,184,74,.3);border-radius:12px;padding:9px 11px">
+            <span style="flex:none;font-size:11px;color:#FFCB6B">✦</span>
+            <span style="font-size:11.5px;line-height:1.5;color:#FFE3B0">{{ btPearl }}</span>
+          </div>
+        </sc-if>
+        <span style="font-size:11.5px;font-style:italic;color:rgba(200,220,250,.6)">{{ btLine }}</span>
+      </div>
+      <div onClick="{{ btNext }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer;margin-top:10px">{{ btNextLabel }}</div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ btDoneShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">{{ btDoneKick }}</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ btDoneTitle }}</span>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(59,214,198,.35);border-radius:18px;padding:13px 19px">
+          <span style="font-family:'Marcellus',serif;font-size:26px;color:#7FE7DB">{{ btScore }}/{{ btN }}</span>
+          <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">CORRECT</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(245,184,74,.35);border-radius:18px;padding:13px 19px">
+          <span style="font-family:'Marcellus',serif;font-size:26px;color:#FFCB6B">+{{ btXp }}</span>
+          <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">XP</span>
+        </div>
+      </div>
+      <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:300px">{{ btDoneMsg }}</span>
+      <div onClick="{{ btDoneCta }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">{{ btDoneCtaLabel }}</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== MEASURE MATCH ===================== -->
+<sc-if value="{{ mmShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Measure Match" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <sc-if value="{{ mmLive }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:12.5px;font-weight:900;color:#FFD98F">MEASURE MATCH</span>
+        <span style="font-size:9.5px;color:rgba(200,220,250,.55)">Round {{ mmRound }} of {{ mmRounds }} · Echo View Gallery</span>
+      </div>
+      <span style="margin-left:auto;font-size:11px;font-weight:900;color:#7FE7DB">{{ mmScore }} pts</span>
+    </div>
+    <div style="background:linear-gradient(140deg, rgba(245,184,74,.16), rgba(13,28,56,.72));border:1.5px solid rgba(245,184,74,.4);border-radius:20px;padding:15px;margin-bottom:12px">
+      <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#FFD98F">THE MEASUREMENT</span>
+      <div style="font-family:'Marcellus',serif;font-size:20px;line-height:1.2;color:#F4F8FF;margin-top:4px">{{ mmMeasure }}</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
+      <sc-for list="{{ mmChain }}" as="ch" hint-placeholder-count="3">
+        <span style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:34px;border-radius:12px;background:{{ ch.bg }};border:1.5px solid {{ ch.bd }};font-size:9px;font-weight:900;letter-spacing:1.2px;color:{{ ch.c }}">{{ ch.t }}</span>
+      </sc-for>
+    </div>
+    <span style="font-size:14px;font-weight:800;line-height:1.5;color:#EAF2FF;margin-bottom:10px">{{ mmPrompt }}</span>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <sc-for list="{{ mmOpts }}" as="c" hint-placeholder-count="4">
+        <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:11px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:16px;padding:13px;cursor:pointer">
+          <span style="flex:1;font-size:13.5px;font-weight:700;line-height:1.4;color:#EAF2FF">{{ c.t }}</span>
+          <span style="flex:none;font-size:13px;color:{{ c.mkC }}">{{ c.mk }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ mmRevealed }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:9px;align-items:flex-start;background:rgba(9,19,38,.85);border:1px solid {{ mmFbBd }};border-radius:16px;padding:13px;margin-top:12px;animation:popIn .3s ease">
+        <span style="flex:none;font-size:13px">{{ mmIcon }}</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(224,238,255,.9)">{{ mmWhy }}</span>
+      </div>
+      <div onClick="{{ mmNext }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer;margin-top:10px">{{ mmNextLabel }}</div>
+    </sc-if>
+  </sc-if>
+  <sc-if value="{{ mmDoneShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#FFD98F">MEASURE MATCH COMPLETE</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ mmDoneTitle }}</span>
+      <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(245,184,74,.35);border-radius:18px;padding:13px 22px">
+        <span style="font-family:'Marcellus',serif;font-size:26px;color:#FFCB6B">{{ mmScore }} / {{ mmMax }}</span>
+        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">CHAIN LINKS FORGED</span>
+      </div>
+      <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:300px">{{ mmDoneMsg }}</span>
+      <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Gallery</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== DOPPLER DUEL ===================== -->
+<sc-if value="{{ duelShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Doppler Duel" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <sc-if value="{{ duLive }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:12.5px;font-weight:900;color:#7AB4FF">DOPPLER DUEL</span>
+        <span style="font-size:9.5px;color:rgba(200,220,250,.55)">Round {{ duRound }} of {{ duRounds }} · Physics Engine Room</span>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:4px">
+        <sc-for list="{{ duBolts }}" as="b" hint-placeholder-count="6">
+          <span style="font-size:12px;color:{{ b.c }};text-shadow:{{ b.sh }}">⚡</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="background:linear-gradient(140deg, rgba(122,180,255,.14), rgba(13,28,56,.75));border:1.5px solid rgba(122,180,255,.4);border-radius:20px;padding:15px;margin-bottom:12px">
+      <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#9CC5FF">THE ROGUE CONSOLE</span>
+      <div style="font-size:13.5px;line-height:1.6;font-style:italic;color:#EAF2FF;margin-top:5px">{{ duScene }}</div>
+    </div>
+    <span style="font-size:14px;font-weight:800;line-height:1.5;color:#EAF2FF;margin-bottom:10px">{{ duPrompt }}</span>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <sc-for list="{{ duOpts }}" as="c" hint-placeholder-count="4">
+        <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:11px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:16px;padding:13px;cursor:pointer">
+          <span style="flex:1;font-size:13.5px;font-weight:700;line-height:1.4;color:#EAF2FF">{{ c.t }}</span>
+          <span style="flex:none;font-size:13px;color:{{ c.mkC }}">{{ c.mk }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ duRevealed }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:9px;background:rgba(9,19,38,.85);border:1px solid {{ duFbBd }};border-radius:16px;padding:13px;margin-top:12px;animation:popIn .3s ease">
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(224,238,255,.9)">{{ duWhy }}</span>
+        <sc-if value="{{ duTipShow }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:11.5px;line-height:1.5;color:#FFE3B0">✦ {{ duTip }}</span>
+        </sc-if>
+      </div>
+      <div onClick="{{ duNext }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer;margin-top:10px">{{ duNextLabel }}</div>
+    </sc-if>
+  </sc-if>
+  <sc-if value="{{ duDoneShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#9CC5FF">DUEL COMPLETE</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ duDoneTitle }}</span>
+      <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(122,180,255,.4);border-radius:18px;padding:13px 22px">
+        <span style="font-family:'Marcellus',serif;font-size:26px;color:#7AB4FF">{{ duScore }} / {{ duRounds }}</span>
+        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">BOLTS LANDED</span>
+      </div>
+      <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:300px">{{ duDoneMsg }}</span>
+      <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Engine Room</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== BOSS BRIEF + BATTLE ===================== -->
+<sc-if value="{{ bossBriefShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Boss Brief" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 0%, rgba(90,90,110,.22), transparent 60%), radial-gradient(100% 50% at 50% 110%, rgba(30,20,50,.5), transparent 70%)"></div>
+  <span onClick="{{ back }}" style="position:absolute;top:16px;left:16px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer;z-index:2">←</span>
+  <div style="position:relative;width:104px;height:104px;border-radius:50%;background:radial-gradient(60% 60% at 50% 32%, rgba(200,205,220,.28), rgba(60,65,90,.3));border:2px solid rgba(200,205,220,.45);box-shadow:0 0 40px rgba(150,160,200,.25);display:flex;align-items:center;justify-content:center;animation:floaty 5s ease-in-out infinite">
+    <span style="font-size:44px;filter:grayscale(1) brightness(1.3)">◈</span>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
+    <span style="font-size:10px;font-weight:900;letter-spacing:2.6px;color:#C9CFE4">BOSS BATTLE</span>
+    <span style="font-family:'Marcellus',serif;font-size:30px;line-height:1.1;color:#F4F8FF">{{ boName }}</span>
+    <span style="font-size:12px;font-weight:800;color:rgba(200,210,240,.65)">{{ boSub }}</span>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:350px;background:rgba(11,20,40,.8);border:1px solid rgba(160,170,210,.3);border-radius:22px;padding:16px">
+    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,232,255,.85)">{{ boIntro }}</span>
+    <div style="height:1px;background:rgba(160,170,210,.2)"></div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:11.5px;color:rgba(210,220,250,.8)">◈ {{ boCount }} questions · {{ boTime }}s each</span>
+      <span style="font-size:11.5px;color:rgba(210,220,250,.8)">◈ Wrong or slow — the Angels advance</span>
+      <span style="font-size:11.5px;color:rgba(210,220,250,.8)">◈ {{ boStrikes }} advances and they reach you</span>
+      <span style="font-size:11.5px;color:#FFE3B0">✦ Victory: +{{ boXpWin }} XP, a badge, and a Chrono Fragment</span>
+    </div>
+  </div>
+  <div onClick="{{ boStart }}" style="position:relative;display:flex;align-items:center;justify-content:center;height:54px;min-width:260px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:15px;font-weight:900;box-shadow:0 10px 30px rgba(240,169,60,.38);cursor:pointer">Don't blink — begin</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ bossShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Boss Battle" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(90% 50% at 50% 0%, rgba(90,90,115,.18), transparent 55%);pointer-events:none"></div>
+  <sc-if value="{{ boLive }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <span style="font-size:11px;font-weight:900;letter-spacing:1.8px;color:#C9CFE4">WEEPING ANGELS</span>
+      <span style="margin-left:auto;font-size:11px;font-weight:900;color:rgba(200,220,250,.7)">{{ boI }}/{{ boN }}</span>
+    </div>
+    <div style="position:relative;height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin-bottom:12px">
+      <div style="width:{{ boBarPct }}%;height:100%;border-radius:99px;background:{{ boBarBg }};box-shadow:0 0 12px {{ boBarGlow }};transition:width .25s linear"></div>
+    </div>
+    <div style="position:relative;display:flex;align-items:center;gap:6px;margin-bottom:14px;background:rgba(9,16,34,.7);border:1px solid rgba(160,170,210,.25);border-radius:16px;padding:10px 12px">
+      <sc-for list="{{ boCells }}" as="cell" hint-placeholder-count="5">
+        <span style="flex:1;display:flex;align-items:center;justify-content:center;height:34px;border-radius:10px;background:{{ cell.bg }};border:1.5px {{ cell.bdStyle }} {{ cell.bd }};font-size:{{ cell.fs }};filter:{{ cell.f }};animation:{{ cell.anim }}">{{ cell.glyph }}</span>
+      </sc-for>
+    </div>
+    <div style="position:relative;background:rgba(13,28,56,.75);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:16px;margin-bottom:11px">
+      <span style="font-size:14.5px;font-weight:800;line-height:1.55;color:#F4F8FF">{{ boQ }}</span>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ boChoices }}" as="c" hint-placeholder-count="4">
+        <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:15px;padding:12px;cursor:pointer">
+          <span style="flex:none;width:24px;height:24px;border-radius:8px;background:{{ c.lBg }};border:1.5px solid {{ c.bd }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:{{ c.lC }}">{{ c.letter }}</span>
+          <span style="flex:1;font-size:13px;font-weight:700;line-height:1.4;color:#EAF2FF">{{ c.t }}</span>
+          <span style="flex:none;font-size:12px;color:{{ c.mkC }}">{{ c.mk }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ boRevealed }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;display:flex;flex-direction:column;gap:8px;background:rgba(9,19,38,.9);border:1px solid {{ boFbBd }};border-radius:16px;padding:13px;margin-top:11px;animation:popIn .25s ease">
+        <span style="font-size:11px;font-weight:900;letter-spacing:1.4px;color:{{ boFbC }}">{{ boFbTitle }}</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(224,238,255,.9)">{{ boExp }}</span>
+      </div>
+      <div onClick="{{ boNext }}" style="display:flex;align-items:center;justify-content:center;height:50px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;cursor:pointer;margin-top:10px;box-shadow:0 8px 24px rgba(240,169,60,.32)">{{ boNextLabel }}</div>
+    </sc-if>
+  </sc-if>
+  <sc-if value="{{ boWinShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease;text-align:center">
+      <span style="font-size:52px;text-shadow:0 0 30px rgba(255,203,107,.8)">✦</span>
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.6px;color:#FFD98F">THE ANGELS ARE FROZEN</span>
+      <span style="font-family:'Marcellus',serif;font-size:32px;color:#F4F8FF">You didn't blink.</span>
+      <span style="font-size:13px;line-height:1.6;color:rgba(210,228,255,.75);max-width:300px">{{ boWinMsg }}</span>
+      <div style="display:flex;gap:10px">
+        <span style="font-size:11px;font-weight:900;color:#FFD98F;border:1px solid rgba(245,184,74,.5);border-radius:999px;padding:8px 14px;background:rgba(245,184,74,.1)">+{{ boXpWin }} XP</span>
+        <span style="font-size:11px;font-weight:900;color:#EAF2FF;border:1px solid rgba(200,210,240,.4);border-radius:999px;padding:8px 14px;background:rgba(200,210,240,.08)">◈ Don't Blink</span>
+        <span style="font-size:11px;font-weight:900;color:#B48CF2;border:1px solid rgba(180,140,242,.5);border-radius:999px;padding:8px 14px;background:rgba(180,140,242,.1)">◆ Chrono</span>
+      </div>
+      <div onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:250px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Return to the TARDIS</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ boLoseShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease;text-align:center">
+      <span style="font-size:52px;filter:grayscale(1) brightness(1.2)">◈</span>
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.6px;color:#C9CFE4">THE ANGELS TOUCHED YOU</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF">Sent back one hour.</span>
+      <span style="font-size:13px;line-height:1.6;color:rgba(210,228,255,.75);max-width:310px">{{ boLoseMsg }}</span>
+      <div onClick="{{ boRetry }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:250px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Face them again</div>
+      <div onClick="{{ goMemory }}" style="display:flex;align-items:center;justify-content:center;height:46px;min-width:250px;border-radius:14px;border:1.5px solid rgba(122,180,255,.32);color:#CFE0FF;font-size:13px;font-weight:800;cursor:pointer">Review the Memory Core first</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== ARCHIVE ===================== -->
+<sc-if value="{{ archiveShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Archive" style="position:relative;min-height:100dvh;padding:16px 16px 100px;overflow:hidden">
+  <div style="position:absolute;left:50%;top:180px;width:760px;height:760px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.12), transparent 70%);filter:blur(16px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">TARDIS ARCHIVE</span>
+      <span style="font-family:'Marcellus',serif;font-size:27px;color:#F4F8FF;line-height:1">Archive</span>
+    </div>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:14px">
+    <div onClick="{{ goMemory }}" style="position:relative;border-radius:24px;overflow:hidden;border:0;box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-memory-core.webp" alt="Memory Core" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+      <sc-if value="{{ archiveMemoryBadgeShow }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;right:14px;bottom:14px;min-width:30px;height:30px;border-radius:999px;background:#F4795B;color:#fff;border:2px solid rgba(4,8,17,.85);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;box-shadow:0 0 18px rgba(244,121,91,.75)">{{ archiveMemoryBadge }}</span>
+      </sc-if>
+    </div>
+    <div onClick="{{ goJournal }}" style="position:relative;border-radius:24px;overflow:hidden;border:0;box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-companion-journal.webp" alt="Companion Journal" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+    </div>
+    <div onClick="{{ goBadges }}" style="position:relative;border-radius:24px;overflow:hidden;border:0;box-shadow:0 16px 34px rgba(0,0,0,.35);cursor:pointer;background:#071326">
+      <img src="art/archive-badge-vault.webp" alt="Badge Vault" style="width:100%;aspect-ratio:1/1;display:block;object-fit:cover">
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== MEMORY CORE ===================== -->
+<sc-if value="{{ memShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Memory Core" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
+  <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+    <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#B48CF2">TARDIS MEMORY CORE</span>
+      <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Spaced Repetition</span>
+      <span style="font-size:12px;line-height:1.55;color:rgba(200,220,250,.6)">Everything you miss is caught here — and returned to you at exactly the right moment.</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:9px;margin-bottom:14px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.66);border:1px solid rgba(180,140,242,.35);border-radius:16px;padding:11px">
+      <span style="font-family:'Marcellus',serif;font-size:22px;color:#D4BCFA">{{ memDueN }}</span>
+      <span style="font-size:8px;font-weight:900;letter-spacing:1.3px;color:rgba(200,220,250,.6)">DUE NOW</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:11px">
+      <span style="font-family:'Marcellus',serif;font-size:22px;color:#9CC5FF">{{ memUpN }}</span>
+      <span style="font-size:8px;font-weight:900;letter-spacing:1.3px;color:rgba(200,220,250,.6)">SCHEDULED</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.66);border:1px solid rgba(59,214,198,.3);border-radius:16px;padding:11px">
+      <span style="font-family:'Marcellus',serif;font-size:22px;color:#7FE7DB">{{ memClearedN }}</span>
+      <span style="font-size:8px;font-weight:900;letter-spacing:1.3px;color:rgba(200,220,250,.6)">CLEARED</span>
+    </div>
+  </div>
+  <sc-if value="{{ memStartShow }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ memStart }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14.5px;font-weight:900;box-shadow:0 10px 30px rgba(240,169,60,.35);cursor:pointer;margin-bottom:14px">Begin review — {{ memDueN }} echoes waiting</div>
+  </sc-if>
+  <sc-if value="{{ memEmptyShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:9px;background:rgba(13,28,56,.5);border:1px dashed rgba(122,180,255,.3);border-radius:20px;padding:26px 20px;margin-bottom:14px;text-align:center">
+      <span style="font-size:26px;color:#7FE7DB">❂</span>
+      <span style="font-size:13.5px;font-weight:800;color:#EAF2FF">The core is quiet.</span>
+      <span style="font-size:11.5px;line-height:1.55;color:rgba(200,220,250,.6)">No echoes due for review. Miss a question anywhere in the TARDIS and it will appear here on a rising schedule until you master it.</span>
+    </div>
+  </sc-if>
+  <sc-for list="{{ memDue }}" as="m" hint-placeholder-count="3">
+    <div style="display:flex;align-items:center;gap:11px;background:rgba(13,28,56,.62);border:1px solid rgba(180,140,242,.28);border-radius:16px;padding:11px 13px;margin-bottom:8px">
+      <span style="flex:none;width:34px;height:34px;border-radius:12px;background:rgba(180,140,242,.12);border:1.5px solid {{ m.color }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:{{ m.color }}">{{ m.dom }}</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+        <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ m.topic }}</span>
+        <span style="font-size:10px;color:rgba(200,220,250,.55)">{{ m.dueLabel }}</span>
+      </div>
+      <span style="flex:none;font-size:9px;font-weight:900;color:#F4998E;border:1px solid rgba(244,121,91,.4);border-radius:999px;padding:4px 8px">×{{ m.miss }}</span>
+    </div>
+  </sc-for>
+</div>
+</sc-if>
+
+<!-- ===================== BADGE VAULT ===================== -->
+<sc-if value="{{ badgesShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Badge Vault" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+    <span onClick="{{ goArchive }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column">
+      <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF">Badge Vault</span>
+      <span style="font-size:11px;color:rgba(200,220,250,.6)">{{ bvEarned }} of {{ bvTotal }} recovered</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+    <sc-for list="{{ badgeList }}" as="b" hint-placeholder-count="8">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;background:{{ b.bg }};border:1.5px solid {{ b.bd }};border-radius:18px;padding:15px 10px;text-align:center">
+        <span style="width:46px;height:46px;border-radius:50%;background:{{ b.gBg }};border:1.5px solid {{ b.bd }};display:flex;align-items:center;justify-content:center;font-size:20px;color:{{ b.gC }};box-shadow:{{ b.gSh }}">{{ b.glyph }}</span>
+        <span style="font-size:12px;font-weight:900;color:{{ b.tC }}">{{ b.name }}</span>
+        <span style="font-size:9.5px;line-height:1.4;color:rgba(200,220,250,.5)">{{ b.how }}</span>
+        <sc-if value="{{ b.tagShow }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:rgba(180,140,242,.85);border:1px dashed rgba(180,140,242,.4);border-radius:999px;padding:3px 7px">{{ b.tag }}</span>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== JOURNAL ===================== -->
+<sc-if value="{{ journalShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Companion Journal" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
+  <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+    <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">COMPANION JOURNAL</span>
+      <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Lizzie's Log</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.07);border:1px solid rgba(245,184,74,.3);border-radius:18px;padding:13px;margin-bottom:13px">
+    <span style="flex:none;font-size:13px;color:#FFCB6B">✎</span>
+    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:#FFE9C4">{{ jNote }}</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
+    <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
+      <span style="font-family:'Marcellus',serif;font-size:21px;color:#FFCB6B">{{ jAns }}</span>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">QUESTIONS ANSWERED</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
+      <span style="font-family:'Marcellus',serif;font-size:21px;color:#7FE7DB">{{ jAcc }}%</span>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">ACCURACY</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
+      <span style="font-family:'Marcellus',serif;font-size:21px;color:#EAF2FF">{{ jMins }}m</span>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">STUDY TODAY</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
+      <span style="font-family:'Marcellus',serif;font-size:21px;color:#F5B84A">{{ streak }}</span>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">DAY STREAK</span>
+    </div>
+  </div>
+  <span style="display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">EXAM READINESS — {{ readiness }}% · {{ readyLabelText }}</span>
+  <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:15px">
+    <sc-for list="{{ jDomains }}" as="d" hint-placeholder-count="5">
+      <div style="display:flex;flex-direction:column;gap:5px;background:rgba(13,28,56,.55);border:1px solid rgba(122,180,255,.16);border-radius:14px;padding:10px 12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:11px;font-weight:900;color:#EAF2FF">{{ d.name }} <span style="font-weight:700;color:rgba(200,220,250,.45)">· {{ d.w }}%</span></span>
+          <span style="font-size:9.5px;font-weight:900;color:{{ d.lc }}">{{ d.label }}</span>
+        </div>
+        <div style="height:6px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden"><div style="width:{{ d.pct }}%;height:100%;border-radius:99px;background:{{ d.color }}"></div></div>
+      </div>
+    </sc-for>
+  </div>
+  <span style="display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">WEAK SIGNALS</span>
+  <sc-if value="{{ jWeakEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="background:rgba(13,28,56,.5);border:1px dashed rgba(122,180,255,.25);border-radius:14px;padding:13px;margin-bottom:15px">
+      <span style="font-size:11.5px;color:rgba(200,220,250,.6)">No weak topics detected yet — answer more questions and the TARDIS will chart them.</span>
+    </div>
+  </sc-if>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:15px">
+    <sc-for list="{{ jWeak }}" as="w" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:10px;background:rgba(244,121,91,.07);border:1px solid rgba(244,121,91,.3);border-radius:14px;padding:10px 12px">
+        <span style="flex:none;width:8px;height:8px;border-radius:50%;background:#F4795B;box-shadow:0 0 8px rgba(244,121,91,.8)"></span>
+        <span style="flex:1;font-size:12px;font-weight:800;color:#FFD9CE">{{ w.topic }}</span>
+        <span style="font-size:10px;font-weight:900;color:rgba(255,180,158,.8)">{{ w.acc }}%</span>
+      </div>
+    </sc-for>
+  </div>
+  <span style="display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">LAST 7 DAYS</span>
+  <div style="display:flex;align-items:flex-end;gap:7px;height:74px;background:rgba(13,28,56,.55);border:1px solid rgba(122,180,255,.16);border-radius:16px;padding:12px;margin-bottom:15px">
+    <sc-for list="{{ jDays }}" as="d" hint-placeholder-count="7">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end">
+        <div style="width:100%;height:{{ d.h }}%;min-height:3px;border-radius:6px;background:{{ d.bg }}"></div>
+        <span style="font-size:7.5px;font-weight:900;color:rgba(200,220,250,.45)">{{ d.label }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;gap:9px">
+    <div onClick="{{ goBadges }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:46px;border-radius:14px;border:1.5px solid rgba(245,184,74,.4);color:#FFD98F;font-size:12.5px;font-weight:900;cursor:pointer;background:rgba(245,184,74,.06)">✦ Badge Vault</div>
+    <div onClick="{{ goCharacter }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:46px;border-radius:14px;border:1.5px solid rgba(122,180,255,.32);color:#CFE0FF;font-size:12.5px;font-weight:900;cursor:pointer;background:rgba(13,28,56,.4)">◉ Companion File</div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== CHARACTER ===================== -->
+<sc-if value="{{ charShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Companion File" style="position:relative;min-height:100dvh;padding:16px 16px 100px;overflow:hidden">
+  <div style="position:absolute;top:-110px;left:50%;width:340px;height:300px;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 50%, rgba(245,184,74,.22), transparent 70%);filter:blur(10px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">COMPANION FILE</span>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px">
+    <div style="position:relative;width:148px;height:148px;border-radius:50%;overflow:visible;background:radial-gradient(60% 60% at 50% 32%, rgba(255,203,107,.5), rgba(30,111,217,.28));border:5px solid rgba(255,203,107,.72);box-shadow:0 0 40px rgba(245,184,74,.3)">
+      <img src="art/lizzie-headshot.webp" alt="Lizzie headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+      <span style="position:absolute;bottom:2px;right:2px;width:38px;height:38px;border-radius:50%;background:linear-gradient(180deg,#FFCB6B,#F0A93C);border:2.5px solid #060D1B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#2A2008">{{ levelNum }}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+      <span style="font-family:'Marcellus',serif;font-size:28px;color:#F4F8FF">Lizzie</span>
+      <span style="font-size:9.5px;font-weight:900;letter-spacing:1.8px;color:#FFD98F;border:1px solid rgba(245,184,74,.5);border-radius:999px;padding:5px 12px">{{ rankNameUp }}</span>
+    </div>
+    <div style="width:100%;max-width:320px;display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;justify-content:space-between;font-size:9.5px;font-weight:900;letter-spacing:1px;color:rgba(200,220,250,.6)"><span>LEVEL {{ levelNum }}</span><span>{{ xpInto }} / {{ xpNeed }} XP</span></div>
+      <div style="height:9px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden"><div style="width:{{ xpPct }}%;height:100%;border-radius:99px;background:linear-gradient(90deg,#F5B84A,#FFCB6B);box-shadow:0 0 10px rgba(255,203,107,.8)"></div></div>
+      <span style="font-size:9.5px;color:rgba(200,220,250,.5);text-align:center">Next rank: {{ nextRank }}</span>
+    </div>
+  </div>
+  <div style="position:relative;display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(59,214,198,.3);border-radius:18px;padding:13px;margin-bottom:16px">
+    <span style="flex:none;font-size:12px;color:#7FE7DB">❝</span>
+    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:rgba(224,238,255,.85)">{{ mentorQuote }}<br><span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:#7FE7DB;font-style:normal">— THE DOCTOR</span></span>
+  </div>
+  <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">BADGES · {{ bvEarned }}/{{ bvTotal }}</span>
+  <div style="position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+    <sc-for list="{{ chBadges }}" as="b" hint-placeholder-count="4">
+      <span style="display:flex;align-items:center;gap:7px;background:rgba(13,28,56,.66);border:1.5px solid {{ b.bd }};border-radius:999px;padding:7px 12px">
+        <span style="font-size:13px;color:{{ b.gC }}">{{ b.glyph }}</span>
+        <span style="font-size:10.5px;font-weight:900;color:{{ b.tC }}">{{ b.name }}</span>
+      </span>
+    </sc-for>
+  </div>
+  <span style="position:relative;display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">TARDIS ARTIFACTS</span>
+  <div style="position:relative;display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ chArts }}" as="a" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:11px;background:rgba(13,28,56,.55);border:1px solid {{ a.bd }};border-radius:14px;padding:10px 13px">
+        <span style="flex:none;font-size:16px;color:{{ a.gC }}">{{ a.glyph }}</span>
+        <div style="flex:1;display:flex;flex-direction:column">
+          <span style="font-size:12px;font-weight:800;color:{{ a.tC }}">{{ a.name }}</span>
+          <span style="font-size:9.5px;color:rgba(200,220,250,.5)">{{ a.how }}</span>
+        </div>
+        <span style="font-size:10px;font-weight:900;color:{{ a.stC }}">{{ a.st }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+
+<!-- ===================== THE DOCTOR CHAT ===================== -->
+<sc-if value="{{ doctorShow }}" hint-placeholder-val="false">
+<div data-screen-label="The Doctor" style="position:relative;min-height:100dvh;padding:16px 16px 100px;display:flex;flex-direction:column;gap:12px;overflow:hidden">
+  <div style="position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.22), transparent 70%);filter:blur(12px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:10px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="flex:1;display:flex;align-items:center;gap:10px;min-width:0">
+      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.7);box-shadow:0 0 18px rgba(245,184,74,.25)"><img src="art/doctor-10-headshot.webp" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+      <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+        <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF;line-height:1">The Doctor</span>
+        <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7FE7DB">ECHOLAB STUDY MENTOR</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch">
+    <sc-for list="{{ doctorLevels }}" as="lv" hint-placeholder-count="4">
+      <div onClick="{{ lv.pick }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:34px;border-radius:999px;padding:0 12px;background:{{ lv.bg }};border:1.5px solid {{ lv.bd }};color:{{ lv.c }};font-size:9.5px;font-weight:900;letter-spacing:1px;cursor:pointer;white-space:nowrap">{{ lv.label }}</div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(7,15,30,.48);border:1px solid rgba(122,180,255,.18);border-radius:22px;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+    <sc-for list="{{ doctorMsgs }}" as="m" hint-placeholder-count="4">
+      <div style="display:flex;gap:9px;align-items:flex-start;justify-content:{{ m.justify }}">
+        <sc-if value="{{ m.doc }}" hint-placeholder-val="true">
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="art/doctor-10-headshot.webp" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+        </sc-if>
+        <div style="max-width:78%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:{{ m.radius }};padding:11px 12px;box-shadow:{{ m.sh }}">
+          <span style="display:block;font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:{{ m.nameC }};margin-bottom:4px">{{ m.name }}</span>
+          <span style="font-size:12.5px;line-height:1.55;color:{{ m.c }};white-space:pre-wrap">{{ m.text }}</span>
+        </div>
+        <sc-if value="{{ m.liz }}" hint-placeholder-val="false">
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(59,214,198,.6);background:#081226"><img src="art/lizzie-headshot.webp" alt="Lizzie" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;display:flex;flex-wrap:wrap;gap:7px">
+    <sc-for list="{{ doctorPrompts }}" as="q" hint-placeholder-count="3">
+      <div onClick="{{ q.go }}" style="display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(122,180,255,.28);background:rgba(13,28,56,.6);color:rgba(224,238,255,.82);font-size:10.5px;font-weight:800;padding:7px 10px;cursor:pointer">{{ q.t }}</div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;display:flex;gap:8px;align-items:flex-end;background:rgba(13,28,56,.78);border:1px solid rgba(59,214,198,.24);border-radius:18px;padding:9px">
+    <textarea value="{{ doctorInput }}" onInput="{{ doctorTyping }}" placeholder="Ask The Doctor..." style="flex:1;min-height:44px;max-height:110px;resize:none;border:0;outline:none;background:transparent;color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;line-height:1.45;padding:8px;box-sizing:border-box"></textarea>
+    <div onClick="{{ doctorSend }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:54px;height:44px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">SEND</div>
+  </div>
+  <span style="position:relative;font-size:9.5px;line-height:1.45;color:rgba(190,212,245,.45);text-align:center">The Doctor teaches EchoLab study content and test-prep patterns. For real symptoms or patient-care decisions, follow clinical protocol and appropriate medical care.</span>
+</div>
+</sc-if>
+
+<!-- ===================== BOSSES TAB ===================== -->
+<sc-if value="{{ bossesShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Boss Gallery" style="position:relative;min-height:100dvh;padding:16px 16px 100px">
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
+    <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#C9CFE4">THREATS DETECTED</span>
+    <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Boss Battles</span>
+    <span style="font-size:12px;color:rgba(200,220,250,.6)">Each one guards a domain of the registry. Mastery is the only weapon.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ bossList }}" as="b" hint-placeholder-count="8">
+      <div onClick="{{ b.go }}" style="display:flex;align-items:center;gap:12px;background:{{ b.bg }};border:1.5px solid {{ b.bd }};border-radius:20px;padding:13px;cursor:pointer">
+        <span style="flex:none;width:46px;height:46px;border-radius:16px;background:rgba(7,15,30,.7);border:1.5px solid {{ b.bd }};display:flex;align-items:center;justify-content:center;font-size:20px;filter:{{ b.f }}">◈</span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:13.5px;font-weight:900;color:{{ b.tC }}">{{ b.name }}</span>
+          <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ b.sub }}</span>
+        </div>
+        <span style="flex:none;font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ b.stC }};border:1.5px {{ b.stBdStyle }} {{ b.stBd }};border-radius:999px;padding:5px 9px;white-space:nowrap">{{ b.status }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== ADMIN ===================== -->
+<sc-if value="{{ adminShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="TARDIS Admin" style="position:relative;min-height:100dvh;padding:16px 16px 40px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column">
+      <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF">TARDIS Admin</span>
+      <span style="font-size:10.5px;color:rgba(200,220,250,.55)">Coordinates, pacing & ship systems</span>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:10px;background:rgba(13,28,56,.66);border:1px solid rgba(59,214,198,.35);border-radius:20px;padding:15px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">EXAM COORDINATES</span>
+      <input type="date" value="{{ examDate }}" onChange="{{ onDate }}" style="height:50px;border-radius:14px;border:1.5px solid rgba(122,180,255,.35);background:rgba(6,13,27,.8);color:#EAF2FF;font-family:'Nunito Sans',sans-serif;font-size:15px;font-weight:700;padding:0 14px;outline:none">
+      <div style="display:flex;gap:9px">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(6,13,27,.6);border-radius:14px;padding:10px">
+          <span style="font-family:'Marcellus',serif;font-size:20px;color:#FFCB6B">{{ admDays }}</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">DAYS LEFT</span>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(6,13,27,.6);border-radius:14px;padding:10px">
+          <span style="font-family:'Marcellus',serif;font-size:20px;color:#7FE7DB">{{ admPace }}</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">LESSONS / DAY</span>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;background:rgba(6,13,27,.6);border-radius:14px;padding:10px">
+          <span style="font-family:'Marcellus',serif;font-size:20px;color:#EAF2FF">{{ admLeft }}</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.55)">LESSONS LEFT</span>
+        </div>
+      </div>
+      <span style="font-size:11px;line-height:1.55;color:rgba(200,220,250,.6)">{{ admPaceMsg }}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.28);border-radius:20px;padding:15px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">THE DOCTOR AI</span>
+          <span style="font-size:11px;line-height:1.45;color:rgba(200,220,250,.62)">Add your Claude API key to power the chat. It is stored only in this browser/app save. Do not share this key publicly.</span>
+        </div>
+        <span style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:{{ aiStatusC }};border:1px solid {{ aiStatusBd }};border-radius:999px;padding:6px 9px;background:{{ aiStatusBg }}">{{ aiStatus }}</span>
+      </div>
+      <input type="password" value="{{ apiKey }}" onInput="{{ apiKeyInput }}" placeholder="Paste Claude API key" autocomplete="off" spellcheck="false" style="height:48px;border-radius:14px;border:1.5px solid rgba(122,180,255,.32);background:rgba(6,13,27,.82);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;font-weight:700;padding:0 13px;outline:none;box-sizing:border-box;width:100%">
+      <div style="display:flex;gap:9px;align-items:center">
+        <input value="{{ aiModel }}" onInput="{{ aiModelInput }}" placeholder="Model" spellcheck="false" style="flex:1;min-width:0;height:44px;border-radius:14px;border:1.5px solid rgba(122,180,255,.26);background:rgba(6,13,27,.72);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:12.5px;font-weight:800;padding:0 12px;outline:none;box-sizing:border-box">
+        <div onClick="{{ testApiKey }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:44px;padding:0 15px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">TEST</div>
+      </div>
+      <span style="font-size:10.5px;line-height:1.45;color:{{ aiTestC }}">{{ aiTestMsg }}</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;background:rgba(13,28,56,.66);border:1px solid rgba(245,184,74,.30);border-radius:20px;padding:15px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#FFD98F">GAME MASTER</span>
+          <span style="font-size:11px;line-height:1.45;color:rgba(200,220,250,.62)">Builder-only controls for testing locked sections and Doctor styles.</span>
+        </div>
+        <span style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:{{ gmStateC }};border:1px solid {{ gmStateBd }};border-radius:999px;padding:6px 9px;background:{{ gmStateBg }}">{{ gmState }}</span>
+      </div>
+      <sc-if value="{{ gmLocked }}" hint-placeholder-val="true">
+        <div style="display:flex;gap:9px;align-items:center">
+          <input type="password" value="{{ gmPassword }}" onInput="{{ gmPasswordInput }}" placeholder="Password" autocomplete="off" style="flex:1;min-width:0;height:46px;border-radius:14px;border:1.5px solid rgba(122,180,255,.28);background:rgba(6,13,27,.78);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;font-weight:800;padding:0 12px;outline:none;box-sizing:border-box">
+          <div onClick="{{ gmUnlock }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:46px;padding:0 16px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">UNLOCK</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ gmUnlocked }}" hint-placeholder-val="false">
+        <div onClick="{{ toggleGameMaster }}" style="display:flex;align-items:center;gap:12px;background:rgba(6,13,27,.55);border:1px solid rgba(245,184,74,.22);border-radius:16px;padding:12px;cursor:pointer">
+          <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+            <span style="font-size:13px;font-weight:900;color:#FFE3B0">Unlock whole app</span>
+            <span style="font-size:10.5px;color:rgba(200,220,250,.55)">Opens all rooms, mini-games, and bosses for build testing.</span>
+          </div>
+          <span style="flex:none;width:46px;height:27px;border-radius:99px;background:{{ gmTogBg }};border:1.5px solid {{ gmTogBd }};position:relative;transition:background .2s">
+            <span style="position:absolute;top:2px;left:{{ gmTogKnob }};width:19px;height:19px;border-radius:50%;background:#EAF2FF;transition:left .2s"></span>
+          </span>
+        </div>
+        <span style="font-size:10px;font-weight:900;letter-spacing:1.6px;color:rgba(190,212,245,.55);margin-top:2px">DOCTOR STYLE PREVIEW</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <sc-for list="{{ gmDoctors }}" as="gd" hint-placeholder-count="3">
+            <div onClick="{{ gd.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:16px;border:1.5px solid {{ gd.bd }};background:{{ gd.bg }};padding:10px 7px;cursor:pointer;min-width:0">
+              <span style="width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid {{ gd.ring }};background:#081226;display:block"><img src="{{ gd.src }}" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+              <span style="font-size:10.5px;font-weight:900;color:{{ gd.c }};text-align:center">The Doctor</span>
+              <span style="font-size:8px;font-weight:900;letter-spacing:.8px;color:{{ gd.subC }};text-align:center">{{ gd.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <div onClick="{{ toggleSound }}" style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:18px;padding:13px 15px;cursor:pointer">
+      <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+        <span style="font-size:13px;font-weight:800;color:#EAF2FF">Sonic feedback</span>
+        <span style="font-size:10.5px;color:rgba(200,220,250,.55)">XP dings, TARDIS hum, angel warnings</span>
+      </div>
+      <span style="flex:none;width:46px;height:27px;border-radius:99px;background:{{ sndBg }};border:1.5px solid {{ sndBd }};position:relative;transition:background .2s">
+        <span style="position:absolute;top:2px;left:{{ sndKnob }};width:19px;height:19px;border-radius:50%;background:#EAF2FF;transition:left .2s"></span>
+      </span>
+    </div>
+    <div onClick="{{ demoBoost }}" style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid rgba(245,184,74,.3);border-radius:18px;padding:13px 15px;cursor:pointer">
+      <span style="flex:none;font-size:16px;color:#FFCB6B">⌛</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+        <span style="font-size:13px;font-weight:800;color:#FFE3B0">Crack in time (+200 XP)</span>
+        <span style="font-size:10.5px;color:rgba(200,220,250,.55)">Demo shortcut — preview level &amp; boss unlocks</span>
+      </div>
+    </div>
+    <div onClick="{{ doReset }}" style="display:flex;align-items:center;gap:12px;background:{{ rstBg }};border:1.5px solid rgba(244,121,91,.45);border-radius:18px;padding:13px 15px;cursor:pointer">
+      <span style="flex:none;font-size:15px;color:#F4795B">↺</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+        <span style="font-size:13px;font-weight:800;color:#FFB49E">{{ rstLabel }}</span>
+        <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ rstSub }}</span>
+      </div>
+    </div>
+    <span style="font-size:9.5px;line-height:1.6;color:rgba(190,212,245,.4);padding:0 4px">{{ disclaimer }}</span>
+  </div>
+</div>
+</sc-if>
+
+<!-- ::SCREENS:: -->
+
+<!-- ===================== MISSIONS SHEET ===================== -->
+<sc-if value="{{ sheetShow }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end">
+  <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(3,7,16,.6);backdrop-filter:blur(3px)"></div>
+  <div data-screen-label="Daily Missions" style="position:relative;box-sizing:border-box;max-width:430px;width:100%;margin:0 auto;background:linear-gradient(180deg,#0E1D3A,#081226);border-radius:26px 26px 0 0;border:1px solid rgba(122,180,255,.24);border-bottom:none;padding:14px 18px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;animation:popIn .26s ease;max-height:82dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch">
+    <div style="width:44px;height:5px;border-radius:99px;background:rgba(190,212,245,.3);margin:0 auto"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:10.5px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">TODAY'S MISSIONS</span>
+      <span style="font-size:11px;font-weight:800;color:rgba(200,220,250,.6)">{{ missionsDone }} / {{ missionsTotal }}</span>
+    </div>
+    <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.08);border:1px solid rgba(245,184,74,.35);border-radius:16px;padding:12px">
+      <span style="flex:none;width:8px;height:8px;margin-top:5px;border-radius:2px;transform:rotate(45deg);background:#F5B84A;box-shadow:0 0 8px rgba(245,184,74,.9)"></span>
+      <span style="min-width:0;font-size:12.5px;line-height:1.55;font-style:italic;color:#FFE3B0;overflow-wrap:anywhere">{{ doctorDaily }}</span>
+    </div>
+    <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.2);border-radius:18px;padding:12px 13px">
+        <span style="flex:none;width:22px;height:22px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;background:{{ t.ckBg }};border:1.5px solid {{ t.ckBd }};color:#122B4F">{{ t.ck }}</span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:13px;font-weight:800;color:{{ t.tc }}">{{ t.t }}</span>
+          <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ t.sub }}</span>
+        </div>
+        <sc-if value="{{ t.ctaShow }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ t.go }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:12px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:11.5px;font-weight:900;cursor:pointer">GO</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== TOAST ===================== -->
+<sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:95;width:min(92%,398px);display:flex;gap:11px;align-items:center;padding:12px 15px;border-radius:18px;background:rgba(9,20,40,.94);border:1px solid rgba(245,184,74,.55);box-shadow:0 14px 40px rgba(0,0,0,.55);animation:popIn .28s ease;pointer-events:none">
+  <span style="flex:none;font-size:17px;color:#FFCB6B;text-shadow:0 0 12px rgba(255,203,107,.8)">✦</span>
+  <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+    <span style="font-size:13px;font-weight:900;color:#FFE3B0">{{ toastT }}</span>
+    <span style="font-size:11.5px;color:rgba(210,228,255,.75)">{{ toastSub }}</span>
+  </div>
+</div>
+</sc-if>
+
+<!-- ===================== BOTTOM NAV ===================== -->
+<sc-if value="{{ navShow }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:60;display:flex;height:80px;background:linear-gradient(180deg,rgba(6,13,27,.35),#060D1B 42%);backdrop-filter:blur(10px);border-top:1px solid rgba(122,180,255,.16);padding-bottom:env(safe-area-inset-bottom)">
+  <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+    <div onClick="{{ n.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;position:relative">
+      <span style="font-size:17px;line-height:1;color:{{ n.c }};text-shadow:{{ n.sh }}">{{ n.glyph }}</span>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.3px;color:{{ n.c }}">{{ n.label }}</span>
+      <sc-if value="{{ n.badgeShow }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;top:13px;right:18%;min-width:17px;height:17px;border-radius:99px;background:#F4795B;color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px;box-shadow:0 0 10px rgba(244,121,91,.6)">{{ n.badge }}</span>
+      </sc-if>
+    </div>
+  </sc-for>
+</div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Feel&quot;}, &quot;pinLabels&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Feel&quot;}}">
+class Component extends DCLogic {
+  state = { ready: false, screen: "boot", ob: 0, sheet: false, beat: 0, tryPick: -1,
+    battle: null, mm: null, duel: null, boss: null, toast: null, resetArm: false,
+    regionId: null, lessonId: null, doctorInput: "", doctorLevel: "intermediate",
+    doctorMsgs: [
+      { who: "doctor", text: "Ah, Lizzie — there you are. Ask me about a view, a Doppler trap, a missed question, or anything in the echo universe. We’ll stabilize it together." }
+    ] };
+
+  // ---------- lifecycle ----------
+  componentDidMount() {
+    import("./game-data.js").then((D) => {
+      // EchoLab app build: internal Doctor progression stays 10/11/12, but the learner only sees The Doctor.
+      if (D.DOCTORS && D.DOCTORS.length >= 3) {
+        Object.assign(D.DOCTORS[0], { n: 10, name: "The Doctor", act: "Act I", tone: "Warm · fast · brilliant · encouraging", quote: "Twenty focused minutes can change everything. I've seen it. I've *caused* it." });
+        Object.assign(D.DOCTORS[1], { n: 11, name: "The Doctor", act: "Act II", tone: "Playful · curious · energetic", quote: "Right then, new window, new wonder. Let's investigate!" });
+        Object.assign(D.DOCTORS[2], { n: 12, name: "The Doctor", act: "Act III", tone: "Brilliant · blunt · demanding · caring", quote: "Don't guess. Guessing is just being wrong with confidence. Explain it." });
+      }
+      if (D.ONBOARDING && D.ONBOARDING.length >= 4) {
+        D.ONBOARDING[0].sp = "The Doctor";
+        D.ONBOARDING[1].sp = "The Doctor";
+        D.ONBOARDING[2].sp = "The Doctor";
+        D.ONBOARDING[3].sp = "The Doctor";
+        D.ONBOARDING[1].t = "Welcome to the TARDIS. Time And Relative Dimension In Space — and, after a small accident with the learning core, a fully operational echocardiography academy.";
+      }
+      if (D.LINES && D.LINES.levelup) {
+        D.LINES.levelup = [
+          "Level up! The TARDIS is showing off for you — ignore the sparks, that's affection.",
+          "Look at you. New rank, same brilliant curiosity.",
+          "That glow is progress. Yours. Keep going."
+        ];
+      }
+      if (D.REGIONS) D.REGIONS.forEach((r) => { if (r.unlock && r.unlock.label && String(r.unlock.label).toLowerCase().includes("regener")) r.unlock.label = "Locked for later"; });
+      this.D = D;
+      this.p = this.load();
+      this.rollover();
+      this.setState({ ready: true, screen: this.p.created ? "home" : "splash" });
+      this._hb = setInterval(() => this.heartbeat(), 5000);
+    });
+  }
+  componentWillUnmount() { clearInterval(this._hb); clearInterval(this._bt); clearTimeout(this._tt); }
+
+  // ---------- persistence ----------
+  KEY = "echolab_save_v2";
+  blank() {
+    return { v: 1, created: false, examDate: "", sound: true, xp: 0, energy: 5,
+      lastDay: this.today(), streak: 0, lastActive: "", secToday: 0, createdAt: Date.now(),
+      lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
+      games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
+      apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10 };
+  }
+  normalizeSave(s) {
+    const b = this.blank();
+    s = Object.assign(b, s || {});
+    s.games = Object.assign(b.games, s.games || {});
+    s.lessons = s.lessons || {}; s.beats = s.beats || {}; s.q = s.q || {}; s.mem = s.mem || {};
+    s.badges = s.badges || {}; s.arts = s.arts || {}; s.boss = s.boss || {}; s.hist = s.hist || {};
+    if (!s.aiModel) s.aiModel = "claude-haiku-4-5";
+    if (String(s.aiModel || "").toLowerCase().startsWith("gpt-")) s.aiModel = "claude-haiku-4-5";
+    if (!s.gmDoctor) s.gmDoctor = 10;
+    return s;
+  }
+  load() { try { const s = JSON.parse(localStorage.getItem(this.KEY)); if (s && s.v === 1) return this.normalizeSave(s); } catch (e) {} return this.blank(); }
+  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.p)); } catch (e) {} }
+  today() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  rollover() {
+    const t = this.today();
+    if (this.p.lastDay !== t) {
+      this.p.lastDay = t; this.p.energy = 5; this.p.secToday = 0;
+      if (this.p.lastActive && this.p.lastActive !== t) {
+        const gap = (new Date(t) - new Date(this.p.lastActive)) / 864e5;
+        if (gap > 1.5) this.p.streak = 0;
+      }
+      this.save();
+    }
+  }
+  hist() { const t = this.today(); if (!this.p.hist[t]) this.p.hist[t] = { xp: 0, ans: 0, cor: 0, rev: 0, drill: 0, lesson: "" }; return this.p.hist[t]; }
+  markActive() {
+    const t = this.today();
+    if (this.p.lastActive !== t) {
+      const y = this.p.lastActive;
+      const gap = y ? (new Date(t) - new Date(y)) / 864e5 : 99;
+      this.p.streak = gap <= 1.5 ? this.p.streak + 1 : 1;
+      this.p.lastActive = t;
+      if (this.p.streak >= 3) this.award("streak3");
+    }
+  }
+  heartbeat() {
+    const s = this.state.screen;
+    if (["lesson", "battle", "mm", "duel", "boss", "memory"].includes(s)) {
+      this.p.secToday += 5; if (this.p.secToday % 30 === 0) this.save();
+      this.forceUpdate();
+    }
+  }
+
+  // ---------- sound ----------
+  ac() { try { if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)(); return this._ac; } catch (e) { return null; } }
+  tone(f, dur, type, gain, delay) {
+    if (!this.p || !this.p.sound) return;
+    const a = this.ac(); if (!a) return;
+    try {
+      const t0 = a.currentTime + (delay || 0);
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = type || "sine"; o.frequency.setValueAtTime(f, t0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(gain || 0.09, t0 + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(a.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+    } catch (e) {}
+  }
+  sClick() { this.tone(660, 0.08, "triangle", 0.05); }
+  sGood() { this.tone(523, 0.12, "sine", 0.08); this.tone(784, 0.16, "sine", 0.08, 0.09); }
+  sBad() { this.tone(150, 0.25, "sawtooth", 0.06); }
+  sLevel() { [523, 659, 784, 1046].forEach((f, i) => this.tone(f, 0.16, "sine", 0.08, i * 0.09)); }
+  sHum() { this.tone(58, 1.1, "sawtooth", 0.045); this.tone(62, 1.1, "sawtooth", 0.04, 0.12); this.tone(880, 0.3, "sine", 0.03, 0.2); }
+
+  // ---------- xp / levels ----------
+  needFor(l) { return 80 + (l - 1) * 45; }
+  levelInfo() { let xp = this.p.xp, l = 1; while (xp >= this.needFor(l)) { xp -= this.needFor(l); l++; } return { level: l, into: xp, need: this.needFor(l) }; }
+  rankFor(l) { const R = this.D.RANKS; let r = R[0][1]; for (const [n, name] of R) if (l >= n) r = name; return r; }
+  doctorFor(l) {
+    const D = this.D.DOCTORS;
+    if (this.p && this.p.gmUnlocked && this.p.gmDoctor) {
+      const chosen = D.find((d) => d.n === this.p.gmDoctor);
+      if (chosen) return chosen;
+    }
+    for (const d of D) if (l <= d.untilLevel) return d;
+    return D[D.length - 1];
+  }
+  gainXp(n) {
+    if (this.p.energy <= 0) n = Math.ceil(n / 2);
+    const before = this.levelInfo().level;
+    this.p.xp += n; this.hist().xp += n;
+    const after = this.levelInfo().level;
+    if (after > before) { this.toast("LEVEL " + after + " — " + this.rankFor(after), this.pick(this.D.LINES.levelup)); this.sLevel(); }
+    this.save();
+  }
+  spendEnergy() { this.p.energy = Math.max(0, this.p.energy - 1); this.save(); }
+  award(id) {
+    if (this.p.badges[id]) return;
+    const b = this.D.BADGES.find((x) => x.id === id); if (!b) return;
+    this.p.badges[id] = Date.now();
+    this.toast("Badge earned — " + b.name, b.how); this.sLevel(); this.save();
+  }
+  artifact(id) {
+    if (this.p.arts[id]) return;
+    const a = this.D.ARTIFACTS.find((x) => x.id === id); if (!a) return;
+    this.p.arts[id] = Date.now();
+    this.toast("Artifact collected — " + a.name, a.how); this.save();
+  }
+  toast(t, sub) { this.setState({ toast: { t, sub } }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: null }), 2800); }
+  pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  shuffle(a) { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  dayIdx() { return Math.floor(Date.now() / 864e5); }
+
+  // ---------- answer recording / spaced repetition ----------
+  recordAnswer(qid, ok, isReview) {
+    const st = this.p.q[qid] || (this.p.q[qid] = { s: 0, c: 0, w: 0 });
+    st.s++; ok ? st.c++ : st.w++; st.last = ok;
+    const h = this.hist(); h.ans++; if (ok) h.cor++;
+    if (ok) {
+      this.award("first_scan");
+      const m = this.p.mem[qid];
+      if (m) {
+        if (isReview) { h.rev++; this.p.reviewsCleared++; if (this.p.reviewsCleared >= 5) this.award("memory_keeper"); }
+        m.iv = m.iv ? m.iv * 2 : 1;
+        if (m.iv > 8) delete this.p.mem[qid];
+        else m.due = Date.now() + m.iv * 864e5;
+      }
+      const nyq = ["e17", "e18", "e19"];
+      if (nyq.includes(qid) && nyq.every((k) => { const s2 = this.p.q[k]; return s2 && s2.c >= 1 && s2.w === 0; })) this.award("nyquist");
+    } else {
+      const m = this.p.mem[qid] || (this.p.mem[qid] = { iv: 0, miss: 0 });
+      m.miss++; m.iv = 0; m.due = Date.now() + 10 * 60e3;
+    }
+    this.markActive(); this.save();
+  }
+  domainMastery(dId) {
+    const all = Object.keys(this.D.QUESTIONS).filter((k) => this.D.QUESTIONS[k].d === dId);
+    if (!all.length) return 0;
+    let sum = 0;
+    for (const k of all) { const st = this.p.q[k]; if (st && st.s) sum += st.c / st.s; }
+    return sum / all.length;
+  }
+  masteryLabel(p) { p *= 100; if (p < 40) return ["Needs Focus", "#F4795B"]; if (p < 60) return ["Needs Review", "#F5B84A"]; if (p < 80) return ["Developing", "#FFCB6B"]; if (p < 90) return ["Strong", "#3BD6C6"]; return ["Registry Ready", "#7FE7DB"]; }
+  readiness() { let r = 0; for (const d of this.D.DOMAINS) r += (d.weight / 96) * this.domainMastery(d.id); return r; }
+  dueList() { const now = Date.now(); return Object.keys(this.p.mem).filter((k) => this.p.mem[k].due <= now); }
+
+  // ---------- unlock logic ----------
+  lessonDone(id) { return !!(this.p.lessons[id] && this.p.lessons[id].done); }
+  lessonsDoneCount() { return Object.keys(this.p.lessons).filter((k) => this.p.lessons[k].done).length; }
+  regionUnlocked(id) {
+    if (this.p.gameMaster) return true;
+    if (id === "medbay") return true;
+    if (id === "engine") return this.lessonDone("mb1");
+    if (id === "gallery") return this.lessonDone("ph1");
+    return false;
+  }
+  mmUnlocked() { return this.p.gameMaster || this.lessonDone("g1"); }
+  duelUnlocked() { return this.p.gameMaster || ["ph1", "ph2", "ph3"].filter((l) => this.lessonDone(l)).length >= 3; }
+  bossUnlocked() { return this.p.gameMaster || this.levelInfo().level >= 3; }
+  nextLesson() {
+    const order = ["mb1", "mb2", "mb3", "ph1", "ph2", "ph3", "ph4", "ph5", "g1", "g2", "g3", "g4", "g5"];
+    for (const id of order) { if (!this.lessonDone(id)) { if (this.regionUnlocked(this.D.LESSONS[id].region)) return id; } }
+    return null;
+  }
+
+  // ---------- navigation ----------
+  go(screen, extra) { this.setState(Object.assign({ screen, sheet: false, resetArm: false }, extra || {})); window.scrollTo(0, 0); this.sClick(); }
+  back() {
+    const s = this.state.screen, b = this.state.battle;
+    if (s === "region") return this.go("map");
+    if (s === "lesson") return this.go("region");
+    if (s === "battle") {
+      if (b && b.mode === "review") return this.go("memory");
+      if (b && (b.mode === "lesson" || b.mode === "drill") && this.state.regionId) return this.go("region");
+      return this.go("home");
+    }
+    if (s === "mm" || s === "duel") return this.go("region");
+    if (s === "bossBrief" || s === "boss") { clearInterval(this._bt); return this.go("bosses"); }
+    return this.go("home");
+  }
+
+
+  // ---------- The Doctor chat ----------
+  doctorPromptText(raw) {
+    return String(raw || "").trim();
+  }
+  doctorQuick(text) {
+    this.setState({ doctorInput: text }, () => this.doctorSend());
+  }
+  doctorAnswer(q) {
+    const level = this.state.doctorLevel || "intermediate";
+    const lower = q.toLowerCase();
+    const intro = "Ah, there it is — a little echo signal asking to be decoded. Brilliant question, Lizzie.";
+    const close = level === "expert" ? "Quick check: what single detail would the exam try to trick you with here?" : "Want to try one quick practice question on that?";
+    if (lower.includes("doppler") || lower.includes("nyquist") || lower.includes("alias")) {
+      return intro + "\n\nDirect answer: Doppler questions usually test direction, velocity, sampling limits, and whether PW or CW is the correct tool. PW tells you where the velocity is measured, but it can alias. CW handles very high velocities, but it cannot localize exactly where along the beam the velocity came from.\n\nWhy it matters: this is a favorite CCI-style trap because both answers can sound useful — the exam wants the best tool for the clinical question.\n\nMemory hook: PW knows WHERE. CW knows HOW FAST.\n\n" + close;
+    }
+    if (lower.includes("view") || lower.includes("parasternal") || lower.includes("apical") || lower.includes("subcostal")) {
+      return intro + "\n\nDirect answer: echo views are really windows. Parasternal gives the long-axis and short-axis landmarks, apical lines up beautifully with flow, and subcostal is your rescue window for septum, IVC, and effusion clues.\n\nWhy it matters: the exam often asks which view best shows a structure, measurement, or Doppler alignment.\n\nMemory hook: parasternal maps the anatomy, apical follows the flow, subcostal saves the day.\n\n" + close;
+    }
+    if (lower.includes("formula") || lower.includes("bernoulli") || lower.includes("gradient")) {
+      return intro + "\n\nDirect answer: the simplified Bernoulli equation is pressure gradient = 4V². V is peak velocity in meters per second.\n\nExample: if a jet is 3 m/s, gradient = 4 × 3² = 36 mmHg.\n\nWhy it matters: velocity turns into pressure difference, which helps grade stenosis and estimate pressures.\n\nMemory hook: square the speed, then multiply by four.\n\n" + close;
+    }
+    if (lower.includes("miss") || lower.includes("memory") || lower.includes("weak")) {
+      return "Good. That’s exactly what the Memory Core is for. A missed question is not a failure — it’s a coordinate.\n\nDirect answer: bring me the topic or the question stem, and I’ll break down what the exam was really testing, why the right answer works, why the other choices are traps, and how to remember it next time.\n\nMemory hook: missed today means protected tomorrow.\n\nWhat topic slipped?";
+    }
+    if (lower.includes("quiz") || lower.includes("practice")) {
+      return "Right then — practice question.\n\nQuestion:\nWhich Doppler mode is best for measuring a high-velocity aortic stenosis jet?\n\nA. Color Doppler\nB. Pulsed-wave Doppler\nC. Continuous-wave Doppler\nD. M-mode\n\nCorrect Answer:\nC. Continuous-wave Doppler\n\nDoctor’s Explanation:\nCW Doppler can record high velocities without aliasing, which makes it the best choice for fast stenotic jets.\n\nWhy the others are wrong:\nA: Color shows flow direction and turbulence, but not the best peak velocity measurement.\nB: PW localizes flow but aliases at high velocity.\nD: M-mode tracks motion over time, not jet velocity.\n\nMemory Hook:\nCW catches speed. PW picks place.\n\nNext Step:\nWant a harder one on Nyquist limit?";
+    }
+    return intro + "\n\nDirect answer: I can help with that. Give me the echo topic, a question stem, or the part that feels foggy, and I’ll turn it into a clear test-prep pattern.\n\nWhy it matters: the CCI exam rewards recognition — view, structure, Doppler choice, measurement, artifact, or safety step.\n\nTeach the concept: start with what the question is asking, identify the tool or view, then eliminate the tempting trap answer.\n\nExam angle: most questions are not asking for trivia; they are asking whether you can choose the safest, cleanest, most accurate next step.\n\nMemory hook: find the window, choose the tool, explain the why.\n\n" + close;
+  }
+  async doctorSend() {
+    const q = this.doctorPromptText(this.state.doctorInput);
+    if (!q) { this.toast("Ask The Doctor", "Type a question first."); return; }
+    const msgs = [...(this.state.doctorMsgs || []), { who: "lizzie", text: q }];
+    this.setState({ doctorMsgs: [...msgs, { who: "doctor", text: "One moment, Lizzie — I’m stabilizing the signal..." }], doctorInput: "" });
+    this.sClick();
+    try {
+      const chatInput = msgs.slice(-8).map((m) => (m.who === "lizzie" ? "Lizzie: " : "The Doctor: ") + m.text).join("\n\n");
+      const reply = this.p.apiKey ? await this.callClaude(chatInput, 950) : this.doctorAnswer(q);
+      const finalMsgs = [...msgs, { who: "doctor", text: reply }];
+      this.setState({ doctorMsgs: finalMsgs });
+    } catch (e) {
+      const fallback = this.doctorAnswer(q) + "\n\nTiny admin note from the console: the live AI link did not connect. Check the API key and model in TARDIS Admin. Error: " + (e.message || e);
+      this.setState({ doctorMsgs: [...msgs, { who: "doctor", text: fallback }] });
+    }
+  }
+
+  // ---------- onboarding ----------
+  beginSplash() { this.sHum(); if (this.p.created) return this.go("home"); this.go("onboard", { ob: 0 }); }
+  obNext() { const n = this.state.ob + 1; this.setState({ ob: Math.min(n, this.D.ONBOARDING.length - 1) }); this.sClick(); }
+  obJumpDate() { this.setState({ ob: this.D.ONBOARDING.length - 1 }); this.sClick(); }
+  onDate(e) { this.p.examDate = e.target.value; this.save(); this.forceUpdate(); }
+  obFinish() { this.p.created = true; this.save(); this.markActive(); this.go("home"); this.toast("Welcome aboard, Lizzie", "Day 1 of the Time Heart Registry begins."); }
+  obSkip() { this.obFinish(); }
+
+  // ---------- lesson engine ----------
+  startLesson(id) {
+    const L = this.D.LESSONS[id];
+    this.go("lesson", { lessonId: id, regionId: L.region, beat: 0, tryPick: -1 });
+  }
+  lsAdvance() {
+    const id = this.state.lessonId, L = this.D.LESSONS[id];
+    const beat = this.state.beat, last = L.beats.length - 1;
+    const cur = L.beats[beat];
+    if (cur.q && this.state.tryPick < 0) { this.toast("Choose an answer first", "The Doctor is watching. Kindly."); return; }
+    const seen = this.p.beats[id] || 0;
+    if (beat + 1 > seen) { this.p.beats[id] = beat + 1; this.gainXp(4); }
+    if (beat < last) { this.setState({ beat: beat + 1, tryPick: -1 }); this.sClick(); window.scrollTo(0, 0); }
+    else this.startBattle(L.battle, "lesson", { lessonId: id });
+  }
+  tryPick(i) {
+    if (this.state.tryPick >= 0) return;
+    const L = this.D.LESSONS[this.state.lessonId], q = L.beats[this.state.beat].q;
+    const ok = i === q.ans;
+    if (ok) { if (!this.p.beats[this.state.lessonId + "_try"]) { this.p.beats[this.state.lessonId + "_try"] = 1; this.gainXp(6); } this.sGood(); }
+    else this.sBad();
+    this.setState({ tryPick: i });
+  }
+
+  // ---------- battle engine ----------
+  startBattle(qids, mode, meta) {
+    if (!qids || !qids.length) { this.toast("Nothing to battle here", "Come back with more echoes."); return; }
+    this.go("battle", { battle: { qids: [...qids], mode, meta: meta || {}, i: 0, cor: 0, xp: 0, picked: -1, rev: false, done: false, streak: 0, line: "" } });
+  }
+  btPick(i) {
+    const b = this.state.battle; if (!b || b.rev || b.done) return;
+    const qid = b.qids[b.i], q = this.D.QUESTIONS[qid];
+    const ok = i === q.ans;
+    b.picked = i; b.rev = true; b.streak = ok ? b.streak + 1 : 0;
+    b.line = this.pick(ok ? this.D.LINES.correct : this.D.LINES.wrong);
+    if (ok) { b.cor++; const amt = 8 + 2 * q.diff; b.xp += amt; this.gainXp(amt); this.sGood(); } else this.sBad();
+    this.recordAnswer(qid, ok, b.mode === "review");
+    this.forceUpdate();
+  }
+  btNext() {
+    const b = this.state.battle; if (!b) return;
+    if (b.i + 1 < b.qids.length) { b.i++; b.picked = -1; b.rev = false; this.forceUpdate(); window.scrollTo(0, 0); this.sClick(); return; }
+    // finish
+    b.done = true;
+    const perfect = b.cor === b.qids.length;
+    if (perfect) { b.xp += 10; this.gainXp(10); }
+    if (b.mode === "lesson") {
+      const id = b.meta.lessonId;
+      const first = !this.lessonDone(id);
+      const rec = this.p.lessons[id] || (this.p.lessons[id] = {});
+      rec.done = true; rec.best = Math.max(rec.best || 0, b.cor); rec.total = b.qids.length;
+      if (first) {
+        b.xp += 20; this.gainXp(20); this.spendEnergy(); this.hist().lesson = id;
+        if (id === "mb1") this.toast("Room unlocked — Physics Engine Room", "The engine hum is calling.");
+        if (id === "ph1") this.toast("Room unlocked — Echo View Gallery", "The gallery doors swing open.");
+        if (["ph1", "ph2", "ph3"].every((l) => this.lessonDone(l)) && id.startsWith("ph")) this.toast("Mini-game unlocked — Doppler Duel", "The rogue console challenges you.");
+        if (id === "g1") this.toast("Mini-game unlocked — Measure Match", "Forge the measurement chains.");
+      }
+      if (["mb1", "mb2", "mb3"].every((l) => this.lessonDone(l))) { this.award("bedside"); this.artifact("sonic_case"); }
+      if (id === "g1" && perfect) this.award("parasternal");
+    }
+    if (b.mode === "drill" || b.mode === "weak") { this.hist().drill = 1; this.spendEnergy(); }
+    if (b.mode === "review") this.spendEnergy();
+    if (this.domainMastery("E") >= 0.8) this.award("physics_eng");
+    const ready = this.readiness();
+    if ([this.domainMastery("A"), this.domainMastery("B"), this.domainMastery("E")].filter((m) => m >= 0.6).length >= 3) this.artifact("primer");
+    if (ready >= 0.9) this.award("registry_ready");
+    this.save(); this.forceUpdate(); window.scrollTo(0, 0);
+  }
+  startDrill(domainId, mode) {
+    const pool = Object.keys(this.D.QUESTIONS).filter((k) => this.D.QUESTIONS[k].d === domainId);
+    this.startBattle(this.shuffle(pool).slice(0, 5), mode || "drill");
+  }
+  weakestDomain() {
+    const cands = ["A", "E", "B"];
+    let best = "A", bm = 2;
+    for (const d of cands) { const m = this.domainMastery(d); if (m < bm) { bm = m; best = d; } }
+    return best;
+  }
+
+  // ---------- rv: home ----------
+  rvHome(s, p, D, li) {
+    const due = this.dueList();
+    const doc = this.doctorFor(li.level);
+    const daily = D.LINES.daily[this.dayIdx() % D.LINES.daily.length];
+    const next = this.nextLesson();
+    const won = p.boss.angels && p.boss.angels.won;
+    const h = p.hist[this.today()] || {};
+    // tasks
+    const tasks = [];
+    tasks.push({ t: next ? "Lesson: " + D.LESSONS[next].title : "All MVP lessons complete", sub: next ? D.REGIONS.find((r) => r.id === D.LESSONS[next].region).name : "The archive is complete for now", done: !!h.lesson || !next, go: () => next && this.startLesson(next) , cta: !!next });
+    tasks.push({ t: due.length ? "Clear the Memory Core" : "Memory Core is clear", sub: due.length ? due.length + " echoes due for review" : "Nothing due — nicely done", done: !due.length, go: () => this.memStart(), cta: !!due.length });
+    const wd = this.weakestDomain();
+    tasks.push({ t: "Weak-signal drill", sub: "5 questions · " + D.DOMAINS.find((d) => d.id === wd).name, done: !!h.drill, go: () => this.startDrill(wd, "weak"), cta: !h.drill });
+    tasks.push({ t: won ? "Angels defeated" : "Boss: the Weeping Angels", sub: won ? "The statue garden is silent" : (this.bossUnlocked() ? "Timed trial — don't blink" : "Unlocks at Level 3"), done: !!won, go: () => this.bossUnlocked() && this.go("bossBrief"), cta: !won && this.bossUnlocked() });
+    const doneN = tasks.filter((t) => t.done).length;
+    // continue cta
+    let cLabel, cGo;
+    if (due.length >= 4) { cLabel = "Clear the Memory Core — " + due.length + " due"; cGo = () => this.memStart(); }
+    else if (next) { cLabel = (p.beats[next] ? "Continue: " : "Begin: ") + D.LESSONS[next].title; cGo = () => this.startLesson(next); }
+    else if (this.bossUnlocked() && !won) { cLabel = "Face the Weeping Angels"; cGo = () => this.go("bossBrief"); }
+    else { cLabel = "Quick drill — stay sharp"; cGo = () => this.startDrill(this.weakestDomain(), "weak"); }
+    // pace
+    let paceChip = "Set your exam date in Admin";
+    if (p.examDate) {
+      const days = Math.max(0, Math.ceil((new Date(p.examDate + "T12:00") - Date.now()) / 864e5));
+      paceChip = days + " days to exam";
+    }
+    const ready = Math.round(this.readiness() * 100);
+    const [rl, rc] = this.masteryLabel(this.readiness());
+    const motion = this.props.motion ?? true;
+    const pinDefs = [
+      { x: 50, y: 26, label: "LIZZIE", go: () => this.go("character") },
+      { x: 27, y: 46, label: "MISSIONS", go: () => this.setState({ sheet: true }), badge: 4 - doneN },
+      { x: 86, y: 34, label: "WORLD MAP", go: () => this.go("map") },
+      { x: 12, y: 40, label: "MEMORY CORE", go: () => this.go("memory"), badge: due.length },
+      { x: 74, y: 64, label: "BADGE VAULT", go: () => this.go("badges") },
+    ];
+    return {
+      homeShow: s.screen === "home",
+      sheetShow: s.screen === "home" && s.sheet,
+      closeSheet: () => this.setState({ sheet: false }),
+      levelNum: String(li.level), rankName: this.rankFor(li.level), streak: String(p.streak),
+      energyPips: [0, 1, 2, 3, 4].map((i) => ({ bg: i < p.energy ? "#3BD6C6" : "rgba(120,150,190,.25)", sh: i < p.energy ? "0 0 6px rgba(59,214,198,.9)" : "none" })),
+      pins: pinDefs.map((pin) => ({ x: String(pin.x), y: String(pin.y), label: pin.label, go: pin.go,
+        ringAnim: motion ? "pulseRing 2.6s ease-out infinite" : "none",
+        badge: String(pin.badge || ""), badgeShow: !!pin.badge, labelShow: this.props.pinLabels ?? true })),
+      doctorName: "THE DOCTOR", doctorAct: "", doctorDaily: daily,
+      continueLabel: cLabel, continueGo: cGo,
+      openSheet: () => this.setState({ sheet: true }),
+      missionsDone: String(doneN), missionsTotal: "4",
+      readiness: String(ready), readyColor: rc, readyLabelText: rl, paceChip,
+      tasks: tasks.map((t) => ({
+        t: t.t, sub: t.sub, done: t.done,
+        ck: t.done ? "✓" : "", ckBg: t.done ? "#3BD6C6" : "rgba(13,28,56,.4)", ckBd: t.done ? "#3BD6C6" : "rgba(150,190,240,.4)",
+        tc: t.done ? "rgba(200,220,250,.45)" : "#EAF2FF",
+        ctaShow: !!t.cta && !t.done, go: () => { this.setState({ sheet: false }); t.go(); },
+      })),
+    };
+  }
+
+  // ---------- rv: map ----------
+  rvMap(s, p, D) {
+    return {
+      mapShow: s.screen === "map",
+      regions: D.REGIONS.map((r, idx) => {
+        const un = this.regionUnlocked(r.id);
+        const act3 = r.unlock.type === "act";
+        const m = this.domainMastery(r.domain);
+        const [ml, mc] = this.masteryLabel(m);
+        const answered = Object.keys(p.q).some((k) => D.QUESTIONS[k] && D.QUESTIONS[k].d === r.domain);
+        return {
+          name: r.name, weightLabel: r.weightLabel.toUpperCase(), tagline: r.tagline || "Locked study room.",
+          glyph: r.icon === "cross" ? "✚" : r.icon === "gear" ? "⚙" : r.icon === "frame" ? "▣" : r.icon === "shield" ? "⛨" : "◎",
+          accent: r.accent,
+          medBg: un ? "rgba(7,15,30,.75)" : "rgba(7,15,30,.5)",
+          medBd: un ? r.accent : "rgba(120,150,190,.3)",
+          medSh: un ? "0 0 20px " + r.accent + "55" : "none",
+          medC: un ? r.accent : "rgba(150,180,220,.4)",
+          connShow: idx < D.REGIONS.length - 1,
+          cardBd: un ? r.accent + "55" : "rgba(122,180,255,.14)",
+          titleC: un ? "#F4F8FF" : "rgba(214,230,255,.5)",
+          status: un ? "OPEN" : "LOCKED",
+          stC: un ? "#7FE7DB" : "rgba(190,212,245,.5)",
+          stBd: un ? "rgba(59,214,198,.5)" : "rgba(150,180,220,.3)",
+          stBdStyle: un ? "solid" : "dashed",
+          masteryPct: String(Math.round(m * 100)),
+          masteryLabel: answered ? ml : un ? "Unexplored" : r.unlock.label,
+          mlC: answered ? mc : "rgba(190,212,245,.45)",
+          open: () => { if (un) this.go("region", { regionId: r.id }); else { this.toast("Locked", r.unlock.label); this.sBad(); } },
+        };
+      }),
+      roadmap: D.ROADMAP_ROOMS.map((r) => ({ name: r.name, act: r.act.toUpperCase(), note: r.note })),
+    };
+  }
+
+  // ---------- rv: region ----------
+  rvRegion(s, p, D) {
+    if (s.screen !== "region" || !s.regionId) return { regionShow: false };
+    const r = D.REGIONS.find((x) => x.id === s.regionId);
+    const m = this.domainMastery(r.domain);
+    const [ml, mc] = this.masteryLabel(m);
+    const games = {
+      gallery: { name: "Measure Match", desc: "Forge the chain: measurement → window → modality → meaning.", glyph: "♦", un: this.mmUnlocked(), lock: "Complete Lesson 1 to unlock", go: () => this.startMM() },
+      engine: { name: "Doppler Duel", desc: "Draw the right Doppler weapon and outwit the rogue console.", glyph: "⚡", un: this.duelUnlocked(), lock: "Complete 3 Engine lessons to unlock", go: () => this.startDuel() },
+    };
+    const g = games[r.id];
+    return {
+      regionShow: true,
+      rgAccent: r.accent, rgAccentSoft: r.accent + "22", rgAccentGlow: r.accent + "44",
+      rgWeight: r.weightLabel.toUpperCase(),
+      rgGlyph: r.icon === "cross" ? "✚" : r.icon === "gear" ? "⚙" : "▣",
+      rgName: r.name, rgTagline: r.tagline,
+      rgMasteryPct: String(Math.round(m * 100)), rgMasteryLabel: ml, rgMlC: mc,
+      rgDoctorIntro: r.doctorIntro,
+      rgNpcBg: r.accent + "18", rgNpcInit: r.npc.init, rgNpcName: r.npc.name, rgNpcRole: r.npc.role, rgNpcIntro: r.npc.intro,
+      rgLessons: r.lessons.map((id, i) => {
+        const L = D.LESSONS[id], done = this.lessonDone(id);
+        return { title: L.title, sub: L.sub, qCount: String(L.battle.length),
+          mark: done ? "✓" : String(i + 1),
+          nBg: done ? "rgba(59,214,198,.15)" : "rgba(245,184,74,.12)",
+          nC: done ? "#7FE7DB" : "#FFD98F", nBd: done ? "rgba(59,214,198,.5)" : "rgba(245,184,74,.4)",
+          bd: done ? "rgba(59,214,198,.3)" : "rgba(122,180,255,.22)",
+          open: () => this.startLesson(id) };
+      }),
+      rgGameShow: !!g,
+      rgGameName: g ? g.name : "", rgGameDesc: g ? g.desc : "", rgGameGlyph: g ? g.glyph : "",
+      rgGameBd: g && g.un ? r.accent + "77" : "rgba(122,180,255,.2)",
+      rgGameSh: g && g.un ? r.accent + "22" : "transparent",
+      rgGameStatus: g ? (g.un ? "PLAY" : "LOCKED") : "",
+      rgGameStC: g && g.un ? "#7FE7DB" : "rgba(190,212,245,.5)",
+      rgGameStBd: g && g.un ? "rgba(59,214,198,.5)" : "rgba(150,180,220,.3)",
+      rgGameStBdStyle: g && g.un ? "solid" : "dashed",
+      rgGameGo: () => { if (!g) return; if (g.un) g.go(); else { this.toast("Locked", g.lock); this.sBad(); } },
+      rgDrill: () => this.startDrill(r.domain, "drill"),
+      back: () => this.back(),
+    };
+  }
+
+  // ---------- rv: lesson ----------
+  rvLesson(s, p, D) {
+    if (s.screen !== "lesson" || !s.lessonId) return { lessonShow: false, back: () => this.back() };
+    const L = D.LESSONS[s.lessonId];
+    const beat = L.beats[s.beat], last = s.beat === L.beats.length - 1;
+    const isTry = !!beat.q, isHook = beat.k === "MEMORY HOOK";
+    const kc = isTry ? "#7FE7DB" : isHook ? "#FFD98F" : "#9CC5FF";
+    const q = beat.q;
+    const revealed = isTry && s.tryPick >= 0;
+    const ok = revealed && s.tryPick === q.ans;
+    const canGo = !isTry || revealed;
+    return {
+      lessonShow: true, back: () => this.back(),
+      lsTitle: L.title, lsSub: L.sub,
+      lsDots: L.beats.map((_, i) => ({ bg: i < s.beat ? "#3BD6C6" : i === s.beat ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
+      lsKicker: beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
+      lsBeatTitle: beat.t,
+      lsBodyShow: !isTry,
+      lsBody: beat.b || "",
+      lsBodyC: isHook ? "#FFEBC9" : "rgba(228,240,255,.92)",
+      lsCardBg: isHook ? "rgba(245,184,74,.09)" : "rgba(13,28,56,.66)",
+      lsCardBd: isHook ? "rgba(245,184,74,.4)" : "rgba(122,180,255,.22)",
+      lsTryShow: isTry, lsTryStem: q ? q.stem : "",
+      tryChoices: q ? q.ch.map((t, i) => {
+        let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", mark = String.fromCharCode(65 + i), markC = "#9CC5FF";
+        if (revealed) {
+          if (i === q.ans) { bg = "rgba(59,214,198,.14)"; bd = "#3BD6C6"; mark = "✓"; markC = "#7FE7DB"; }
+          else if (i === s.tryPick) { bg = "rgba(244,121,91,.16)"; bd = "#F4795B"; mark = "✕"; markC = "#FFB49E"; }
+          else { bg = "rgba(13,28,56,.4)"; bd = "rgba(122,180,255,.12)"; }
+        }
+        return { t, bg, bd, mark, markC, pick: () => this.tryPick(i) };
+      }) : [],
+      tryRevealed: revealed, tryIcon: ok ? "✓" : "✕", tryWhy: q ? q.why : "",
+      lsNext: () => this.lsAdvance(),
+      lsNextLabel: !canGo ? "Pick an answer above" : last ? "Enter the Console Drill →" : "Continue",
+      lsNextBg: canGo ? "linear-gradient(180deg,#FFCB6B,#F0A93C)" : "rgba(13,28,56,.5)",
+      lsNextC: canGo ? "#2A2008" : "rgba(200,220,250,.4)",
+      lsNextSh: canGo ? "0 8px 24px rgba(240,169,60,.32)" : "none",
+      lsNextBd: canGo ? "none" : "1.5px solid rgba(122,180,255,.2)",
+    };
+  }
+
+  // ---------- rv: battle ----------
+  rvBattle(s, p, D) {
+    const b = s.battle;
+    if (s.screen !== "battle" || !b) return { battleShow: false };
+    const modeL = { lesson: ["CONSOLE DRILL", "#7FE7DB"], drill: ["QUICK DRILL", "#FFD98F"], weak: ["WEAK-SIGNAL DRILL", "#FFB49E"], review: ["MEMORY CORE REVIEW", "#D4BCFA"] }[b.mode] || ["DRILL", "#7FE7DB"];
+    const qid = b.qids[b.i], q = D.QUESTIONS[qid];
+    const out = {
+      battleShow: true, back: () => this.back(),
+      btLive: !b.done, btDoneShow: b.done,
+      btPct: String(Math.round(((b.i + (b.rev ? 1 : 0)) / b.qids.length) * 100)),
+      btI: String(b.i + 1), btN: String(b.qids.length),
+      btStreakShow: b.streak >= 2, btStreak: String(b.streak),
+      btMode: modeL[0], btModeC: modeL[1],
+    };
+    if (!b.done && q) {
+      Object.assign(out, {
+        btTopic: q.topic.toUpperCase(), btDiff: "●".repeat(q.diff) + "○".repeat(3 - q.diff),
+        btQ: q.stem,
+        btChoices: q.ch.map((t, i) => {
+          let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", lBg = "rgba(245,184,74,.1)", lC = "#FFD98F", mk = "", mkC = "#7FE7DB", anim = "none";
+          if (b.rev) {
+            if (i === q.ans) { bg = "rgba(59,214,198,.13)"; bd = "#3BD6C6"; lBg = "rgba(59,214,198,.2)"; lC = "#7FE7DB"; mk = "✓"; }
+            else if (i === b.picked) { bg = "rgba(244,121,91,.15)"; bd = "#F4795B"; lBg = "rgba(244,121,91,.2)"; lC = "#FFB49E"; mk = "✕"; mkC = "#FFB49E"; anim = "shakeX .3s ease"; }
+            else { bg = "rgba(13,28,56,.4)"; bd = "rgba(122,180,255,.1)"; lC = "rgba(190,212,245,.4)"; lBg = "rgba(122,180,255,.06)"; }
+          }
+          return { letter: String.fromCharCode(65 + i), t, bg, bd, lBg, lC, mk, mkC, anim, pick: () => this.btPick(i) };
+        }),
+        btRevealed: b.rev,
+        btFbBd: b.picked === q.ans ? "rgba(59,214,198,.45)" : "rgba(244,121,91,.45)",
+        btFbC: b.picked === q.ans ? "#7FE7DB" : "#FFB49E",
+        btFbTitle: b.picked === q.ans ? "✓ CORRECT — FIXED POINT LOCKED" : "✕ NOT QUITE — THE MEMORY CORE HAS IT",
+        btExp: q.exp,
+        btWhyShow: b.rev && b.picked !== q.ans && b.picked >= 0 && !!q.ww[b.picked],
+        btWhy: b.picked >= 0 ? q.ww[b.picked] || "" : "",
+        btPearlShow: b.rev && !!q.pearl, btPearl: q.pearl || "",
+        btLine: b.line,
+        btNext: () => this.btNext(),
+        btNextLabel: b.i + 1 < b.qids.length ? "Next question →" : "Finish",
+      });
+    }
+    if (b.done) {
+      const acc = b.cor / b.qids.length;
+      const missed = b.qids.length - b.cor;
+      const backLabel = b.mode === "review" ? "Back to the Memory Core" : b.mode === "lesson" || b.mode === "drill" ? "Back to " + (D.REGIONS.find((r) => r.id === s.regionId) || { name: "the TARDIS" }).name : "Back to the TARDIS";
+      Object.assign(out, {
+        btDoneKick: acc === 1 ? "FLAWLESS RUN" : acc >= 0.7 ? "DRILL COMPLETE" : "DRILL SURVIVED",
+        btDoneTitle: acc === 1 ? "Perfect. Textbook." : acc >= 0.7 ? "Strong scanning, Lizzie." : "The Core caught your misses.",
+        btScore: String(b.cor), btXp: String(b.xp),
+        btDoneMsg: missed ? missed + " missed question" + (missed > 1 ? "s were" : " was") + " pulled into the TARDIS Memory Core — they'll return at the perfect moment for your brain to keep them." : "Nothing for the Memory Core today. The TARDIS is almost disappointed.",
+        btDoneCta: () => this.back(), btDoneCtaLabel: backLabel,
+      });
+    }
+    return out;
+  }
+
+  // ---------- measure match ----------
+  startMM() { this.go("mm", { mm: { r: 0, s: 0, picked: -1, rev: false, score: 0, done: false } }); }
+  mmPick(i) {
+    const m = this.state.mm; if (!m || m.rev) return;
+    const st = this.D.MM_ROUNDS[m.r].stages[m.s];
+    const ok = i === st.ans;
+    m.picked = i; m.rev = true;
+    if (ok) { m.score++; this.gainXp(6); this.sGood(); } else this.sBad();
+    this.markActive(); this.forceUpdate();
+  }
+  mmNext() {
+    const m = this.state.mm, R = this.D.MM_ROUNDS;
+    if (m.s + 1 < R[m.r].stages.length) { m.s++; }
+    else if (m.r + 1 < R.length) { m.r++; m.s = 0; }
+    else {
+      m.done = true; this.p.games.mm++; this.gainXp(15); this.spendEnergy();
+      if (m.score >= 16) this.award("apical");
+      this.save(); this.forceUpdate(); window.scrollTo(0, 0); return;
+    }
+    m.picked = -1; m.rev = false; this.forceUpdate(); window.scrollTo(0, 0); this.sClick();
+  }
+  rvGames(s, p, D) {
+    const out = { mmShow: s.screen === "mm", duelShow: s.screen === "duel" };
+    // ----- MM -----
+    const m = s.mm;
+    if (out.mmShow && m) {
+      const round = D.MM_ROUNDS[m.r], st = round.stages[m.s];
+      const names = ["WINDOW", "MODALITY", "MEANING"];
+      Object.assign(out, {
+        back: () => this.back(),
+        mmLive: !m.done, mmDoneShow: m.done,
+        mmRound: String(m.r + 1), mmRounds: String(D.MM_ROUNDS.length),
+        mmScore: String(m.score), mmMax: String(D.MM_ROUNDS.length * 3),
+        mmMeasure: round.m,
+        mmChain: names.map((t, i) => ({ t,
+          bg: i < m.s ? "rgba(59,214,198,.13)" : i === m.s ? "rgba(245,184,74,.14)" : "rgba(13,28,56,.5)",
+          bd: i < m.s ? "rgba(59,214,198,.5)" : i === m.s ? "rgba(245,184,74,.55)" : "rgba(122,180,255,.16)",
+          c: i < m.s ? "#7FE7DB" : i === m.s ? "#FFD98F" : "rgba(190,212,245,.4)" })),
+        mmPrompt: st.prompt,
+        mmOpts: st.opts.map((t, i) => {
+          let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", mk = "", mkC = "#7FE7DB";
+          if (m.rev) {
+            if (i === st.ans) { bg = "rgba(59,214,198,.13)"; bd = "#3BD6C6"; mk = "✓"; }
+            else if (i === m.picked) { bg = "rgba(244,121,91,.15)"; bd = "#F4795B"; mk = "✕"; mkC = "#FFB49E"; }
+            else { bg = "rgba(13,28,56,.4)"; bd = "rgba(122,180,255,.1)"; }
+          }
+          return { t, bg, bd, mk, mkC, pick: () => this.mmPick(i) };
+        }),
+        mmRevealed: m.rev,
+        mmFbBd: m.picked === st.ans ? "rgba(59,214,198,.45)" : "rgba(244,121,91,.45)",
+        mmIcon: m.picked === st.ans ? "✓" : "✕",
+        mmWhy: st.why,
+        mmNext: () => this.mmNext(),
+        mmNextLabel: m.s + 1 < 3 ? "Next link →" : m.r + 1 < D.MM_ROUNDS.length ? "Next measurement →" : "Finish",
+        mmDoneTitle: m.score >= 16 ? "Chain-forger supreme." : m.score >= 11 ? "Strong chains, Lizzie." : "The links need re-forging.",
+        mmDoneMsg: m.score >= 16 ? "You matched measurements to windows, modalities and meanings like a registry veteran. Captain Doppler salutes you." : "Every broken link is listed in your head now — run the gallery lessons again and re-forge.",
+      });
+    }
+    // ----- DUEL -----
+    const d = s.duel;
+    if (out.duelShow && d) {
+      const round = D.DUEL_ROUNDS[d.r];
+      Object.assign(out, {
+        back: () => this.back(),
+        duLive: !d.done, duDoneShow: d.done,
+        duRound: String(d.r + 1), duRounds: String(D.DUEL_ROUNDS.length),
+        duBolts: D.DUEL_ROUNDS.map((_, i) => ({
+          c: i < d.score ? "#FFD98F" : "rgba(150,180,220,.25)",
+          sh: i < d.score ? "0 0 8px rgba(255,203,107,.8)" : "none" })),
+        duScene: round.scene, duPrompt: round.prompt,
+        duOpts: round.opts.map((t, i) => {
+          let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", mk = "", mkC = "#7FE7DB";
+          if (d.rev) {
+            if (i === round.ans) { bg = "rgba(59,214,198,.13)"; bd = "#3BD6C6"; mk = "✓"; }
+            else if (i === d.picked) { bg = "rgba(244,121,91,.15)"; bd = "#F4795B"; mk = "✕"; mkC = "#FFB49E"; }
+            else { bg = "rgba(13,28,56,.4)"; bd = "rgba(122,180,255,.1)"; }
+          }
+          return { t, bg, bd, mk, mkC, pick: () => this.duPick(i) };
+        }),
+        duRevealed: d.rev,
+        duFbBd: d.picked === round.ans ? "rgba(59,214,198,.45)" : "rgba(244,121,91,.45)",
+        duWhy: round.why, duTipShow: !!round.tip, duTip: round.tip,
+        duNext: () => this.duNext(),
+        duNextLabel: d.r + 1 < D.DUEL_ROUNDS.length ? "Next round →" : "Finish the duel",
+        duScore: String(d.score),
+        duDoneTitle: d.score >= 5 ? "The console yields." : d.score >= 3 ? "A worthy duel." : "The console cackles.",
+        duDoneMsg: d.score >= 5 ? "PW, CW, angles, Nyquist — you drew the right weapon every time it mattered. Engineer Nyquist is impressed, and he is never impressed." : "Re-run 'The Nyquist Wall' lesson and challenge the console again — it will not expect you twice.",
+      });
+    }
+    return out;
+  }
+  startDuel() { this.go("duel", { duel: { r: 0, picked: -1, rev: false, score: 0, done: false } }); }
+  duPick(i) {
+    const d = this.state.duel; if (!d || d.rev) return;
+    const ok = i === this.D.DUEL_ROUNDS[d.r].ans;
+    d.picked = i; d.rev = true;
+    if (ok) { d.score++; this.gainXp(8); this.sGood(); } else this.sBad();
+    this.markActive(); this.forceUpdate();
+  }
+  duNext() {
+    const d = this.state.duel;
+    if (d.r + 1 < this.D.DUEL_ROUNDS.length) { d.r++; d.picked = -1; d.rev = false; this.forceUpdate(); window.scrollTo(0, 0); this.sClick(); }
+    else { d.done = true; this.p.games.duel++; this.gainXp(15); this.spendEnergy(); if (d.score >= 5) this.award("duelist"); this.save(); this.forceUpdate(); window.scrollTo(0, 0); }
+  }
+
+  // ---------- boss ----------
+  bossStart() {
+    const pool = this.shuffle(Object.keys(this.D.QUESTIONS)).slice(0, 10);
+    this.go("boss", { boss: { qids: pool, i: 0, t: 15, strikes: 0, cor: 0, picked: -1, rev: false, done: false, win: false } });
+    clearInterval(this._bt);
+    this._bt = setInterval(() => this.bossTick(), 250);
+  }
+  bossTick() {
+    const b = this.state.boss;
+    if (this.state.screen !== "boss" || !b || b.done) { clearInterval(this._bt); return; }
+    if (b.rev) return;
+    b.t -= 0.25;
+    if (b.t <= 0) {
+      b.t = 0; b.rev = true; b.picked = -1; b.strikes++;
+      this.sBad();
+      if (b.strikes >= 4) this.bossEnd(false);
+    }
+    this.forceUpdate();
+  }
+  boPick(i) {
+    const b = this.state.boss; if (!b || b.rev || b.done) return;
+    const qid = b.qids[b.i], q = this.D.QUESTIONS[qid];
+    const ok = i === q.ans;
+    b.picked = i; b.rev = true;
+    if (ok) { b.cor++; this.gainXp(10); this.sGood(); } else { b.strikes++; this.sBad(); }
+    this.recordAnswer(qid, ok, false);
+    if (b.strikes >= 4) this.bossEnd(false);
+    this.forceUpdate();
+  }
+  boNext() {
+    const b = this.state.boss; if (!b || b.done) return;
+    if (b.i + 1 < b.qids.length) { b.i++; b.t = 15; b.picked = -1; b.rev = false; this.forceUpdate(); window.scrollTo(0, 0); }
+    else this.bossEnd(b.strikes < 4);
+  }
+  bossEnd(win) {
+    const b = this.state.boss; if (!b || b.done) return;
+    clearInterval(this._bt);
+    b.done = true; b.win = win;
+    if (win) {
+      this.gainXp(60); this.award("dont_blink"); this.artifact("chrono");
+      this.p.boss.angels = { won: true, best: b.cor, date: Date.now() };
+      this.spendEnergy();
+    }
+    this.markActive(); this.save(); this.forceUpdate(); window.scrollTo(0, 0);
+  }
+  rvBoss(s, p, D) {
+    const B = D.BOSSES[0];
+    const out = {
+      bossBriefShow: s.screen === "bossBrief",
+      bossShow: s.screen === "boss",
+      boName: B.name, boSub: B.sub.toUpperCase(), boIntro: B.intro,
+      boCount: String(B.count), boTime: String(B.time), boStrikes: String(B.strikes), boXpWin: String(B.xp),
+      boStart: () => this.bossStart(),
+    };
+    const b = s.boss;
+    if (out.bossShow && b) {
+      const q = D.QUESTIONS[b.qids[b.i]];
+      const pct = (b.t / 15) * 100;
+      const danger = b.t <= 5;
+      Object.assign(out, {
+        back: () => this.back(),
+        boLive: !b.done, boWinShow: b.done && b.win, boLoseShow: b.done && !b.win,
+        boI: String(b.i + 1), boN: String(b.qids.length),
+        boBarPct: String(Math.max(0, Math.round(pct))),
+        boBarBg: danger ? "linear-gradient(90deg,#F4795B,#FF9E86)" : "linear-gradient(90deg,#3BD6C6,#7FE7DB)",
+        boBarGlow: danger ? "rgba(244,121,91,.7)" : "rgba(59,214,198,.7)",
+        boCells: [0, 1, 2, 3, 4].map((i) => {
+          if (i === 4) return { glyph: "◉", bg: "rgba(245,184,74,.14)", bd: "rgba(245,184,74,.6)", bdStyle: "solid", fs: "15px", f: "none", anim: "none" };
+          if (i === b.strikes) return { glyph: "◈", bg: "rgba(200,205,225,.14)", bd: "rgba(200,205,225,.6)", bdStyle: "solid", fs: "16px", f: "grayscale(1) brightness(1.35)", anim: (this.props.motion ?? true) ? "glowPulse 1.6s ease-in-out infinite" : "none" };
+          if (i < b.strikes) return { glyph: "", bg: "rgba(9,16,34,.4)", bd: "rgba(120,140,180,.15)", bdStyle: "dashed", fs: "12px", f: "none", anim: "none" };
+          return { glyph: "·", bg: "rgba(9,16,34,.4)", bd: "rgba(120,140,180,.2)", bdStyle: "dashed", fs: "12px", f: "none", anim: "none" };
+        }),
+        boQ: q ? q.stem : "",
+        boChoices: q ? q.ch.map((t, i) => {
+          let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", lBg = "rgba(245,184,74,.1)", lC = "#FFD98F", mk = "", mkC = "#7FE7DB";
+          if (b.rev) {
+            if (i === q.ans) { bg = "rgba(59,214,198,.13)"; bd = "#3BD6C6"; lBg = "rgba(59,214,198,.2)"; lC = "#7FE7DB"; mk = "✓"; }
+            else if (i === b.picked) { bg = "rgba(244,121,91,.15)"; bd = "#F4795B"; lBg = "rgba(244,121,91,.2)"; lC = "#FFB49E"; mk = "✕"; mkC = "#FFB49E"; }
+            else { bg = "rgba(13,28,56,.4)"; bd = "rgba(122,180,255,.1)"; lC = "rgba(190,212,245,.4)"; lBg = "rgba(122,180,255,.06)"; }
+          }
+          return { letter: String.fromCharCode(65 + i), t, bg, bd, lBg, lC, mk, mkC, pick: () => this.boPick(i) };
+        }) : [],
+        boRevealed: b.rev && !b.done,
+        boFbBd: b.picked === (q && q.ans) ? "rgba(59,214,198,.45)" : "rgba(244,121,91,.45)",
+        boFbC: b.picked === (q && q.ans) ? "#7FE7DB" : "#FFB49E",
+        boFbTitle: b.picked === (q && q.ans) ? "✓ FROZEN — THE ANGEL IS STONE" : b.picked < 0 ? "⌛ TOO SLOW — IT MOVED" : "✕ WRONG — IT MOVED",
+        boExp: q ? q.exp : "",
+        boNext: () => this.boNext(),
+        boNextLabel: b.i + 1 < b.qids.length ? "Keep your eyes open →" : "Final answer locked",
+        boWinMsg: "Ten questions, " + b.cor + " correct, and the statues never reached you. The Chrono Fragment hums in your pocket — proof that your recall is faster than a blink.",
+        boLoseMsg: "You answered " + b.cor + " correctly, but the Angels closed the distance. No harm done — that's the beauty of time travel. Review your missed echoes and return.",
+      });
+    }
+    return out;
+  }
+
+  // ---------- memory ----------
+  memStart() {
+    const due = this.dueList();
+    if (!due.length) { this.toast("The core is quiet", "Nothing due for review right now."); this.go("memory"); return; }
+    this.startBattle(this.shuffle(due).slice(0, 10), "review");
+  }
+  rvMemory(s, p, D) {
+    const due = this.dueList();
+    const upN = Object.keys(p.mem).length - due.length;
+    return {
+      memShow: s.screen === "memory",
+      memDueN: String(due.length), memUpN: String(upN), memClearedN: String(p.reviewsCleared),
+      memStartShow: due.length > 0, memEmptyShow: due.length === 0,
+      memStart: () => this.memStart(),
+      memDue: due.slice(0, 12).map((qid) => {
+        const q = D.QUESTIONS[qid], m = p.mem[qid];
+        const dom = D.DOMAINS.find((d) => d.id === q.d);
+        return { topic: q.topic, dom: dom.short, color: dom.color, miss: String(m.miss),
+          dueLabel: m.iv === 0 ? "Fresh miss — due now" : "Interval " + m.iv + "d — due now" };
+      }),
+    };
+  }
+
+  // ---------- admin / meta ----------
+  toggleSound() { this.p.sound = !this.p.sound; this.save(); this.sClick(); this.forceUpdate(); }
+  demoBoost() { this.gainXp(200); this.toast("Energy boost", "+200 XP added."); }
+  doReset() {
+    if (!this.state.resetArm) { this.setState({ resetArm: true }); return; }
+    try { localStorage.removeItem(this.KEY); } catch (e) {}
+    this.p = this.blank(); this.save();
+    this.setState({ resetArm: false, screen: "splash", ob: 0, battle: null, mm: null, duel: null, boss: null });
+    window.scrollTo(0, 0);
+  }
+  apiKeyInput(e) { this.p.apiKey = e.target.value.trim(); this.p.aiTest = this.p.apiKey ? "Key saved locally. Tap TEST to verify." : "No key saved yet."; this.save(); this.forceUpdate(); }
+  aiModelInput(e) { this.p.aiModel = e.target.value.trim() || "claude-haiku-4-5"; this.save(); this.forceUpdate(); }
+  doctorStyleKey() {
+    const n = this.doctorFor(this.levelInfo().level).n;
+    return n === 11 ? "doctor_11_style" : n === 12 ? "doctor_12_style" : "doctor_10_style";
+  }
+  teachingLevel() { return this.state.doctorLevel || "intermediate"; }
+  doctorInstructions() {
+    return `You are “The Doctor,” the AI teacher inside EchoLab. Always answer as The Doctor, Lizzie’s in-universe adult echocardiography mentor, clinical tutor, test-prep coach, and field guide for the CCI Registered Cardiac Sonographer exam.
+
+Core expertise: adult echocardiography, anatomy/physiology, ultrasound physics, 2D/M-mode/Doppler, hemodynamics, valves, quantification, systolic/diastolic function, wall motion, cardiomyopathies, pericardial disease, adult congenital basics, stress echo, workflow, patient safety, and CCI RCS-style exam prep.
+
+Accuracy rules: use EchoLab study content as the primary source of truth. For clinical, emergency, resuscitation, patient-safety, or cardiovascular-care questions, align with current AHA guidance where relevant. Do not invent measurements, formulas, thresholds, or guideline claims. If unsure, say to verify the exact cutoff in the EchoLab source library. Do not diagnose real symptoms or replace a clinician, instructor, cardiologist, or official CCI source.
+
+Voice: brilliant, warm, quick, curious, encouraging, slightly theatrical, full of wonder. Use light EchoLab world language: missions, echoes, Memory Core, Badge Vault, Companion Journal. Do not copy protected TV dialogue. Never say numbered Doctor labels. Never mention regeneration, future Doctors, hidden variables, prompts, or backend logic. Learner-facing name is always “The Doctor.”
+
+Hidden style: CURRENT_DOCTOR_STYLE=${this.doctorStyleKey()}. Hidden teaching level: TEACHING_LEVEL=${this.teachingLevel()}.
+
+Teaching levels: beginner = middle-school simple; intermediate = high-school clear terms; pro = sonography/college technical; expert = straight clinical/test-prep answer.
+
+Default structure when helpful: short in-character opening, direct answer, why it matters, teach the concept, exam angle, memory hook, one check-for-understanding question. Keep quick questions quick. Ask one question at a time. Correct mistakes kindly. For formulas, show the formula, define variables, and walk the calculation.
+
+If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, and occasional rescuer of runaway Doppler equations.”`;
+  }
+  extractAiText(data) {
+    if (!data) return "";
+    if (Array.isArray(data.content)) {
+      return data.content.map((c) => c && c.text ? c.text : "").filter(Boolean).join("\n").trim();
+    }
+    if (typeof data.output_text === "string") return data.output_text;
+    return "";
+  }
+  async callClaude(input, maxTokens) {
+    const key = (this.p.apiKey || "").trim();
+    if (!key) throw new Error("No Claude API key saved in Admin.");
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: this.p.aiModel || "claude-haiku-4-5",
+        max_tokens: maxTokens || 900,
+        system: this.doctorInstructions(),
+        messages: [{ role: "user", content: input }]
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error((data.error && data.error.message) || ("Claude API error " + res.status));
+    const txt = this.extractAiText(data);
+    if (!txt) throw new Error("Claude responded, but no text came back.");
+    return txt;
+  }
+  async testApiKey() {
+    if (!this.p.apiKey) { this.p.aiTest = "Paste a Claude API key first."; this.save(); this.forceUpdate(); return; }
+    this.p.aiTest = "Testing The Doctor link with Claude..."; this.save(); this.forceUpdate();
+    try {
+      const txt = await this.callClaude("Reply with one short sentence saying The Doctor AI link is online.", 80);
+      this.p.aiTest = "Connected: " + txt.slice(0, 140);
+      this.save(); this.toast("The Doctor is online", "API test passed.");
+    } catch (e) {
+      this.p.aiTest = "Test failed: " + (e.message || e);
+      this.save(); this.toast("API test failed", "Check the Claude key/model and try again.");
+    }
+    this.forceUpdate();
+  }
+  gmPasswordInput(e) { this.setState({ gmPassword: e.target.value }); }
+  gmUnlock() {
+    if ((this.state.gmPassword || "") === "Lizzie") {
+      this.p.gmUnlocked = true; this.save(); this.setState({ gmPassword: "" }); this.toast("Game Master unlocked", "Builder controls are available.");
+    } else { this.toast("Wrong password", "Try again."); this.sBad(); }
+  }
+  toggleGameMaster() { if (!this.p.gmUnlocked) return; this.p.gameMaster = !this.p.gameMaster; this.save(); this.toast("Game Master", this.p.gameMaster ? "Whole app unlocked for testing." : "Normal locks restored."); this.forceUpdate(); }
+  gmDoctorPick(n) { if (!this.p.gmUnlocked) return; this.p.gmDoctor = n; this.save(); this.toast("Doctor style selected", "Previewing The Doctor in app text and chat."); this.forceUpdate(); }
+  rvMeta(s, p, D, li) {
+    const earned = Object.keys(p.badges).length;
+    const mvpB = D.BADGES;
+    // journal numbers
+    let ans = 0, cor = 0;
+    for (const k in p.q) { ans += p.q[k].s; cor += p.q[k].c; }
+    const acc = ans ? Math.round((cor / ans) * 100) : 0;
+    const topicMap = {};
+    for (const k in p.q) { const q = D.QUESTIONS[k]; if (!q) continue; const t = topicMap[q.topic] || (topicMap[q.topic] = { s: 0, c: 0 }); t.s += p.q[k].s; t.c += p.q[k].c; }
+    const weak = Object.keys(topicMap).map((t) => ({ topic: t, acc: Math.round((topicMap[t].c / topicMap[t].s) * 100) })).filter((w) => w.acc < 75).sort((a, b) => a.acc - b.acc).slice(0, 4);
+    const days = []; const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now); d.setDate(d.getDate() - i);
+      const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      const h = p.hist[key];
+      days.push({ label: "SMTWTFS"[d.getDay()], n: h ? h.ans : 0 });
+    }
+    const maxN = Math.max(1, ...days.map((d) => d.n));
+    const lessonsDone = this.lessonsDoneCount(), totalLessons = 13;
+    const nextRankRow = D.RANKS.find((r) => r[0] > li.level);
+    // admin pace
+    let admDays = "—", admPace = "—", admPaceMsg = "Set the exam date and the TARDIS will compute your daily flight plan.";
+    if (p.examDate) {
+      const dl = Math.ceil((new Date(p.examDate + "T12:00") - Date.now()) / 864e5);
+      admDays = String(Math.max(0, dl));
+      const remaining = totalLessons - lessonsDone;
+      const rate = dl > 0 ? remaining / dl : remaining;
+      admPace = remaining === 0 ? "0" : rate < 0.1 ? "<1" : (Math.round(rate * 10) / 10).toFixed(1);
+      admPaceMsg = dl <= 0 ? "The exam date has arrived — update the coordinates or fly the mock exams." :
+        remaining === 0 ? "All current lessons complete. Hold the pace with daily reviews and drills." :
+        remaining + " lessons remain across " + dl + " days. The TARDIS recommends " + (rate <= 0.5 ? "one lesson every other day" : rate <= 1.1 ? "about one lesson a day" : "about " + Math.ceil(rate) + " lessons a day") + ", plus clearing the Memory Core daily.";
+    }
+    // note
+    const jNote = ans === 0 ? "Day one. The Doctor says every expert was once exactly this nervous. Deep breath — parasternal first." :
+      acc >= 80 ? "I'm starting to see the images before I place the probe. " + (weak[0] ? "Still wobbly on " + weak[0].topic.toLowerCase() + " — the Core will drill me." : "The Core is quiet tonight.") :
+      "Rough edges today — " + (weak[0] ? weak[0].topic.toLowerCase() + " keeps slipping" : "a few topics keep slipping") + ". But missed questions aren't failures, they're coordinates. Tomorrow I fly at them.";
+    return {
+      badgesShow: s.screen === "badges", journalShow: s.screen === "journal",
+      charShow: s.screen === "character", doctorShow: s.screen === "doctor", adminShow: s.screen === "admin", bossesShow: s.screen === "bosses",
+      bvEarned: String(earned), bvTotal: String(mvpB.length),
+      badgeList: mvpB.map((b) => {
+        const got = !!p.badges[b.id];
+        return { name: b.name, how: b.how, glyph: b.glyph,
+          bg: got ? "rgba(13,28,56,.75)" : "rgba(10,20,40,.45)",
+          bd: got ? b.color + "88" : "rgba(122,180,255,.14)",
+          gBg: got ? b.color + "22" : "rgba(122,180,255,.06)",
+          gC: got ? b.color : "rgba(150,180,220,.35)",
+          gSh: got ? "0 0 18px " + b.color + "55" : "none",
+          tC: got ? "#F4F8FF" : "rgba(200,220,250,.45)",
+          tagShow: false, tag: "" };
+      }),
+      jNote, jAns: String(ans), jAcc: String(acc), jMins: String(Math.floor(p.secToday / 60)),
+      jDomains: D.DOMAINS.map((d) => {
+        const m = this.domainMastery(d.id); const [ml, mc] = this.masteryLabel(m);
+        const answered = Object.keys(p.q).some((k) => D.QUESTIONS[k] && D.QUESTIONS[k].d === d.id);
+        return { name: d.name, w: String(d.weight), pct: String(Math.round(m * 100)), color: d.color,
+          label: answered ? ml : "Unexplored", lc: answered ? mc : "rgba(190,212,245,.4)" };
+      }),
+      jWeakEmpty: weak.length === 0,
+      jWeak: weak.map((w) => ({ topic: w.topic, acc: String(w.acc) })),
+      jDays: days.map((d) => ({ label: d.label, h: String(Math.round((d.n / maxN) * 100)), bg: d.n ? "linear-gradient(180deg,#3BD6C6,#1E6FD9)" : "rgba(122,180,255,.12)" })),
+      rankNameUp: this.rankFor(li.level).toUpperCase(),
+      xpInto: String(li.into), xpNeed: String(li.need), xpPct: String(Math.round((li.into / li.need) * 100)),
+      nextRank: nextRankRow ? nextRankRow[1] + " at Level " + nextRankRow[0] : "You hold the highest rank",
+      doctors: D.DOCTORS.map((d) => {
+        const active = this.doctorFor(li.level).n === d.n;
+        const src = d.n === 11 ? "art/doctor-11-headshot.png" : d.n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+        return { name: "The Doctor", src, act: d.act.toUpperCase(), tone: active ? "Current mentor" : "Locked",
+          bg: active ? "rgba(13,28,56,.78)" : "rgba(10,20,40,.45)",
+          bd: active ? d.color + "99" : "rgba(122,180,255,.14)",
+          ringBg: active ? "radial-gradient(60% 60% at 50% 35%, " + d.color + "66, rgba(30,111,217,.25))" : "rgba(122,180,255,.1)",
+          tc: active ? "#F4F8FF" : "rgba(200,220,250,.5)",
+          actC: active ? d.color : "rgba(190,212,245,.4)" };
+      }),
+      mentorQuote: this.doctorFor(li.level).quote,
+      chBadges: earned ? mvpB.filter((b) => p.badges[b.id]).map((b) => ({ glyph: b.glyph, name: b.name, bd: b.color + "77", gC: b.color, tC: "#F4F8FF" })) : [{ glyph: "·", name: "No badges yet — the vault waits", bd: "rgba(122,180,255,.2)", gC: "rgba(150,180,220,.4)", tC: "rgba(200,220,250,.5)" }],
+      chArts: D.ARTIFACTS.map((a) => {
+        const got = !!p.arts[a.id];
+        return { name: a.name, how: a.how, glyph: a.glyph,
+          bd: got ? "rgba(245,184,74,.5)" : "rgba(122,180,255,.14)",
+          gC: got ? "#FFCB6B" : "rgba(150,180,220,.35)",
+          tC: got ? "#F4F8FF" : "rgba(200,220,250,.45)",
+          st: got ? "HELD" : "MISSING", stC: got ? "#7FE7DB" : "rgba(190,212,245,.4)" };
+      }),
+      bossList: D.BOSSES.map((b) => {
+        const un = b.mvp && this.bossUnlocked();
+        const won = b.id === "angels" && p.boss.angels && p.boss.angels.won;
+        return { name: b.name, sub: b.sub,
+          bg: un ? "linear-gradient(120deg, rgba(90,90,115,.16), rgba(13,28,56,.7))" : "rgba(10,20,40,.45)",
+          bd: won ? "rgba(59,214,198,.45)" : un ? "rgba(200,205,225,.4)" : "rgba(122,180,255,.12)",
+          f: un ? "grayscale(1) brightness(1.4)" : "grayscale(1) brightness(.7)",
+          tC: un ? "#F4F8FF" : "rgba(200,220,250,.45)",
+          status: won ? "DEFEATED" : un ? "READY" : b.mvp ? "LEVEL " + b.unlockLevel : (b.act || "SOON").toUpperCase(),
+          stC: won ? "#7FE7DB" : un ? "#FFD98F" : "rgba(190,212,245,.45)",
+          stBd: won ? "rgba(59,214,198,.5)" : un ? "rgba(245,184,74,.5)" : "rgba(150,180,220,.3)",
+          stBdStyle: un || won ? "solid" : "dashed",
+          go: () => { if (b.id !== "angels") { this.toast("Not yet", "This threat is still locked."); return; } if (this.bossUnlocked()) this.go("bossBrief"); else { this.toast("Locked — reach Level 3", "The Angels only hunt companions worth hunting."); this.sBad(); } } };
+      }),
+      examDate: p.examDate, onDate: (e) => this.onDate(e),
+      admDays, admPace, admLeft: String(totalLessons - lessonsDone), admPaceMsg,
+      toggleSound: () => this.toggleSound(),
+      sndBg: p.sound ? "rgba(59,214,198,.4)" : "rgba(120,150,190,.2)",
+      sndBd: p.sound ? "rgba(59,214,198,.7)" : "rgba(120,150,190,.4)",
+      sndKnob: p.sound ? "23px" : "2px",
+      demoBoost: () => this.demoBoost(),
+      doReset: () => this.doReset(),
+      rstBg: s.resetArm ? "rgba(244,121,91,.18)" : "rgba(13,28,56,.66)",
+      rstLabel: s.resetArm ? "Tap again to confirm reset" : "Reset progress",
+      rstSub: s.resetArm ? "This erases Lizzie's entire save. No take-backs." : "Wipe all progress and start from Day 1",
+      apiKey: p.apiKey || "", aiModel: p.aiModel || "claude-haiku-4-5",
+      apiKeyInput: (e) => this.apiKeyInput(e), aiModelInput: (e) => this.aiModelInput(e), testApiKey: () => this.testApiKey(),
+      aiStatus: p.apiKey ? "KEY SAVED" : "OFFLINE", aiStatusC: p.apiKey ? "#7FE7DB" : "rgba(190,212,245,.55)",
+      aiStatusBd: p.apiKey ? "rgba(59,214,198,.55)" : "rgba(150,180,220,.25)", aiStatusBg: p.apiKey ? "rgba(59,214,198,.10)" : "rgba(122,180,255,.06)",
+      aiTestMsg: p.aiTest || "No test run yet.", aiTestC: (p.aiTest || "").toLowerCase().includes("failed") ? "#FFB49E" : "rgba(200,220,250,.62)",
+      gmPassword: s.gmPassword || "", gmPasswordInput: (e) => this.gmPasswordInput(e), gmUnlock: () => this.gmUnlock(),
+      gmLocked: !p.gmUnlocked, gmUnlocked: !!p.gmUnlocked,
+      gmState: p.gmUnlocked ? (p.gameMaster ? "ON" : "UNLOCKED") : "LOCKED",
+      gmStateC: p.gmUnlocked ? (p.gameMaster ? "#7FE7DB" : "#FFD98F") : "rgba(190,212,245,.55)",
+      gmStateBd: p.gmUnlocked ? (p.gameMaster ? "rgba(59,214,198,.55)" : "rgba(245,184,74,.45)") : "rgba(150,180,220,.25)",
+      gmStateBg: p.gmUnlocked ? (p.gameMaster ? "rgba(59,214,198,.10)" : "rgba(245,184,74,.10)") : "rgba(122,180,255,.06)",
+      toggleGameMaster: () => this.toggleGameMaster(),
+      gmTogBg: p.gameMaster ? "rgba(59,214,198,.4)" : "rgba(120,150,190,.2)",
+      gmTogBd: p.gameMaster ? "rgba(59,214,198,.7)" : "rgba(120,150,190,.4)",
+      gmTogKnob: p.gameMaster ? "23px" : "2px",
+      gmDoctors: [10,11,12].map((n) => {
+        const active = (p.gmDoctor || 10) === n;
+        const src = n === 11 ? "art/doctor-11-headshot.png" : n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+        return { src, label: n === 10 ? "Style A" : n === 11 ? "Style B" : "Style C", pick: () => this.gmDoctorPick(n),
+          bg: active ? "rgba(245,184,74,.14)" : "rgba(6,13,27,.48)", bd: active ? "rgba(245,184,74,.75)" : "rgba(122,180,255,.18)", ring: active ? "#FFCB6B" : "rgba(122,180,255,.28)", c: active ? "#F4F8FF" : "rgba(200,220,250,.58)", subC: active ? "#FFD98F" : "rgba(190,212,245,.38)" };
+      }),
+      jMinsGoal: "20",
+      doctorInput: s.doctorInput || "",
+      doctorMsgs: (s.doctorMsgs || []).map((m) => {
+        const doc = m.who !== "lizzie";
+        return { text: m.text, doc, liz: !doc, justify: doc ? "flex-start" : "flex-end",
+          name: doc ? "THE DOCTOR" : "LIZZIE",
+          bg: doc ? "rgba(13,28,56,.78)" : "linear-gradient(180deg, rgba(59,214,198,.18), rgba(30,111,217,.16))",
+          bd: doc ? "rgba(245,184,74,.3)" : "rgba(59,214,198,.38)",
+          radius: doc ? "16px 16px 16px 6px" : "16px 16px 6px 16px",
+          c: doc ? "rgba(224,238,255,.92)" : "#EAF2FF",
+          nameC: doc ? "#FFD98F" : "#7FE7DB",
+          sh: doc ? "0 8px 22px rgba(0,0,0,.18)" : "0 8px 22px rgba(0,0,0,.16)" };
+      }),
+      doctorLevels: [
+        ["beginner", "BEGINNER"], ["intermediate", "INTERMEDIATE"], ["pro", "PRO"], ["expert", "EXPERT"]
+      ].map(([k, label]) => ({ label, pick: () => this.setState({ doctorLevel: k }),
+        bg: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.18)" : "rgba(13,28,56,.55)",
+        bd: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.7)" : "rgba(122,180,255,.22)",
+        c: (s.doctorLevel || "intermediate") === k ? "#FFD98F" : "rgba(200,220,250,.65)" })),
+      doctorPrompts: [
+        { t: "Explain my missed question", q: "Explain a missed question from the Memory Core." },
+        { t: "Quiz me", q: "Quiz me with one CCI-style echo question." },
+        { t: "Doppler help", q: "Help me understand Doppler and aliasing." }
+      ].map((x) => ({ t: x.t, go: () => this.doctorQuick(x.q) })),
+      doctorTyping: (e) => this.setState({ doctorInput: e.target.value }),
+      doctorSend: () => this.doctorSend(),
+    };
+  }
+
+
+
+  // ---------- renderVals ----------
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const base = {
+      vortexAnim: motion ? "vx 46s linear infinite" : "none",
+      disclaimer: this.D ? this.D.DISCLAIMER : "",
+      splashShow: false, obShow: false, sheetShow: false, toastShow: false, navShow: false,
+      homeShow: false, mapShow: false, regionShow: false, lessonShow: false, battleShow: false,
+      mmShow: false, duelShow: false, bossBriefShow: false, bossShow: false, memShow: false,
+      badgesShow: false, journalShow: false, charShow: false, doctorShow: false, adminShow: false, bossesShow: false,
+      beginSplash: () => this.beginSplash(),
+      beginLabel: "Knock four times",
+    };
+    if (!this.state.ready || !this.D) return Object.assign(base, { splashShow: true });
+
+    const s = this.state, p = this.p, D = this.D;
+    const li = this.levelInfo();
+    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvBoss", "rvMemory", "rvMeta"];
+    const out = Object.assign(base, {
+      splashShow: s.screen === "splash",
+      obShow: s.screen === "onboard",
+    });
+    for (const k of parts) if (typeof this[k] === "function") Object.assign(out, this[k](s, p, D, li));
+    return out;
+  }
+
+  rvChrome(s, p, D, li) {
+    const due = this.dueList().length;
+    const tabs = [
+      { k: "home", label: "HOME", glyph: "◉" }, { k: "map", label: "MAP", glyph: "❖" },
+      { k: "bosses", label: "BOSSES", glyph: "◈" }, { k: "archive", label: "ARCHIVE", glyph: "▣", badge: due },
+      { k: "doctor", label: "THE DOCTOR", glyph: "✚" },
+    ];
+    return {
+      goHome: () => this.go("home"), goMap: () => this.go("map"), goBosses: () => this.go("bosses"),
+      archiveShow: s.screen === "archive",
+      archiveMemoryBadge: String(due), archiveMemoryBadgeShow: due > 0,
+      goMemory: () => this.go("memory"), goJournal: () => this.go("journal"), goBadges: () => this.go("badges"),
+      goArchive: () => this.go("archive"), goCharacter: () => this.go("character"), goDoctor: () => this.go("doctor"), goAdmin: () => this.go("admin"),
+      back: () => this.back(), boRetry: () => this.bossStart(),
+      toastShow: !!s.toast, toastT: s.toast ? s.toast.t : "", toastSub: s.toast ? s.toast.sub : "",
+      navShow: ["home", "map", "bosses", "archive", "memory", "journal", "badges", "character", "doctor"].includes(s.screen),
+      navItems: tabs.map((t) => {
+        const active = s.screen === t.k;
+        return { label: t.label, glyph: t.glyph, go: () => this.go(t.k),
+          c: active ? "#FFD98F" : "rgba(190,212,245,.55)",
+          sh: active ? "0 0 14px rgba(255,203,107,.9)" : "none",
+          badge: String(t.badge || ""), badgeShow: !!t.badge };
+      }),
+    };
+  }
+
+  rvOnboard(s, p, D) {
+    const last = D.ONBOARDING.length - 1, i = Math.min(s.ob, last), o = D.ONBOARDING[i];
+    return {
+      obSpeaker: o.sp.toUpperCase(), obText: o.t,
+      obDots: D.ONBOARDING.map((_, j) => ({ bg: j <= i ? "#FFCB6B" : "rgba(190,212,245,.25)", sh: j === i ? "0 0 8px rgba(255,203,107,.9)" : "none" })),
+      obDateShow: i === last, obNextShow: i < last,
+      obNext: () => this.obNext(), obJumpDate: () => this.obJumpDate(),
+      obFinish: () => this.obFinish(), obSkip: () => this.obSkip(),
+      onDate: (e) => this.onDate(e), examDate: p.examDate,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
