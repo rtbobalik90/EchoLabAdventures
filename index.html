@@ -282,7 +282,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
     </div>
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(122,180,255,.22);border-radius:20px;padding:13px">
-      <span style="flex:none;width:40px;height:40px;border-radius:14px;background:{{ rgNpcBg }};border:1.5px solid {{ rgAccent }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:{{ rgAccent }}">{{ rgNpcInit }}</span>
+      <span style="flex:none;width:40px;height:40px;border-radius:14px;background:{{ rgNpcBg }};border:1.5px solid {{ rgAccent }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:{{ rgNpcInitC }};background-size:cover;background-position:center;overflow:hidden">{{ rgNpcInit }}</span>
       <div style="display:flex;flex-direction:column;gap:3px">
         <span style="font-size:11.5px;font-weight:900;color:#EAF2FF">{{ rgNpcName }} <span style="font-weight:700;color:rgba(200,220,250,.5)">· {{ rgNpcRole }}</span></span>
         <span style="font-size:12.5px;line-height:1.55;color:rgba(210,228,255,.75)">{{ rgNpcIntro }}</span>
@@ -292,7 +292,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">LESSONS</span>
     <sc-for list="{{ rgLessons }}" as="l" hint-placeholder-count="3">
       <div onClick="{{ l.open }}" style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid {{ l.bd }};border-radius:18px;padding:12px 13px;cursor:pointer">
-        <span style="flex:none;width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:{{ l.nBg }};color:{{ l.nC }};border:1.5px solid {{ l.nBd }}">{{ l.mark }}</span>
+        <span style="flex:none;width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:{{ l.nBg }};background-size:cover;background-position:center;color:{{ l.nC }};border:1.5px solid {{ l.nBd }};box-shadow:{{ l.nSh }}">{{ l.mark }}</span>
         <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
           <span style="font-size:13.5px;font-weight:800;color:#EAF2FF">{{ l.title }}</span>
           <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ l.sub }} · {{ l.qCount }} battle questions</span>
@@ -341,9 +341,14 @@ image-slot{display:block !important;width:100% !important;height:100% !important
         <span style="font-family:'Marcellus',serif;font-size:25px;line-height:1.1;color:#F4F8FF">{{ lessonMenuTitle }}</span>
         <span style="font-size:13px;line-height:1.55;color:rgba(214,232,255,.72)">{{ lessonMenuSub }}</span>
       </div>
+      <sc-if value="{{ lessonMenuHeroShow }}" hint-placeholder-val="{{ false }}">
+        <div style="border-radius:22px;overflow:hidden;border:1.5px solid rgba(59,214,198,.28);background:rgba(7,15,30,.72);box-shadow:0 12px 30px rgba(0,0,0,.28)">
+          <img src="{{ lessonMenuHeroImg }}" alt="{{ lessonMenuTitle }} art" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:center">
+        </div>
+      </sc-if>
       <sc-for list="{{ lessonSectionCards }}" as="sec" hint-placeholder-count="4">
         <div onClick="{{ sec.go }}" style="display:flex;align-items:center;gap:12px;background:linear-gradient(145deg,rgba(13,28,56,.88),rgba(8,17,34,.92));border:1.5px solid {{ sec.bd }};border-radius:20px;padding:15px;cursor:pointer;box-shadow:{{ sec.sh }}">
-          <span style="flex:none;width:44px;height:44px;border-radius:15px;background:{{ sec.iconBg }};border:1.5px solid {{ sec.bd }};display:flex;align-items:center;justify-content:center;color:{{ sec.c }};font-size:16px;font-weight:900">{{ sec.n }}</span>
+          <span style="flex:none;width:54px;height:54px;border-radius:16px;background:{{ sec.iconBg }};background-size:cover;background-position:center;border:1.5px solid {{ sec.bd }};display:flex;align-items:center;justify-content:center;color:{{ sec.c }};font-size:16px;font-weight:900;box-shadow:{{ sec.iconSh }}">{{ sec.n }}</span>
           <div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0">
             <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:{{ sec.c }}">{{ sec.k }}</span>
             <span style="font-size:15px;font-weight:900;color:#F4F8FF;line-height:1.25">{{ sec.t }}</span>
@@ -359,7 +364,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <sc-if value="{{ aiLessonPanelShow }}" hint-placeholder-val="false">
     <div style="display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg,rgba(59,214,198,.10),rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.35);border-radius:22px;padding:15px;margin-bottom:13px;box-shadow:0 0 24px rgba(59,214,198,.08)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="flex:none;width:42px;height:42px;border-radius:15px;background:{{ aiNpcBg }};border:1.5px solid {{ aiNpcBd }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#EAF2FF">{{ aiNpcInit }}</span>
+        <span style="flex:none;width:42px;height:42px;border-radius:15px;background:{{ aiNpcBg }};background-size:cover;background-position:center;border:1.5px solid {{ aiNpcBd }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:{{ aiNpcInitC }};overflow:hidden">{{ aiNpcInit }}</span>
         <div style="flex:1;display:flex;flex-direction:column;min-width:0">
           <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">AI LESSON · TAUGHT BY THE SECTION MENTOR</span>
           <span style="font-size:14px;font-weight:900;color:#F4F8FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ aiTeacher }}</span>
@@ -400,6 +405,11 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   </sc-if>
 
   <div style="display:flex;flex-direction:column;gap:12px;animation:popIn .3s ease">
+    <sc-if value="{{ lsImageShow }}" hint-placeholder-val="{{ false }}">
+      <div style="border-radius:22px;overflow:hidden;border:1.5px solid {{ lsKickBd }};background:rgba(7,15,30,.72);box-shadow:0 12px 30px rgba(0,0,0,.28)">
+        <img src="{{ lsImage }}" alt="{{ lsBeatTitle }} art" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;object-position:center">
+      </div>
+    </sc-if>
     <span style="align-self:flex-start;font-size:9.5px;font-weight:900;letter-spacing:2px;color:{{ lsKickC }};background:{{ lsKickBg }};border:1px solid {{ lsKickBd }};border-radius:999px;padding:6px 12px">{{ lsKicker }}</span>
     <span style="font-family:'Marcellus',serif;font-size:24px;line-height:1.15;color:#F4F8FF">{{ lsBeatTitle }}</span>
     <sc-if value="{{ lsBodyShow }}" hint-placeholder-val="{{ true }}">
@@ -1614,6 +1624,49 @@ class Component extends DCLogic {
     };
     return common.concat(byStyle[style] || byStyle.doctor_10_style).join("\n- ");
   }
+  medbayLessonHero(id) {
+    const map = {
+      mb1: "art/lessons/mb1/mb1-hero-before-the-probe-touches-skin.webp",
+      mb2: "art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
+      mb3: "art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
+    };
+    return map[id] || "";
+  }
+  medbayLessonCard(id) {
+    const map = {
+      mb1: "art/lessons/cards/lesson-medbay-01-card.webp",
+      mb2: "art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
+      mb3: "art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
+    };
+    return map[id] || "";
+  }
+  medbayBeatImage(id, beat) {
+    const map = {
+      mb1: [
+        "art/lessons/mb1/mb1-beat-concept-ois.webp",
+        "art/lessons/mb1/mb1-beat-why-wrong-exam-events.webp",
+        "art/lessons/mb1/mb1-beat-memory-hook-ois.webp",
+        "art/lessons/mb1/mb1-beat-quick-check-identifiers.webp"
+      ],
+      mb2: [
+        "art/lessons/mb2/mb2-beat-concept-positioning.webp",
+        "art/lessons/mb2/mb2-beat-why-ergonomics-infection.webp",
+        "art/lessons/mb2/mb2-beat-memory-hook-tilt-patient-not-spine.webp",
+        "art/lessons/mb2/mb2-beat-quick-check-left-lateral.webp"
+      ],
+      mb3: [
+        "art/lessons/mb3/mb3-beat-concept-explain-not-interpret.webp",
+        "art/lessons/mb3/mb3-beat-why-critical-findings.webp",
+        "art/lessons/mb3/mb3-beat-memory-hook-describe-dont-diagnose.webp",
+        "art/lessons/mb3/mb3-beat-quick-check-effusion-escalation.webp"
+      ]
+    };
+    return map[id] && map[id][beat] ? map[id][beat] : "";
+  }
+  medbayNpcFace(regionId) {
+    return regionId === "medbay" ? "art/npcs/clara-vale-portrait-circle.webp" : "";
+  }
+
   buildJournalAiPrompt(key, h, weak, reason) {
     const D = this.D || {};
     h = h || this.hist(); weak = weak || [];
@@ -1868,11 +1921,11 @@ Return ONLY valid JSON, no markdown:
   // ---------- UNIT Medical Bay intro comic ----------
   medbayComicPages() {
     return [
-      { title: "The Quietest Emergency", img: "art/comic-medbay-page-01-the-quietest-emergency.webp" },
-      { title: "The Wrong Story", img: "art/comic-medbay-page-02-the-wrong-story.webp" },
-      { title: "Order, Identity, Story", img: "art/comic-medbay-page-03-order-identity-story.webp" },
-      { title: "Prepare the Room", img: "art/comic-medbay-page-04-prepare-the-room.webp" },
-      { title: "Before the Probe Touches Skin", img: "art/comic-medbay-page-05-before-the-probe-touches-skin.webp" },
+      { title: "The Quietest Emergency", img: "art/comics/medbay/page-01-the-quietest-emergency.webp" },
+      { title: "The Wrong Story", img: "art/comics/medbay/page-02-the-wrong-story.webp" },
+      { title: "Order, Identity, Story", img: "art/comics/medbay/page-03-order-identity-story.webp" },
+      { title: "Prepare the Room", img: "art/comics/medbay/page-04-prepare-the-room.webp" },
+      { title: "Before the Probe Touches Skin", img: "art/comics/medbay/page-05-before-the-probe-touches-skin.webp" },
     ];
   }
   openRegion(id, opts) {
@@ -2602,14 +2655,19 @@ Return ONLY valid JSON, no markdown:
       rgName: r.name, rgTagline: r.tagline,
       rgMasteryPct: String(Math.round(m * 100)), rgMasteryLabel: ml, rgMlC: mc,
       rgDoctorIntro: r.doctorIntro,
-      rgNpcBg: r.accent + "18", rgNpcInit: r.npc.init, rgNpcName: r.npc.name, rgNpcRole: r.npc.role, rgNpcIntro: r.npc.intro,
-      rgHeroShow: r.id === "medbay", rgHeroImg: r.id === "medbay" ? "art/unit-medbay-hub.webp" : "", rgReplayIntro: () => this.replayMedbayIntro(),
+      rgNpcBg: this.medbayNpcFace(r.id) ? "url('" + this.medbayNpcFace(r.id) + "') center/cover" : r.accent + "18",
+      rgNpcInit: this.medbayNpcFace(r.id) ? "" : r.npc.init,
+      rgNpcInitC: this.medbayNpcFace(r.id) ? "transparent" : r.accent,
+      rgNpcName: r.npc.name, rgNpcRole: r.npc.role, rgNpcIntro: r.npc.intro,
+      rgHeroShow: r.id === "medbay", rgHeroImg: r.id === "medbay" ? "art/regions/medbay/unit-medbay-hub.webp" : "", rgReplayIntro: () => this.replayMedbayIntro(),
       rgLessons: r.lessons.map((id, i) => {
         const L = D.LESSONS[id], done = this.lessonDone(id);
+        const cardImg = r.id === "medbay" ? this.medbayLessonCard(id) : "";
         return { title: L.title, sub: L.sub, qCount: String(L.battle.length),
-          mark: done ? "✓" : String(i + 1),
-          nBg: done ? "rgba(59,214,198,.15)" : "rgba(245,184,74,.12)",
-          nC: done ? "#7FE7DB" : "#FFD98F", nBd: done ? "rgba(59,214,198,.5)" : "rgba(245,184,74,.4)",
+          mark: cardImg ? (done ? "✓" : "") : (done ? "✓" : String(i + 1)),
+          nBg: cardImg ? "linear-gradient(rgba(7,15,30,.05),rgba(7,15,30,.2)), url('" + cardImg + "') center/cover" : (done ? "rgba(59,214,198,.15)" : "rgba(245,184,74,.12)"),
+          nC: cardImg ? "#FFFFFF" : (done ? "#7FE7DB" : "#FFD98F"), nBd: done ? "rgba(59,214,198,.5)" : "rgba(245,184,74,.4)",
+          nSh: cardImg ? "0 0 18px rgba(59,214,198,.16)" : "none",
           bd: done ? "rgba(59,214,198,.3)" : "rgba(122,180,255,.22)",
           open: () => this.startLesson(id) };
       }),
@@ -2639,7 +2697,8 @@ Return ONLY valid JSON, no markdown:
       const isTry = !!b.q, isHook = b.k === "MEMORY HOOK";
       const c = isTry ? "#7FE7DB" : isHook ? "#FFD98F" : i === 0 ? (region.accent || "#3BD6C6") : "#9CC5FF";
       const sub = b.q ? "Quick check before the drill" : (b.b || "").replace(/\s+/g, " ").slice(0, 92) + ((b.b || "").length > 92 ? "…" : "");
-      return { n: String(i + 1), k: b.k || "SECTION", t: b.t || "Lesson section", sub, c, bd: c + "66", iconBg: c + "18", sh: i === 0 ? "0 0 18px " + c + "18" : "none", go: () => this.selectLessonSection(i) };
+      const img = region.id === "medbay" ? this.medbayBeatImage(L.id, i) : "";
+      return { n: img ? "" : String(i + 1), k: b.k || "SECTION", t: b.t || "Lesson section", sub, c, bd: c + "66", iconBg: img ? "linear-gradient(rgba(7,15,30,.08),rgba(7,15,30,.12)), url('" + img + "') center/cover" : c + "18", iconSh: img ? "0 0 18px " + c + "22" : "none", sh: i === 0 ? "0 0 18px " + c + "18" : "none", go: () => this.selectLessonSection(i) };
     });
     if (inMenu) {
       return {
