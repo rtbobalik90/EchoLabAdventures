@@ -1928,19 +1928,195 @@ Return ONLY valid JSON, no markdown:
     const L = this.D.LESSONS[id];
     const r = this.D.REGIONS.find((x) => x.id === L.region) || {};
     const npc = r.npc || { name: "the section mentor", role: "EchoLab mentor" };
-    const styleNote = r.id === "medbay" ? "Teach as the UNIT Medical Bay NPC mentor, calm, practical, patient-safety-first, with The Doctor nearby as a possible helper." : "Teach as the region NPC mentor, with light EchoLab story atmosphere.";
-    return `Create the default AI lesson for EchoLab. This lesson will be shown before the built-in fallback lesson.\n\n${styleNote}\nVisible teacher for this lesson: ${npc.name}, ${npc.role}. The NPC should teach the lesson directly. Learner is Lizzie. The Doctor may be mentioned as available for help, but this lesson is taught by the NPC.\n\nSOURCE / ACCURACY RULES:\n- Use the supplied EchoLab local lesson data below as the primary source.\n- Align clinical safety, patient-care, emergency, and cardiovascular-care statements with American Heart Association guidance where relevant.\n- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.\n- Do NOT invent thresholds, measurements, formulas, or guideline claims. If a cutoff is not in the supplied source or you are not certain, write: “Verify the exact cutoff in the EchoLab source library before memorizing it.”\n- No patient-specific diagnosis or treatment instructions.\n- Keep it medically careful and test-prep useful.\n\nSTYLE:\n- EchoLab magical medical sci-fi RPG world, but the teaching must be clear and grounded.\n- Hybrid feel: real clinical workflow + story adventure.\n- No numbered Doctor labels. No regeneration. No hidden backend language.\n- Short paragraphs, mobile-friendly, not a wall of text.\n\nTEACHING LEVEL: ${this.teachingLevel()}\n\nReturn ONLY valid JSON, no markdown. Preserve the lesson as a sequence of sections matching the supplied EchoLab lesson beats. Do not compress all beats into one long lesson. Each section should correspond to one beat in order. For a built-in TRY IT / quick-check beat, create a short section that introduces the question without giving away the answer.\n\nRequired JSON shape:\n{\n  "title":"lesson title",\n  "teacher":"NPC teacher name",\n  "opening":"short in-character opening from the NPC",\n  "learningGoals":["goal 1","goal 2","goal 3"],\n  "sections":[\n    {\n      "kicker":"CONCEPT / WHY IT MATTERS / MEMORY HOOK / TRY IT",\n      "title":"section title matching this beat",\n      "story":"1-2 short paragraphs taught by the NPC inside the EchoLab scene",\n      "clinical":"clear clinical or workflow teaching for this exact beat",\n      "examAngle":"how this exact beat may show up on a CCI-style exam",\n      "safetyNote":"patient-safety/AHA-relevant note if relevant, otherwise empty string",\n      "memoryHook":"short sticky memory phrase if relevant, otherwise empty string",\n      "doctorHelpPrompt":"short prompt Lizzie can send to The Doctor about this exact section"\n    }\n  ],\n  "doctorHelpPrompt":"overall prompt Lizzie can send to The Doctor if confused"\n}\n\nRules for sections:\n- The sections array MUST have the same number of items and same order as the local lesson beats.\n- Do not merge Verify, Wrong-exam events, and Memory Hook into one block. They must remain separate screens.\n- Keep each section mobile-friendly: short paragraphs, strong teaching, no wall of text.\n- If the source beat includes a practice question, do not reveal the answer in that section text; the app will display the interactive question separately.\n\nLOCAL ECHOLAB SOURCE DATA:\n${this.lessonSourceContext(id)}`;
+    const lessonBeats = (L.beats || []).map((b, i) => `${i + 1}. ${b.k}: ${b.t}`).join("\n");
+    return `You are the EchoLab Lesson Architect.
+
+Your job is to generate story-driven echocardiography lessons for EchoLab, a magical medical sci-fi RPG study app designed to help Lizzie learn adult echocardiography and prepare for the CCI Registered Cardiac Sonographer exam.
+
+You are not a generic curriculum writer. You are building immersive lessons where NPCs teach, guide, challenge, correct, and encourage Lizzie inside the EchoLab world.
+
+CORE PURPOSE:
+Every lesson must help Lizzie understand echocardiography concepts, prepare for CCI-style exam questions, recognize images/views/waveforms/measurements/patterns when relevant, learn through guided practice, and feel like she is progressing through a living story world.
+
+PRIMARY SUBJECT AREA:
+Adult echocardiography, echo lab workflow, patient preparation, standard imaging windows, 2D echo, M-mode, Doppler, hemodynamics, valvular disease, chamber quantification, LV/RV function, diastology, pericardial disease, wall motion, stress echo basics, common exam traps, and CCI-style reasoning.
+
+SOURCE AND ACCURACY RULES:
+- Use the supplied EchoLab local lesson data as the primary source of truth.
+- Align patient-care and cardiovascular safety statements with American Heart Association guidance where relevant.
+- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.
+- Do not invent clinical cutoffs, formulas, measurement ranges, diagnostic criteria, or guideline statements.
+- If a specific threshold is needed but not supplied, write exactly: "VERIFY IN SOURCE LIBRARY: exact cutoff needed here."
+- Never create fake citations. Never claim a detail comes from CCI, AHA, ASE, or another source unless supplied.
+- No patient-specific diagnosis or treatment instructions.
+
+NPC TEACHING ROLE:
+Visible teacher: ${npc.name}, ${npc.role}.
+The NPC teaches the lesson directly. The Doctor may appear as a guide or helper, but this lesson is taught by the NPC.
+NPC voice for UNIT Medical Bay should be warm, practical, calm, patient-safety focused, clear, and encouraging.
+Do not make the NPC sound like The Doctor.
+
+ECHO LAB WORLD TONE:
+Use light story language such as echo chambers, memory fragments, holo-panels, diagnostic clues, case files, patient stories, mission briefings, and scan portals. Keep the actual education clear and medically accurate.
+
+TEACHING LEVEL: ${this.teachingLevel() || "intermediate"}
+
+DOCTOR SAFETY:
+No numbered Doctor labels. No regeneration. No future Doctor changes. No hidden backend language. Do not copy protected dialogue or exact catchphrases.
+
+IMPORTANT STRUCTURE RULE:
+This app displays the lesson one section/screen at a time. You MUST preserve the built-in lesson beat structure. Do not merge all lesson beats into one long answer.
+
+LOCAL LESSON BEATS TO PRESERVE, IN ORDER:
+${lessonBeats}
+
+Return ONLY valid JSON. No markdown. No commentary before or after the JSON.
+
+Required JSON shape:
+{
+  "schema":"echolab_ai_lesson_sections_v2",
+  "lessonName":"${L.title}",
+  "lessonObjective":"one focused objective for Lizzie",
+  "primaryNpc":"${npc.name}",
+  "setting":"${r.name || L.region}",
+  "opening":"2 short sentences from the NPC that introduce the mission",
+  "learningGoals":["goal 1","goal 2","goal 3"],
+  "sections":[
+    {
+      "kicker":"same beat label, such as CONCEPT, WHY IT MATTERS, MEMORY HOOK, or TRY IT",
+      "title":"same core section title as the matching beat",
+      "storySetup":"1 short paragraph. Set the EchoLab scene for this section only.",
+      "npcTeaching":["short paragraph 1 from the NPC", "short paragraph 2 from the NPC"],
+      "coreConcept":["clear teaching point 1", "clear teaching point 2", "clear teaching point 3"],
+      "whatLizzieMustRemember":["must remember 1", "must remember 2"],
+      "visualGameMoment":"describe what Lizzie sees on the med-bay holo-panel or game scene",
+      "cciExamAngle":"how this exact section may appear on a CCI-style exam",
+      "commonTraps":["trap 1", "trap 2"],
+      "guidedPractice":"one short active-recall prompt for Lizzie",
+      "safetyNote":"patient-safety/AHA-relevant note if relevant, otherwise empty string",
+      "memoryHook":"short sticky memory phrase if relevant, otherwise empty string",
+      "doctorHelpPrompt":"short prompt Lizzie can send to The Doctor about this exact section"
+    }
+  ],
+  "reward":"badge, artifact, unlock, or journal moment connected to the lesson",
+  "nextLessonHook":"short story bridge to the next concept",
+  "doctorHelpPrompt":"overall prompt Lizzie can send to The Doctor if confused"
+}
+
+Rules for sections:
+- sections.length MUST equal the number of local lesson beats.
+- Each section must match the corresponding local beat in order.
+- Each section must have paragraph breaks by using arrays for npcTeaching, coreConcept, whatLizzieMustRemember, and commonTraps.
+- Keep each field mobile-friendly. No giant paragraphs.
+- For TRY IT / quick-check beats, introduce the thinking skill but do NOT reveal the correct answer. The app will display the interactive question separately.
+- Every section should include active recall and a CCI exam angle.
+
+QUALITY CHECK BEFORE FINALIZING:
+Accurate, focused, NPC voice distinct, Lizzie actively learning, CCI connection, uncertain cutoffs marked, story fun without burying teaching, no wall of text.
+
+LOCAL ECHOLAB SOURCE DATA:
+${this.lessonSourceContext(id)}`;
   }
+
+  normalizeAiLessonData(data, id) {
+    const L = this.D.LESSONS[id];
+    const r = this.D.REGIONS.find((x) => x.id === L.region) || {};
+    const npc = r.npc || { name: "Section Mentor", role: "EchoLab mentor" };
+    if (!data || typeof data !== "object") throw new Error("AI lesson came back empty.");
+    let sections = Array.isArray(data.sections) ? data.sections : (Array.isArray(data.lessonSections) ? data.lessonSections : (Array.isArray(data.beats) ? data.beats : []));
+    if (!sections.length && data.storyLesson) {
+      sections = (L.beats || []).map((b, i) => ({
+        kicker: b.k, title: b.t,
+        storySetup: i === 0 ? data.opening || "" : "",
+        npcTeaching: [data.storyLesson].filter(Boolean),
+        coreConcept: Array.isArray(data.clinicalCore) ? data.clinicalCore : [],
+        whatLizzieMustRemember: data.memoryHook ? [data.memoryHook] : [],
+        visualGameMoment: "",
+        cciExamAngle: data.examAngle || "",
+        commonTraps: [], guidedPractice: data.checkQuestion || "",
+        safetyNote: data.safetyNote || "", memoryHook: data.memoryHook || "",
+        doctorHelpPrompt: data.doctorHelpPrompt || ""
+      }));
+    }
+    if (!sections.length) throw new Error("AI lesson came back in the wrong section format.");
+    sections = (L.beats || []).map((beat, i) => {
+      const src = sections[i] || {};
+      const asArray = (v) => Array.isArray(v) ? v.filter(Boolean).map(String) : (v ? String(v).split(/\n\s*\n|\n-\s+|\n•\s+/).map((x) => x.trim()).filter(Boolean) : []);
+      return {
+        kicker: src.kicker || beat.k,
+        title: src.title || beat.t,
+        storySetup: src.storySetup || src.story || src.setting || "",
+        npcTeaching: asArray(src.npcTeaching || src.teaching || src.explanation || src.body),
+        coreConcept: asArray(src.coreConcept || src.clinical || src.clinicalCore || src.coreTeaching),
+        whatLizzieMustRemember: asArray(src.whatLizzieMustRemember || src.mustRemember || src.keyPoints || src.remember),
+        visualGameMoment: src.visualGameMoment || src.visual || "",
+        cciExamAngle: src.cciExamAngle || src.examAngle || "",
+        commonTraps: asArray(src.commonTraps || src.traps),
+        guidedPractice: src.guidedPractice || src.practice || src.checkQuestion || "",
+        safetyNote: src.safetyNote || "",
+        memoryHook: src.memoryHook || "",
+        doctorHelpPrompt: src.doctorHelpPrompt || data.doctorHelpPrompt || `I am confused about ${L.title}, section ${beat.t}. Please explain it clearly and quiz me once.`
+      };
+    });
+    return {
+      schema: "echolab_ai_lesson_sections_v2",
+      title: data.lessonName || data.title || L.title,
+      teacher: data.primaryNpc || data.teacher || npc.name,
+      setting: data.setting || r.name || L.region,
+      opening: data.opening || "",
+      learningGoals: Array.isArray(data.learningGoals) ? data.learningGoals : [],
+      sections,
+      reward: data.reward || "",
+      nextLessonHook: data.nextLessonHook || "",
+      doctorHelpPrompt: data.doctorHelpPrompt || `Help me understand ${L.title} at my current teaching level.`
+    };
+  }
+
+  formatAiSectionBody(sec) {
+    if (!sec) return "";
+    const lines = [];
+    const add = (label, value) => {
+      if (!value) return;
+      if (Array.isArray(value)) {
+        const clean = value.filter(Boolean).map(String);
+        if (!clean.length) return;
+        lines.push(label + ":\n" + clean.map((x) => "• " + x).join("\n"));
+      } else {
+        const txt = String(value).trim();
+        if (txt) lines.push(label + ":\n" + txt);
+      }
+    };
+    if (sec.storySetup) lines.push(String(sec.storySetup).trim());
+    add("NPC teaching", sec.npcTeaching);
+    add("Core concept", sec.coreConcept);
+    add("What Lizzie must remember", sec.whatLizzieMustRemember);
+    add("Visual / game moment", sec.visualGameMoment);
+    add("CCI exam angle", sec.cciExamAngle);
+    add("Common traps", sec.commonTraps);
+    add("Guided practice", sec.guidedPractice);
+    add("Safety note", sec.safetyNote);
+    add("Memory hook", sec.memoryHook);
+    return lines.filter(Boolean).join("\n\n");
+  }
+
   async ensureAiLesson(id, force) {
     if (!id || !this.p || !this.D || !this.D.LESSONS[id]) return;
-    if (!force && this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok && this.p.aiLessons[id].data && Array.isArray(this.p.aiLessons[id].data.sections)) return;
+    if (!force && this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok && this.p.aiLessons[id].data && this.p.aiLessons[id].data.schema === "echolab_ai_lesson_sections_v2" && Array.isArray(this.p.aiLessons[id].data.sections)) return;
     if (!this.p.apiKey) { return; }
     if (this.state.aiLessonBusyId === id) return;
     this.setState({ aiLessonBusyId: id, aiLessonStatus: "Building the AI lesson with the section mentor..." });
     try {
-      const txt = await this.callClaude(this.buildAiLessonPrompt(id), 1800);
+      const txt = await this.callClaude(this.buildAiLessonPrompt(id), 3600, this.lessonArchitectSystem());
       let data = null;
-      try { data = JSON.parse(txt.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim()); } catch(e) {}
+      const cleaned = txt.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+      try { data = JSON.parse(cleaned); } catch(e) {
+        const a = cleaned.indexOf("{");
+        const b = cleaned.lastIndexOf("}");
+        if (a >= 0 && b > a) {
+          try { data = JSON.parse(cleaned.slice(a, b + 1)); } catch(e2) {}
+        }
+      }
+      data = this.normalizeAiLessonData(data, id);
       if (!data || !Array.isArray(data.sections) || !data.sections.length) throw new Error("AI lesson came back in the wrong section format.");
       this.p.aiLessons = this.p.aiLessons || {};
       this.p.aiLessons[id] = { ok: true, at: Date.now(), data };
@@ -2257,7 +2433,7 @@ Return ONLY valid JSON, no markdown:
       lsKicker: aiSection && aiSection.kicker ? aiSection.kicker : beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
       lsBeatTitle: aiPending ? "Preparing the AI lesson…" : (aiSection && aiSection.title ? aiSection.title : beat.t),
       lsBodyShow: aiPending ? true : !isTry,
-      lsBody: aiPending ? "Nurse Clara Vale is building this lesson from the approved EchoLab source material. If the AI lesson cannot load, the built-in lesson will appear automatically." : (aiSection ? [aiSection.story || "", aiSection.clinical ? "Clinical core: " + aiSection.clinical : "", aiSection.examAngle ? "Exam angle: " + aiSection.examAngle : "", aiSection.safetyNote ? "Safety note: " + aiSection.safetyNote : "", aiSection.memoryHook ? "Memory hook: " + aiSection.memoryHook : ""].filter(Boolean).join("\n\n") : (beat.b || "")),
+      lsBody: aiPending ? "Nurse Clara Vale is building this lesson from the approved EchoLab source material. If the AI lesson cannot load, the built-in lesson will appear automatically." : (aiSection ? this.formatAiSectionBody(aiSection) : (beat.b || "")),
       lsBodyC: isHook ? "#FFEBC9" : "rgba(228,240,255,.92)",
       lsCardBg: isHook ? "rgba(245,184,74,.09)" : "rgba(13,28,56,.66)",
       lsCardBd: isHook ? "rgba(245,184,74,.4)" : "rgba(122,180,255,.22)",
@@ -2607,7 +2783,11 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
     if (typeof data.output_text === "string") return data.output_text;
     return "";
   }
-  async callClaude(input, maxTokens) {
+  lessonArchitectSystem() {
+    return `You are the EchoLab Lesson Architect. Generate story-driven adult echocardiography lessons for EchoLab, a magical medical sci-fi RPG study app. Use the supplied EchoLab lesson source as primary truth. Align patient-safety and cardiovascular-care statements with American Heart Association guidance where relevant. Align exam framing with CCI RCS-style adult echocardiography objectives. Never invent cutoffs, formulas, diagnostic criteria, or guideline claims. If a threshold is needed but not supplied, write: VERIFY IN SOURCE LIBRARY: exact cutoff needed here. Lessons are taught by the section NPC, not The Doctor, unless the prompt says otherwise. Return only valid JSON when asked for JSON. Keep content mobile-friendly with paragraph breaks and arrays, not walls of text. No numbered Doctor labels. No regeneration. No future Doctor changes.`;
+  }
+
+  async callClaude(input, maxTokens, systemOverride) {
     const key = (this.p.apiKey || "").trim();
     if (!key) throw new Error("No Claude API key saved in Admin.");
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -2621,7 +2801,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       body: JSON.stringify({
         model: this.p.aiModel || "claude-haiku-4-5",
         max_tokens: maxTokens || 900,
-        system: this.doctorInstructions(),
+        system: systemOverride || this.doctorInstructions(),
         messages: [{ role: "user", content: input }]
       })
     });
