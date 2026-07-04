@@ -643,6 +643,15 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       <span style="font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ mtCaseTagC }};border:1px solid {{ mtCaseTagBd }};border-radius:999px;padding:5px 8px;white-space:nowrap">{{ mtCaseTag }}</span>
     </div>
 
+    <sc-if value="{{ mtCaseImgShow }}" hint-placeholder-val="{{ true }}">
+      <div style="position:relative;border-radius:22px;overflow:hidden;border:1.5px solid rgba(59,214,198,.3);background:rgba(7,15,30,.72);box-shadow:0 12px 34px rgba(0,0,0,.35);margin-bottom:12px">
+        <img src="{{ mtCaseImg }}" alt="{{ mtCaseTitle }} case art" style="width:100%;display:block;aspect-ratio:3/2;object-fit:cover;object-position:center">
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:30px 12px 10px;background:linear-gradient(180deg, transparent, rgba(3,7,16,.82))">
+          <span style="font-size:8.5px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">CASE ART · SPOT THE CLUE</span>
+        </div>
+      </div>
+    </sc-if>
+
     <div style="display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg, rgba(59,214,198,.10), rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.26);border-radius:22px;padding:15px;margin-bottom:12px">
       <div style="display:flex;align-items:flex-start;gap:10px">
         <span style="flex:none;width:42px;height:42px;border-radius:14px;background:rgba(59,214,198,.12);border:1.5px solid rgba(59,214,198,.55);display:flex;align-items:center;justify-content:center;font-size:18px;color:#7FE7DB">{{ mtCaseGlyph }}</span>
@@ -724,6 +733,9 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <sc-if value="{{ mtDoneShow }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
       <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">SHIFT COMPLETE</span>
+      <div style="width:100%;max-width:360px;border-radius:22px;overflow:hidden;border:1.5px solid rgba(59,214,198,.3);background:rgba(7,15,30,.72);box-shadow:0 12px 34px rgba(0,0,0,.35)">
+        <img src="{{ mtDoneImg }}" alt="Med Bay shift complete" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:center">
+      </div>
       <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ mtDoneTitle }}</span>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(59,214,198,.35);border-radius:18px;padding:13px 18px;min-width:95px">
@@ -2340,7 +2352,7 @@ Return ONLY valid JSON, no markdown:
   medbayTriageCases() {
     return [
       {
-        title: "The Mismatched Wristband", tag: "PAUSE & VERIFY", glyph: "⌁",
+        title: "The Mismatched Wristband", tag: "PAUSE & VERIFY", glyph: "⌁", img: "art/MedBay/art/medtriage/medtriage-case-01-mismatched-wristband.webp",
         scene: "A patient arrives calmly, but the details don't line up.",
         patient: "Vell Tiran", wristband: "Wristband DOB: 04/17/2148", order: "Transthoracic echocardiogram", indication: "Order DOB: 03/11/2119 · Indication: chest pain",
         note: "The patient says, ‘My appointment nearly disappeared in the system this morning.’",
@@ -2359,7 +2371,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Wrong coordinates, wrong destination. The TARDIS hates that. So does patient safety."
       },
       {
-        title: "The Missing Indication", tag: "CLINICAL STORY", glyph: "☍",
+        title: "The Missing Indication", tag: "CLINICAL STORY", glyph: "☍", img: "art/MedBay/art/medtriage/medtriage-case-02-missing-indication.webp",
         scene: "The patient is ready, but the order doesn't tell the full story.",
         patient: "Marin Sol", wristband: "Verified: full name + DOB match", order: "TTE ordered", indication: "Indication field blank · Prior study 6 months ago",
         note: "The patient says, ‘They told me it was because of shortness of breath, I think.’",
@@ -2378,7 +2390,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "No one scans blind on my watch. Not in space, not in time, and definitely not in a lab."
       },
       {
-        title: "The Unready Room", tag: "PREP THE BAY", glyph: "⚕",
+        title: "The Unready Room", tag: "PREP THE BAY", glyph: "⚕", img: "art/MedBay/art/medtriage/medtriage-case-03-unready-room.webp",
         scene: "The case is correct, but the environment is not.",
         patient: "Etta Rowan", wristband: "Verified: full name + DOB match", order: "TTE for murmur evaluation", indication: "Room note: bed high, chair low, probe not yet disinfected",
         note: "The patient is supine and uncomfortable. The transducer station shows low-level disinfection not completed after the previous case.",
@@ -2397,7 +2409,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Tilt the patient, not your spine. Heroic? Yes. Preventable shoulder injury? Absolutely not."
       },
       {
-        title: "The Results Question", tag: "EXPLAIN SAFELY", glyph: "✦",
+        title: "The Results Question", tag: "EXPLAIN SAFELY", glyph: "✦", img: "art/MedBay/art/medtriage/medtriage-case-04-results-question.webp",
         scene: "Everything is in order, then the patient asks the question every learner eventually hears.",
         patient: "Hadi Neral", wristband: "Verified: full name + DOB match", order: "TTE for LV function", indication: "Patient asks, ‘Is my heart okay?’",
         note: "The scan is underway. The patient looks worried and wants an answer immediately.",
@@ -2416,7 +2428,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Journey, not destination. We can narrate the trip beautifully without spoiling the ending."
       },
       {
-        title: "The Red-Flag Finding", tag: "ESCALATE NOW", glyph: "⚠",
+        title: "The Red-Flag Finding", tag: "ESCALATE NOW", glyph: "⚠", img: "art/MedBay/art/medtriage/medtriage-case-05-red-flag-finding.webp",
         scene: "The study uncovers a finding that should not wait quietly in a report queue.",
         patient: "Oren Pell", wristband: "Verified: full name + DOB match", order: "TTE for hypotension", indication: "Large pericardial effusion with RV collapse seen on images",
         note: "The patient is still in the room. The worksheet is open. This looks unstable.",
@@ -2444,7 +2456,7 @@ Return ONLY valid JSON, no markdown:
   mtPickClue(i) {
     const m = this.state.medtriage; if (!m || m.done || m.stage !== "clue") return;
     m.cluePicked = i; m.stage = "action"; this.markActive();
-    if (m.cases[m.i].clueAnswer === i) this.sGood(); else { m.sBad(); m.safety = Math.max(0, m.safety - 5); }
+    if (m.cases[m.i].clueAnswer === i) this.sGood(); else { this.sBad(); m.safety = Math.max(0, m.safety - 5); }
     this.forceUpdate();
   }
   mtPickAction(key) {
@@ -2490,7 +2502,7 @@ Return ONLY valid JSON, no markdown:
       mtRound: String((m.i || 0) + 1), mtRounds: String((m.cases || []).length),
       mtSafety: String(m.safety), mtSafetyWidth: String(Math.max(0, Math.min(100, m.safety))), mtSafetyColor: safetyColor, mtSafetyGlow: safetyColor + '66',
       mtStreak: String(m.streak || 0), mtCaseTag: c.tag || 'CASE', mtCaseTagC: c.tag === 'ESCALATE NOW' ? '#FFB49E' : '#7FE7DB', mtCaseTagBd: c.tag === 'ESCALATE NOW' ? 'rgba(244,121,91,.45)' : 'rgba(59,214,198,.4)',
-      mtCaseGlyph: c.glyph || '✚', mtCaseTitle: c.title || '', mtCaseScene: c.scene || '', mtPatient: c.patient || '', mtWristband: c.wristband || '', mtOrder: c.order || '', mtIndication: c.indication || '', mtCaseNote: c.note || '',
+      mtCaseGlyph: c.glyph || '✚', mtCaseTitle: c.title || '', mtCaseScene: c.scene || '', mtCaseImg: c.img || '', mtCaseImgShow: !!c.img, mtPatient: c.patient || '', mtWristband: c.wristband || '', mtOrder: c.order || '', mtIndication: c.indication || '', mtCaseNote: c.note || '',
       mtClues: (c.clues || []).map((t, i) => {
         let bg = 'rgba(13,28,56,.7)', bd = 'rgba(122,180,255,.25)', mk = String(i + 1), mkC = 'rgba(190,212,245,.65)', sh = 'none';
         if (m.cluePicked >= 0) {
@@ -2518,7 +2530,7 @@ Return ONLY valid JSON, no markdown:
       mtWhy: c.why || '', mtNpcLine: c.npc || '', mtDoctorLine: c.doctor || '',
       mtNext: () => this.mtNext(), mtNextLabel: m.i + 1 < (m.cases || []).length ? 'Next case →' : 'Finish the shift',
       mtDoneTitle: m.cleared === (m.cases || []).length ? 'Five patients. Timeline stable.' : (m.cleared >= 3 ? 'The Med Bay holds.' : 'The shift needs another pass.'),
-      mtCleared: String(m.cleared || 0), mtFinalSafety: String(m.safety || 0),
+      mtCleared: String(m.cleared || 0), mtFinalSafety: String(m.safety || 0), mtDoneImg: "art/MedBay/art/medtriage/medtriage-shift-complete.webp",
       mtDoneMsg: m.cleared === (m.cases || []).length ? 'You cleared every case before the probe touched skin. Clara Vale logged a clean chain, and The Doctor is already calling it a fixed point in the shift.' : 'Not every case was stabilized on the first pass. That is still useful. Review the problem patterns, then run the shift again and strengthen the chain.',
       mtRestart: () => this.startMedTriage(),
     });
