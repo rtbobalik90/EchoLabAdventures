@@ -25,6 +25,10 @@ input,textarea,select,button{font-size:16px !important;touch-action:manipulation
 input[type="date"]{color-scheme:dark}
 x-dc{display:block}
 image-slot{display:block !important;width:100% !important;height:100% !important}
+.el-chat-scroll::-webkit-scrollbar{width:0;height:0}
+.el-chat-scroll{scrollbar-width:none}
+.el-doctor-home-card{transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease}
+.el-doctor-home-card:active{transform:scale(.985)}
 .el-doctor-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%}
 </style>
 </helmet>
@@ -129,14 +133,15 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
   <!-- lower stack -->
   <div style="position:absolute;left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom));z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px;box-sizing:border-box">
-    <div style="display:flex;gap:11px;align-items:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:12px 13px;backdrop-filter:blur(8px)">
-      <div style="flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.55)">
+    <div class="el-doctor-home-card" onClick="{{ goDoctor }}" style="display:flex;gap:11px;align-items:center;background:linear-gradient(135deg, rgba(9,19,38,.9), rgba(13,35,64,.88));border:1.5px solid rgba(59,214,198,.36);border-radius:24px;padding:12px 13px;backdrop-filter:blur(8px);box-shadow:0 0 28px rgba(59,214,198,.08);cursor:pointer">
+      <div style="flex:none;width:50px;height:50px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.7);box-shadow:0 0 18px rgba(59,214,198,.18)">
         <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
-        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#7FE7DB">{{ doctorName }}</span>
-        <span style="font-size:12px;line-height:1.45;font-style:italic;color:rgba(224,238,255,.88)">{{ doctorDaily }}</span>
+      <div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0">
+        <span style="font-size:8.5px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">ASK THE DOCTOR</span>
+        <span style="font-size:12px;line-height:1.45;font-style:italic;color:rgba(224,238,255,.9)">{{ doctorDaily }}</span>
       </div>
+      <span style="flex:none;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:18px;font-weight:900;box-shadow:0 0 18px rgba(255,203,107,.24)">+</span>
     </div>
     <div style="display:flex;gap:9px">
       <div onClick="{{ openSheet }}" style="flex:1.2;display:flex;align-items:center;gap:9px;background:rgba(9,19,38,.82);border:1px solid rgba(59,214,198,.32);border-radius:16px;padding:10px 12px;backdrop-filter:blur(8px);cursor:pointer">
@@ -821,53 +826,54 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== THE DOCTOR CHAT ===================== -->
 <sc-if value="{{ doctorShow }}" hint-placeholder-val="false">
-<div data-screen-label="The Doctor" style="position:relative;height:100dvh;max-height:100dvh;padding:calc(12px + env(safe-area-inset-top)) 12px calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;display:flex;flex-direction:column;gap:10px;overflow:hidden">
-  <div style="position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.22), transparent 70%);filter:blur(12px);pointer-events:none"></div>
-  <div style="position:relative;display:flex;align-items:center;gap:10px">
+<div data-screen-label="The Doctor" style="position:relative;height:100dvh;max-height:100dvh;padding:calc(10px + env(safe-area-inset-top)) 10px calc(8px + env(safe-area-inset-bottom));box-sizing:border-box;display:flex;flex-direction:column;gap:8px;overflow:hidden;background:radial-gradient(90% 45% at 50% -10%, rgba(59,214,198,.16), transparent 55%), #060D1B">
+  <div style="position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.20), transparent 70%);filter:blur(12px);pointer-events:none"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:9px;flex:none">
     <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="flex:1;display:flex;align-items:center;gap:10px;min-width:0">
-      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.7);box-shadow:0 0 18px rgba(245,184,74,.25)"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.75);box-shadow:0 0 18px rgba(245,184,74,.25);background:#081226"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
       <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
         <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF;line-height:1">The Doctor</span>
-        <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7FE7DB">ECHOLAB STUDY MENTOR</span>
+        <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7FE7DB">LIVE STUDY ROOM · {{ doctorAiChip }}</span>
       </div>
     </div>
+    <span onClick="{{ doctorClear }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:34px;border-radius:999px;padding:0 11px;background:rgba(13,28,56,.6);border:1px solid rgba(122,180,255,.22);color:rgba(224,238,255,.72);font-size:9px;font-weight:900;letter-spacing:1px;cursor:pointer">NEW</span>
   </div>
 
-  <div style="position:relative;display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch">
+  <div style="position:relative;display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;flex:none">
     <sc-for list="{{ doctorLevels }}" as="lv" hint-placeholder-count="4">
-      <div onClick="{{ lv.pick }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:34px;border-radius:999px;padding:0 12px;background:{{ lv.bg }};border:1.5px solid {{ lv.bd }};color:{{ lv.c }};font-size:9.5px;font-weight:900;letter-spacing:1px;cursor:pointer;white-space:nowrap">{{ lv.label }}</div>
+      <div onClick="{{ lv.pick }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:32px;border-radius:999px;padding:0 11px;background:{{ lv.bg }};border:1.5px solid {{ lv.bd }};color:{{ lv.c }};font-size:9px;font-weight:900;letter-spacing:.9px;cursor:pointer;white-space:nowrap">{{ lv.label }}</div>
     </sc-for>
   </div>
 
-  <div style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(7,15,30,.48);border:1px solid rgba(122,180,255,.18);border-radius:22px;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain">
+  <div class="el-chat-scroll" style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(7,15,30,.42);border:1px solid rgba(122,180,255,.16);border-radius:22px;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scroll-behavior:smooth">
     <sc-for list="{{ doctorMsgs }}" as="m" hint-placeholder-count="4">
       <div style="display:flex;gap:9px;align-items:flex-start;justify-content:{{ m.justify }}">
         <sc-if value="{{ m.doc }}" hint-placeholder-val="true">
-          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
         </sc-if>
-        <div style="max-width:78%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:{{ m.radius }};padding:11px 12px;box-shadow:{{ m.sh }}">
+        <div style="max-width:80%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:{{ m.radius }};padding:11px 12px;box-shadow:{{ m.sh }}">
           <span style="display:block;font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:{{ m.nameC }};margin-bottom:4px">{{ m.name }}</span>
           <span style="font-size:12.5px;line-height:1.55;color:{{ m.c }};white-space:pre-wrap">{{ m.text }}</span>
         </div>
         <sc-if value="{{ m.liz }}" hint-placeholder-val="false">
-          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(59,214,198,.6);background:#081226"><img src="art/lizzie-headshot.webp" alt="Lizzie" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(59,214,198,.6);background:#081226"><img src="art/lizzie-headshot.webp" alt="Lizzie" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
         </sc-if>
       </div>
     </sc-for>
   </div>
 
-  <div style="position:relative;display:flex;flex-wrap:wrap;gap:7px">
-    <sc-for list="{{ doctorPrompts }}" as="q" hint-placeholder-count="3">
-      <div onClick="{{ q.go }}" style="display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(122,180,255,.28);background:rgba(13,28,56,.6);color:rgba(224,238,255,.82);font-size:10.5px;font-weight:800;padding:7px 10px;cursor:pointer">{{ q.t }}</div>
+  <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:none">
+    <sc-for list="{{ doctorPrompts }}" as="q" hint-placeholder-count="4">
+      <div onClick="{{ q.go }}" style="display:flex;align-items:center;justify-content:center;min-height:35px;border-radius:13px;border:1px solid rgba(122,180,255,.25);background:rgba(13,28,56,.62);color:rgba(224,238,255,.84);font-size:10px;font-weight:850;line-height:1.2;text-align:center;padding:7px 8px;cursor:pointer">{{ q.t }}</div>
     </sc-for>
   </div>
 
-  <div style="position:relative;display:flex;gap:8px;align-items:flex-end;background:rgba(13,28,56,.78);border:1px solid rgba(59,214,198,.24);border-radius:18px;padding:9px">
-    <textarea value="{{ doctorInput }}" onInput="{{ doctorTyping }}" placeholder="Ask The Doctor..." style="flex:1;min-height:44px;max-height:110px;resize:none;border:0;outline:none;background:transparent;color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:16px;line-height:1.45;padding:8px;box-sizing:border-box"></textarea>
-    <div onClick="{{ doctorSend }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:54px;height:44px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">SEND</div>
+  <div style="position:relative;display:flex;gap:8px;align-items:flex-end;background:rgba(13,28,56,.82);border:1px solid rgba(59,214,198,.28);border-radius:20px;padding:9px;box-shadow:0 0 24px rgba(59,214,198,.06);flex:none">
+    <textarea value="{{ doctorInput }}" onInput="{{ doctorTyping }}" placeholder="Ask The Doctor..." rows="1" style="flex:1;min-height:42px;max-height:104px;resize:none;border:0;outline:none;background:transparent;color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:16px;line-height:1.45;padding:8px;box-sizing:border-box"></textarea>
+    <div onClick="{{ doctorSend }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:56px;height:44px;border-radius:15px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">SEND</div>
   </div>
-  <span style="position:relative;font-size:9px;line-height:1.35;color:rgba(190,212,245,.38);text-align:center;flex:none">The Doctor teaches EchoLab study content and test-prep patterns. For real symptoms or patient-care decisions, follow clinical protocol and appropriate medical care.</span>
+  <span style="position:relative;font-size:8.5px;line-height:1.3;color:rgba(190,212,245,.36);text-align:center;flex:none">Study help only. For real symptoms or patient-care decisions, follow clinical protocol and appropriate medical care.</span>
 </div>
 </sc-if>
 
@@ -1101,7 +1107,7 @@ class Component extends DCLogic {
       this.D = D;
       this.p = this.load();
       this.rollover();
-      this.setState({ ready: true, screen: this.p.created ? "home" : "splash" });
+      this.setState({ ready: true, screen: this.p.created ? "home" : "splash", doctorMsgs: this.doctorMsgs(), doctorLevel: this.p.doctorLevel || "intermediate" });
       this._hb = setInterval(() => this.heartbeat(), 5000);
     });
   }
@@ -1114,7 +1120,8 @@ class Component extends DCLogic {
       lastDay: this.today(), streak: 0, lastActive: "", secToday: 0, createdAt: Date.now(),
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
-      apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10 };
+      apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
+      doctorLevel: "intermediate", doctorMsgs: [] };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1125,6 +1132,8 @@ class Component extends DCLogic {
     if (!s.aiModel) s.aiModel = "claude-haiku-4-5";
     if (String(s.aiModel || "").toLowerCase().startsWith("gpt-")) s.aiModel = "claude-haiku-4-5";
     if (!s.gmDoctor) s.gmDoctor = 10;
+    if (!Array.isArray(s.doctorMsgs)) s.doctorMsgs = [];
+    if (!s.doctorLevel) s.doctorLevel = "intermediate";
     if (!s.gmUnlocked) s.gameMaster = false;
     s.gameMaster = !!(s.gmUnlocked && s.gameMaster);
     return s;
@@ -1293,6 +1302,49 @@ class Component extends DCLogic {
 
 
   // ---------- The Doctor chat ----------
+  defaultDoctorMsgs() {
+    return [
+      { who: "doctor", text: "Ah, Lizzie — there you are. This is the study room now. Bring me a missed question, a foggy concept, a Doppler trap, or the lesson you’re on, and I’ll help you stabilize it." }
+    ];
+  }
+  doctorMsgs() {
+    const saved = this.p && Array.isArray(this.p.doctorMsgs) && this.p.doctorMsgs.length ? this.p.doctorMsgs : null;
+    const live = this.state && Array.isArray(this.state.doctorMsgs) && this.state.doctorMsgs.length ? this.state.doctorMsgs : null;
+    return saved || live || this.defaultDoctorMsgs();
+  }
+  saveDoctorMsgs(msgs) {
+    const clean = (msgs || []).filter(Boolean).slice(-60);
+    if (this.p) { this.p.doctorMsgs = clean; this.save(); }
+    this.setState({ doctorMsgs: clean });
+  }
+  setDoctorLevel(k) {
+    if (this.p) { this.p.doctorLevel = k; this.save(); }
+    this.setState({ doctorLevel: k });
+  }
+  clearDoctorChat() {
+    this.saveDoctorMsgs(this.defaultDoctorMsgs());
+    this.toast("New chat", "The Doctor cleared the console.");
+  }
+  doctorContextPrompt(kind) {
+    const next = this.nextLesson && this.nextLesson();
+    const due = this.dueList ? this.dueList() : [];
+    const weak = this.weakestDomain ? this.weakestDomain() : "A";
+    const dom = this.D && this.D.DOMAINS ? this.D.DOMAINS.find((d) => d.id === weak) : null;
+    if (kind === "lesson") {
+      const L = next && this.D.LESSONS[next];
+      return L ? `Teach today’s lesson: ${L.title}. Start with the core idea, give the exam angle, then quiz me with one question.` : "I finished the current MVP lessons. Give me a smart mixed review plan for today.";
+    }
+    if (kind === "missed") {
+      const first = due[0];
+      if (first && first.id && this.D.QUESTIONS[first.id]) {
+        const q = this.D.QUESTIONS[first.id];
+        return `Explain this missed Memory Core question. Stem: ${q.stem} Choices: ${q.ch.join(" | ")} Correct answer index: ${q.ans}. Teach the concept, explain the trap, and give me one similar practice question.`;
+      }
+      return "Explain how to review missed questions in the Memory Core and give me one short practice question from my weakest area.";
+    }
+    if (kind === "weak") return `Quiz me on my weakest area: ${dom ? dom.name : "echo fundamentals"}. Ask one CCI-style question and explain the answer.`;
+    return "Quiz me with one CCI-style echo question."
+  }
   doctorPromptText(raw) {
     return String(raw || "").trim();
   }
@@ -1300,7 +1352,7 @@ class Component extends DCLogic {
     this.setState({ doctorInput: text }, () => this.doctorSend());
   }
   doctorAnswer(q) {
-    const level = this.state.doctorLevel || "intermediate";
+    const level = this.p.doctorLevel || this.state.doctorLevel || "intermediate";
     const lower = q.toLowerCase();
     const intro = "Ah, there it is — a little echo signal asking to be decoded. Brilliant question, Lizzie.";
     const close = level === "expert" ? "Quick check: what single detail would the exam try to trick you with here?" : "Want to try one quick practice question on that?";
@@ -1324,17 +1376,18 @@ class Component extends DCLogic {
   async doctorSend() {
     const q = this.doctorPromptText(this.state.doctorInput);
     if (!q) { this.toast("Ask The Doctor", "Type a question first."); return; }
-    const msgs = [...(this.state.doctorMsgs || []), { who: "lizzie", text: q }];
-    this.setState({ doctorMsgs: [...msgs, { who: "doctor", text: "One moment, Lizzie — I’m stabilizing the signal..." }], doctorInput: "" });
+    const msgs = [...this.doctorMsgs(), { who: "lizzie", text: q }];
+    const thinking = [...msgs, { who: "doctor", text: "One moment, Lizzie — I’m stabilizing the signal..." }];
+    this.saveDoctorMsgs(thinking);
+    this.setState({ doctorInput: "" });
     this.sClick();
     try {
-      const chatInput = msgs.slice(-8).map((m) => (m.who === "lizzie" ? "Lizzie: " : "The Doctor: ") + m.text).join("\n\n");
-      const reply = this.p.apiKey ? await this.callClaude(chatInput, 950) : this.doctorAnswer(q);
-      const finalMsgs = [...msgs, { who: "doctor", text: reply }];
-      this.setState({ doctorMsgs: finalMsgs });
+      const chatInput = msgs.slice(-10).map((m) => (m.who === "lizzie" ? "Lizzie: " : "The Doctor: ") + m.text).join("\n\n");
+      const reply = this.p.apiKey ? await this.callClaude(chatInput, 1100) : this.doctorAnswer(q);
+      this.saveDoctorMsgs([...msgs, { who: "doctor", text: reply }]);
     } catch (e) {
-      const fallback = this.doctorAnswer(q) + "\n\nTiny admin note from the console: the live AI link did not connect. Check the API key and model in TARDIS Admin. Error: " + (e.message || e);
-      this.setState({ doctorMsgs: [...msgs, { who: "doctor", text: fallback }] });
+      const fallback = this.doctorAnswer(q) + "\n\nConsole note: the live AI link did not connect. Check the API key and model in TARDIS Admin. Error: " + (e.message || e);
+      this.saveDoctorMsgs([...msgs, { who: "doctor", text: fallback }]);
     }
   }
 
@@ -1902,7 +1955,7 @@ class Component extends DCLogic {
     const n = this.doctorFor(this.levelInfo().level).n;
     return n === 11 ? "doctor_11_style" : n === 12 ? "doctor_12_style" : "doctor_10_style";
   }
-  teachingLevel() { return this.state.doctorLevel || "intermediate"; }
+  teachingLevel() { return (this.p && this.p.doctorLevel) || this.state.doctorLevel || "intermediate"; }
   doctorInstructions() {
     return `You are “The Doctor,” the AI teacher inside EchoLab. Always answer as The Doctor, Lizzie’s in-universe adult echocardiography mentor, clinical tutor, test-prep coach, and field guide for the CCI Registered Cardiac Sonographer exam.
 
@@ -2114,13 +2167,13 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       gmTogKnob: this.isGM() ? "23px" : "2px",
       gmDoctors: [10,11,12].map((n) => {
         const active = (p.gmDoctor || 10) === n;
-        const src = n === 11 ? "art/doctor-11-headshot.png" : n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+        const src = n === 11 ? "art/11th%20doctor%20headshot.png" : n === 12 ? "art/12th%20doctor%20headshot.png" : "art/doctor-10-headshot.webp";
         return { src, fallback: "art/doctor-10-headshot.webp", label: n === 10 ? "Style A" : n === 11 ? "Style B" : "Style C", pick: () => this.gmDoctorPick(n),
           bg: active ? "rgba(245,184,74,.14)" : "rgba(6,13,27,.48)", bd: active ? "rgba(245,184,74,.75)" : "rgba(122,180,255,.18)", ring: active ? "#FFCB6B" : "rgba(122,180,255,.28)", c: active ? "#F4F8FF" : "rgba(200,220,250,.58)", subC: active ? "#FFD98F" : "rgba(190,212,245,.38)" };
       }),
       jMinsGoal: "20",
       doctorInput: s.doctorInput || "",
-      doctorMsgs: (s.doctorMsgs || []).map((m) => {
+      doctorMsgs: this.doctorMsgs().map((m) => {
         const doc = m.who !== "lizzie";
         return { text: m.text, doc, liz: !doc, justify: doc ? "flex-start" : "flex-end",
           name: doc ? "THE DOCTOR" : "LIZZIE",
@@ -2133,14 +2186,17 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       }),
       doctorLevels: [
         ["beginner", "BEGINNER"], ["intermediate", "INTERMEDIATE"], ["pro", "PRO"], ["expert", "EXPERT"]
-      ].map(([k, label]) => ({ label, pick: () => this.setState({ doctorLevel: k }),
-        bg: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.18)" : "rgba(13,28,56,.55)",
-        bd: (s.doctorLevel || "intermediate") === k ? "rgba(245,184,74,.7)" : "rgba(122,180,255,.22)",
-        c: (s.doctorLevel || "intermediate") === k ? "#FFD98F" : "rgba(200,220,250,.65)" })),
+      ].map(([k, label]) => ({ label, pick: () => this.setDoctorLevel(k),
+        bg: ((p.doctorLevel || s.doctorLevel || "intermediate") === k) ? "rgba(245,184,74,.18)" : "rgba(13,28,56,.55)",
+        bd: ((p.doctorLevel || s.doctorLevel || "intermediate") === k) ? "rgba(245,184,74,.7)" : "rgba(122,180,255,.22)",
+        c: ((p.doctorLevel || s.doctorLevel || "intermediate") === k) ? "#FFD98F" : "rgba(200,220,250,.65)" })),
+      doctorAiChip: p.apiKey ? "LIVE AI" : "LOCAL MODE",
+      doctorClear: () => this.clearDoctorChat(),
       doctorPrompts: [
-        { t: "Explain my missed question", q: "Explain a missed question from the Memory Core." },
-        { t: "Quiz me", q: "Quiz me with one CCI-style echo question." },
-        { t: "Doppler help", q: "Help me understand Doppler and aliasing." }
+        { t: "Missed question", q: this.doctorContextPrompt("missed") },
+        { t: "Teach today", q: this.doctorContextPrompt("lesson") },
+        { t: "Weak-area quiz", q: this.doctorContextPrompt("weak") },
+        { t: "Doppler help", q: "Help me understand Doppler, Nyquist limit, aliasing, and when to choose PW versus CW." }
       ].map((x) => ({ t: x.t, go: () => this.doctorQuick(x.q) })),
       doctorTyping: (e) => this.setState({ doctorInput: e.target.value }),
       doctorSend: () => this.doctorSend(),
@@ -2183,7 +2239,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       { k: "doctor", label: "THE DOCTOR", glyph: "✚" },
     ];
     const activeDoc = this.doctorFor(li.level);
-    const doctorHeadshot = activeDoc.n === 11 ? "art/doctor-11-headshot.png" : activeDoc.n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+    const doctorHeadshot = activeDoc.n === 11 ? "art/11th%20doctor%20headshot.png" : activeDoc.n === 12 ? "art/12th%20doctor%20headshot.png" : "art/doctor-10-headshot.webp";
     return {
       doctorHeadshot,
       goHome: () => this.go("home"), goMap: () => this.go("map"), goBosses: () => this.go("bosses"),
