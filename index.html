@@ -1125,6 +1125,8 @@ class Component extends DCLogic {
     if (!s.aiModel) s.aiModel = "claude-haiku-4-5";
     if (String(s.aiModel || "").toLowerCase().startsWith("gpt-")) s.aiModel = "claude-haiku-4-5";
     if (!s.gmDoctor) s.gmDoctor = 10;
+    if (!s.gmUnlocked) s.gameMaster = false;
+    s.gameMaster = !!(s.gmUnlocked && s.gameMaster);
     return s;
   }
   load() { try { const s = JSON.parse(localStorage.getItem(this.KEY)); if (s && s.v === 1) return this.normalizeSave(s); } catch (e) {} return this.blank(); }
@@ -1252,20 +1254,21 @@ class Component extends DCLogic {
   masteryLabel(p) { p *= 100; if (p < 40) return ["Needs Focus", "#F4795B"]; if (p < 60) return ["Needs Review", "#F5B84A"]; if (p < 80) return ["Developing", "#FFCB6B"]; if (p < 90) return ["Strong", "#3BD6C6"]; return ["Registry Ready", "#7FE7DB"]; }
   readiness() { let r = 0; for (const d of this.D.DOMAINS) r += (d.weight / 96) * this.domainMastery(d.id); return r; }
   dueList() { const now = Date.now(); return Object.keys(this.p.mem).filter((k) => this.p.mem[k].due <= now); }
+  isGM() { return !!(this.p && this.p.gmUnlocked && this.p.gameMaster); }
 
   // ---------- unlock logic ----------
   lessonDone(id) { return !!(this.p.lessons[id] && this.p.lessons[id].done); }
   lessonsDoneCount() { return Object.keys(this.p.lessons).filter((k) => this.p.lessons[k].done).length; }
   regionUnlocked(id) {
-    if (this.p.gameMaster) return true;
+    if (this.isGM()) return true;
     if (id === "medbay") return true;
     if (id === "engine") return this.lessonDone("mb1");
     if (id === "gallery") return this.lessonDone("ph1");
     return false;
   }
-  mmUnlocked() { return this.p.gameMaster || this.lessonDone("g1"); }
-  duelUnlocked() { return this.p.gameMaster || ["ph1", "ph2", "ph3"].filter((l) => this.lessonDone(l)).length >= 3; }
-  bossUnlocked() { return this.p.gameMaster || this.levelInfo().level >= 3; }
+  mmUnlocked() { return this.isGM() || this.lessonDone("g1"); }
+  duelUnlocked() { return this.isGM() || ["ph1", "ph2", "ph3"].filter((l) => this.lessonDone(l)).length >= 3; }
+  bossUnlocked() { return this.isGM() || this.levelInfo().level >= 3; }
   nextLesson() {
     const order = ["mb1", "mb2", "mb3", "ph1", "ph2", "ph3", "ph4", "ph5", "g1", "g2", "g3", "g4", "g5"];
     for (const id of order) { if (!this.lessonDone(id)) { if (this.regionUnlocked(this.D.LESSONS[id].region)) return id; } }
@@ -1510,9 +1513,9 @@ class Component extends DCLogic {
           stBd: un ? "rgba(59,214,198,.5)" : "rgba(150,180,220,.3)",
           stBdStyle: un ? "solid" : "dashed",
           masteryPct: String(Math.round(m * 100)),
-          masteryLabel: answered ? ml : un ? "Unexplored" : r.unlock.label,
+          masteryLabel: answered ? ml : un ? "Unexplored" : "Locked",
           mlC: answered ? mc : "rgba(190,212,245,.45)",
-          open: () => { if (un) this.go("region", { regionId: r.id }); else { this.toast("Locked", r.unlock.label); this.sBad(); } },
+          open: () => { if (un) this.go("region", { regionId: r.id }); else { this.toast("Locked", "This study room is not open yet."); this.sBad(); } },
         };
       }),
       roadmap: D.ROADMAP_ROOMS.map((r) => ({ name: r.name, act: r.act.toUpperCase(), note: r.note })),
@@ -1968,7 +1971,14 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       this.p.gmUnlocked = true; this.save(); this.setState({ gmPassword: "" }); this.toast("Game Master unlocked", "Builder controls are available.");
     } else { this.toast("Wrong password", "Try again."); this.sBad(); }
   }
-  toggleGameMaster() { if (!this.p.gmUnlocked) return; this.p.gameMaster = !this.p.gameMaster; this.save(); this.toast("Game Master", this.p.gameMaster ? "Whole app unlocked for testing." : "Normal locks restored."); this.forceUpdate(); }
+  toggleGameMaster() {
+    if (!this.p.gmUnlocked) return;
+    this.p.gameMaster = !this.p.gameMaster;
+    if (!this.p.gmUnlocked) this.p.gameMaster = false;
+    this.save();
+    this.toast("Game Master", this.p.gameMaster ? "Whole app unlocked for testing." : "Builder unlocks turned off. Normal locks restored.");
+    this.forceUpdate();
+  }
   gmDoctorPick(n) { if (!this.p.gmUnlocked) return; this.p.gmDoctor = n; this.save(); this.toast("Doctor style selected", "Previewing The Doctor in app text and chat."); this.forceUpdate(); }
   rvMeta(s, p, D, li) {
     const earned = Object.keys(p.badges).length;
@@ -2055,18 +2065,25 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           st: got ? "HELD" : "MISSING", stC: got ? "#7FE7DB" : "rgba(190,212,245,.4)" };
       }),
       bossList: D.BOSSES.map((b) => {
-        const un = b.mvp && this.bossUnlocked();
+        const gm = this.isGM();
+        const playable = b.id === "angels" && this.bossUnlocked();
+        const visibleOpen = playable || (gm && b.mvp);
         const won = b.id === "angels" && p.boss.angels && p.boss.angels.won;
+        const lockedStatus = b.mvp ? "LEVEL " + b.unlockLevel : "LOCKED";
         return { name: b.name, sub: b.sub,
-          bg: un ? "linear-gradient(120deg, rgba(90,90,115,.16), rgba(13,28,56,.7))" : "rgba(10,20,40,.45)",
-          bd: won ? "rgba(59,214,198,.45)" : un ? "rgba(200,205,225,.4)" : "rgba(122,180,255,.12)",
-          f: un ? "grayscale(1) brightness(1.4)" : "grayscale(1) brightness(.7)",
-          tC: un ? "#F4F8FF" : "rgba(200,220,250,.45)",
-          status: won ? "DEFEATED" : un ? "READY" : b.mvp ? "LEVEL " + b.unlockLevel : (b.act || "SOON").toUpperCase(),
-          stC: won ? "#7FE7DB" : un ? "#FFD98F" : "rgba(190,212,245,.45)",
-          stBd: won ? "rgba(59,214,198,.5)" : un ? "rgba(245,184,74,.5)" : "rgba(150,180,220,.3)",
-          stBdStyle: un || won ? "solid" : "dashed",
-          go: () => { if (b.id !== "angels") { this.toast("Not yet", "This threat is still locked."); return; } if (this.bossUnlocked()) this.go("bossBrief"); else { this.toast("Locked — reach Level 3", "The Angels only hunt companions worth hunting."); this.sBad(); } } };
+          bg: visibleOpen ? "linear-gradient(120deg, rgba(90,90,115,.16), rgba(13,28,56,.7))" : "rgba(10,20,40,.45)",
+          bd: won ? "rgba(59,214,198,.45)" : visibleOpen ? "rgba(200,205,225,.4)" : "rgba(122,180,255,.12)",
+          f: visibleOpen ? "grayscale(1) brightness(1.4)" : "grayscale(1) brightness(.7)",
+          tC: visibleOpen ? "#F4F8FF" : "rgba(200,220,250,.45)",
+          status: won ? "DEFEATED" : playable ? "READY" : (gm && !b.mvp ? "PREVIEW" : lockedStatus),
+          stC: won ? "#7FE7DB" : visibleOpen ? "#FFD98F" : "rgba(190,212,245,.45)",
+          stBd: won ? "rgba(59,214,198,.5)" : visibleOpen ? "rgba(245,184,74,.5)" : "rgba(150,180,220,.3)",
+          stBdStyle: visibleOpen || won ? "solid" : "dashed",
+          go: () => {
+            if (b.id !== "angels") { this.toast(gm ? "Preview only" : "Locked", "This threat is not active in the current build."); return; }
+            if (this.bossUnlocked()) this.go("bossBrief");
+            else { this.toast("Locked — reach Level 3", "The Angels only hunt companions worth hunting."); this.sBad(); }
+          } };
       }),
       examDate: p.examDate, onDate: (e) => this.onDate(e),
       admDays, admPace, admLeft: String(totalLessons - lessonsDone), admPaceMsg,
@@ -2086,14 +2103,14 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       aiTestMsg: p.aiTest || "No test run yet.", aiTestC: (p.aiTest || "").toLowerCase().includes("failed") ? "#FFB49E" : "rgba(200,220,250,.62)",
       gmPassword: s.gmPassword || "", gmPasswordInput: (e) => this.gmPasswordInput(e), gmUnlock: () => this.gmUnlock(),
       gmLocked: !p.gmUnlocked, gmUnlocked: !!p.gmUnlocked,
-      gmState: p.gmUnlocked ? (p.gameMaster ? "ON" : "UNLOCKED") : "LOCKED",
-      gmStateC: p.gmUnlocked ? (p.gameMaster ? "#7FE7DB" : "#FFD98F") : "rgba(190,212,245,.55)",
-      gmStateBd: p.gmUnlocked ? (p.gameMaster ? "rgba(59,214,198,.55)" : "rgba(245,184,74,.45)") : "rgba(150,180,220,.25)",
-      gmStateBg: p.gmUnlocked ? (p.gameMaster ? "rgba(59,214,198,.10)" : "rgba(245,184,74,.10)") : "rgba(122,180,255,.06)",
+      gmState: p.gmUnlocked ? (this.isGM() ? "ON" : "UNLOCKED") : "LOCKED",
+      gmStateC: p.gmUnlocked ? (this.isGM() ? "#7FE7DB" : "#FFD98F") : "rgba(190,212,245,.55)",
+      gmStateBd: p.gmUnlocked ? (this.isGM() ? "rgba(59,214,198,.55)" : "rgba(245,184,74,.45)") : "rgba(150,180,220,.25)",
+      gmStateBg: p.gmUnlocked ? (this.isGM() ? "rgba(59,214,198,.10)" : "rgba(245,184,74,.10)") : "rgba(122,180,255,.06)",
       toggleGameMaster: () => this.toggleGameMaster(),
-      gmTogBg: p.gameMaster ? "rgba(59,214,198,.4)" : "rgba(120,150,190,.2)",
-      gmTogBd: p.gameMaster ? "rgba(59,214,198,.7)" : "rgba(120,150,190,.4)",
-      gmTogKnob: p.gameMaster ? "23px" : "2px",
+      gmTogBg: this.isGM() ? "rgba(59,214,198,.4)" : "rgba(120,150,190,.2)",
+      gmTogBd: this.isGM() ? "rgba(59,214,198,.7)" : "rgba(120,150,190,.4)",
+      gmTogKnob: this.isGM() ? "23px" : "2px",
       gmDoctors: [10,11,12].map((n) => {
         const active = (p.gmDoctor || 10) === n;
         const src = n === 11 ? "art/doctor-11-headshot.png" : n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
