@@ -1626,45 +1626,45 @@ class Component extends DCLogic {
   }
   medbayLessonHero(id) {
     const map = {
-      mb1: "art/lessons/mb1/mb1-hero-before-the-probe-touches-skin.webp",
-      mb2: "art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
-      mb3: "art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
+      mb1: "art/MedBay/art/lessons/mb1/mb1-hero-before-the-probe-touches-skin.webp",
+      mb2: "art/MedBay/art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
+      mb3: "art/MedBay/art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
     };
     return map[id] || "";
   }
   medbayLessonCard(id) {
     const map = {
-      mb1: "art/lessons/cards/lesson-medbay-01-card.webp",
-      mb2: "art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
-      mb3: "art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
+      mb1: "art/MedBay/art/lessons/cards/lesson-medbay-01-card.webp",
+      mb2: "art/MedBay/art/lessons/mb2/mb2-hero-position-protect-preserve.webp",
+      mb3: "art/MedBay/art/lessons/mb3/mb3-hero-words-reports-red-flags.webp"
     };
     return map[id] || "";
   }
   medbayBeatImage(id, beat) {
     const map = {
       mb1: [
-        "art/lessons/mb1/mb1-beat-concept-ois.webp",
-        "art/lessons/mb1/mb1-beat-why-wrong-exam-events.webp",
-        "art/lessons/mb1/mb1-beat-memory-hook-ois.webp",
-        "art/lessons/mb1/mb1-beat-quick-check-identifiers.webp"
+        "art/MedBay/art/lessons/mb1/mb1-beat-concept-ois.webp",
+        "art/MedBay/art/lessons/mb1/mb1-beat-why-wrong-exam-events.webp",
+        "art/MedBay/art/lessons/mb1/mb1-beat-memory-hook-ois.webp",
+        "art/MedBay/art/lessons/mb1/mb1-beat-quick-check-identifiers.webp"
       ],
       mb2: [
-        "art/lessons/mb2/mb2-beat-concept-positioning.webp",
-        "art/lessons/mb2/mb2-beat-why-ergonomics-infection.webp",
-        "art/lessons/mb2/mb2-beat-memory-hook-tilt-patient-not-spine.webp",
-        "art/lessons/mb2/mb2-beat-quick-check-left-lateral.webp"
+        "art/MedBay/art/lessons/mb2/mb2-beat-concept-positioning.webp",
+        "art/MedBay/art/lessons/mb2/mb2-beat-why-ergonomics-infection.webp",
+        "art/MedBay/art/lessons/mb2/mb2-beat-memory-hook-tilt-patient-not-spine.webp",
+        "art/MedBay/art/lessons/mb2/mb2-beat-quick-check-left-lateral.webp"
       ],
       mb3: [
-        "art/lessons/mb3/mb3-beat-concept-explain-not-interpret.webp",
-        "art/lessons/mb3/mb3-beat-why-critical-findings.webp",
-        "art/lessons/mb3/mb3-beat-memory-hook-describe-dont-diagnose.webp",
-        "art/lessons/mb3/mb3-beat-quick-check-effusion-escalation.webp"
+        "art/MedBay/art/lessons/mb3/mb3-beat-concept-explain-not-interpret.webp",
+        "art/MedBay/art/lessons/mb3/mb3-beat-why-critical-findings.webp",
+        "art/MedBay/art/lessons/mb3/mb3-beat-memory-hook-describe-dont-diagnose.webp",
+        "art/MedBay/art/lessons/mb3/mb3-beat-quick-check-effusion-escalation.webp"
       ]
     };
     return map[id] && map[id][beat] ? map[id][beat] : "";
   }
   medbayNpcFace(regionId) {
-    return regionId === "medbay" ? "art/npcs/clara-vale-portrait-circle.webp" : "";
+    return regionId === "medbay" ? "art/MedBay/art/npcs/clara-vale-portrait-circle.webp" : "";
   }
 
   buildJournalAiPrompt(key, h, weak, reason) {
@@ -1921,11 +1921,11 @@ Return ONLY valid JSON, no markdown:
   // ---------- UNIT Medical Bay intro comic ----------
   medbayComicPages() {
     return [
-      { title: "The Quietest Emergency", img: "art/comics/medbay/page-01-the-quietest-emergency.webp" },
-      { title: "The Wrong Story", img: "art/comics/medbay/page-02-the-wrong-story.webp" },
-      { title: "Order, Identity, Story", img: "art/comics/medbay/page-03-order-identity-story.webp" },
-      { title: "Prepare the Room", img: "art/comics/medbay/page-04-prepare-the-room.webp" },
-      { title: "Before the Probe Touches Skin", img: "art/comics/medbay/page-05-before-the-probe-touches-skin.webp" },
+      { title: "The Quietest Emergency", img: "art/MedBay/art/comics/medbay/page-01-the-quietest-emergency.webp" },
+      { title: "The Wrong Story", img: "art/MedBay/art/comics/medbay/page-02-the-wrong-story.webp" },
+      { title: "Order, Identity, Story", img: "art/MedBay/art/comics/medbay/page-03-order-identity-story.webp" },
+      { title: "Prepare the Room", img: "art/MedBay/art/comics/medbay/page-04-prepare-the-room.webp" },
+      { title: "Before the Probe Touches Skin", img: "art/MedBay/art/comics/medbay/page-05-before-the-probe-touches-skin.webp" },
     ];
   }
   openRegion(id, opts) {
@@ -2659,7 +2659,7 @@ Return ONLY valid JSON, no markdown:
       rgNpcInit: this.medbayNpcFace(r.id) ? "" : r.npc.init,
       rgNpcInitC: this.medbayNpcFace(r.id) ? "transparent" : r.accent,
       rgNpcName: r.npc.name, rgNpcRole: r.npc.role, rgNpcIntro: r.npc.intro,
-      rgHeroShow: r.id === "medbay", rgHeroImg: r.id === "medbay" ? "art/regions/medbay/unit-medbay-hub.webp" : "", rgReplayIntro: () => this.replayMedbayIntro(),
+      rgHeroShow: r.id === "medbay", rgHeroImg: r.id === "medbay" ? "art/MedBay/art/regions/medbay/unit-medbay-hub.webp" : "", rgReplayIntro: () => this.replayMedbayIntro(),
       rgLessons: r.lessons.map((id, i) => {
         const L = D.LESSONS[id], done = this.lessonDone(id);
         const cardImg = r.id === "medbay" ? this.medbayLessonCard(id) : "";
