@@ -651,7 +651,25 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <div onClick="{{ memStart }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14.5px;font-weight:900;box-shadow:0 10px 30px rgba(240,169,60,.35);cursor:pointer;margin-bottom:14px">Begin review — {{ memDueN }} echoes waiting</div>
   </sc-if>
   <sc-if value="{{ memDoctorToolsShow }}" hint-placeholder-val="{{ false }}">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
+    <span style="display:block;font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-bottom:9px">RECENT STORY PAGES</span>
+  <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:15px">
+    <sc-for list="{{ jTimeline }}" as="e" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:7px;background:rgba(13,28,56,.58);border:1px solid rgba(122,180,255,.18);border-radius:18px;padding:12px 13px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+          <span style="font-family:'Marcellus',serif;font-size:16px;color:#F4F8FF">{{ e.title }}</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.2px;color:rgba(200,220,250,.45);white-space:nowrap">{{ e.date }}</span>
+        </div>
+        <span style="font-size:11.5px;line-height:1.58;color:rgba(224,238,255,.76)">{{ e.body }}</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:#FFD98F;border:1px solid rgba(245,184,74,.32);border-radius:999px;padding:4px 7px;background:rgba(245,184,74,.07)">+{{ e.xp }} XP</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:#7FE7DB;border:1px solid rgba(59,214,198,.32);border-radius:999px;padding:4px 7px;background:rgba(59,214,198,.06)">{{ e.ans }} Q · {{ e.acc }}%</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:#D4BCFA;border:1px solid rgba(180,140,242,.32);border-radius:999px;padding:4px 7px;background:rgba(180,140,242,.06)">{{ e.rev }} reviews</span>
+          <span style="font-size:8px;font-weight:900;letter-spacing:1px;color:#CFE0FF;border:1px solid rgba(122,180,255,.25);border-radius:999px;padding:4px 7px;background:rgba(122,180,255,.05)">{{ e.doctor }} Doctor chats</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
       <div onClick="{{ memDoctorExplainAll }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:15px;background:rgba(245,184,74,.12);border:1.5px solid rgba(245,184,74,.42);color:#FFE3B0;font-size:12px;font-weight:900;text-align:center;padding:0 10px;cursor:pointer">Ask The Doctor</div>
       <div onClick="{{ memDoctorQuiz }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:15px;background:rgba(59,214,198,.10);border:1.5px solid rgba(59,214,198,.38);color:#BDEDE6;font-size:12px;font-weight:900;text-align:center;padding:0 10px;cursor:pointer">Quiz these echoes</div>
     </div>
@@ -717,9 +735,15 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Lizzie's Log</span>
     </div>
   </div>
-  <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.07);border:1px solid rgba(245,184,74,.3);border-radius:18px;padding:13px;margin-bottom:13px">
-    <span style="flex:none;font-size:13px;color:#FFCB6B">✎</span>
-    <span style="font-size:12.5px;line-height:1.6;font-style:italic;color:#FFE9C4">{{ jNote }}</span>
+  <div style="display:flex;flex-direction:column;gap:10px;background:linear-gradient(160deg, rgba(245,184,74,.10), rgba(13,28,56,.72));border:1px solid rgba(245,184,74,.32);border-radius:22px;padding:15px;margin-bottom:13px;box-shadow:0 10px 28px rgba(3,8,20,.28)">
+    <div style="display:flex;align-items:center;gap:9px">
+      <span style="flex:none;font-size:14px;color:#FFCB6B">✎</span>
+      <div style="display:flex;flex-direction:column;gap:1px">
+        <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#FFD98F">TODAY'S STORY ENTRY · {{ jDate }}</span>
+        <span style="font-family:'Marcellus',serif;font-size:20px;color:#F4F8FF">{{ jTitle }}</span>
+      </div>
+    </div>
+    <span style="font-size:13px;line-height:1.72;color:#FFE9C4">{{ jNote }}</span>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
     <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
@@ -1159,7 +1183,7 @@ class Component extends DCLogic {
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
       apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
-      doctorLevel: "intermediate", doctorMsgs: [] };
+      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [] };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1171,6 +1195,8 @@ class Component extends DCLogic {
     if (String(s.aiModel || "").toLowerCase().startsWith("gpt-")) s.aiModel = "claude-haiku-4-5";
     if (!s.gmDoctor) s.gmDoctor = 10;
     if (!Array.isArray(s.doctorMsgs)) s.doctorMsgs = [];
+    if (!Array.isArray(s.journalEntries)) s.journalEntries = [];
+    s.journalEntries = s.journalEntries.slice(0, 30);
     if (!s.doctorLevel) s.doctorLevel = "intermediate";
     if (!s.gmUnlocked) s.gameMaster = false;
     s.gameMaster = !!(s.gmUnlocked && s.gameMaster);
@@ -1191,14 +1217,63 @@ class Component extends DCLogic {
     }
   }
   hist() { const t = this.today(); if (!this.p.hist[t]) this.p.hist[t] = { xp: 0, ans: 0, cor: 0, rev: 0, drill: 0, lesson: "", doctor: 0, missionReward: 0 }; return this.p.hist[t]; }
+  storyDateLabel(key) {
+    try {
+      const d = new Date(key + "T12:00");
+      return d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+    } catch (e) { return key || "Today"; }
+  }
+  generateJournalStory(key, h, weak) {
+    const D = this.D || {};
+    h = h || this.hist(); weak = weak || [];
+    const ans = h.ans || 0, cor = h.cor || 0, rev = h.rev || 0, doctor = h.doctor || 0;
+    const acc = ans ? Math.round((cor / ans) * 100) : 0;
+    const weakTopic = weak[0] ? weak[0].topic : "the next weak signal";
+    const lessonTitle = h.lesson && D.LESSONS && D.LESSONS[h.lesson] ? D.LESSONS[h.lesson].title : "one quiet lesson corridor";
+    const stars = acc >= 80 ? "bright" : ans ? "stubborn" : "waiting";
+    const echoes = rev ? rev + " memory fragment" + (rev === 1 ? "" : "s") : "a few sleepy memory fragments";
+    const oldLore = [
+      "The Doctor compared the console lights to old red desert suns and said every good journey starts by reading the map before running at the monster.",
+      "Somewhere deep in the TARDIS archives, a tin dog beeped approvingly, and the old ship filed Lizzie beside the long line of companions who learned by asking one more question.",
+      "The Doctor mentioned a lost library moon, a brave shopgirl, a medical student with steel in her spine, and a girl who waited — not as a lecture, just as proof that ordinary people can become astonishing with practice.",
+      "A roundel on the wall flickered like an old battlefield sky, then settled into a clean echo trace. The Doctor called it dramatic. The TARDIS called it Tuesday.",
+      "For a moment, the Console Room smelled faintly of rain on an impossible city, like the old stories The Doctor almost tells before deciding Lizzie has a Doppler puzzle to solve first."
+    ];
+    const lore = oldLore[Math.abs((key || "today").split("").reduce((a,c)=>a+c.charCodeAt(0),0)) % oldLore.length];
+    let body;
+    if (h.missionReward) {
+      body = "Lizzie closed today's mission path with the sort of quiet victory the TARDIS loves best — not loud, not flashy, just earned. She cleared " + echoes + ", stepped through " + lessonTitle + ", and brought " + (ans || "a handful of") + " question" + (ans === 1 ? "" : "s") + " under control. " + lore + " By the end, the Memory Core was humming softer, and The Doctor left one note in the margin: the timeline bends for learners who come back tomorrow.";
+    } else if (ans || rev || doctor) {
+      body = "Today’s entry is unfinished, but it already has shape. Lizzie stabilized " + echoes + ", wrestled with " + weakTopic.toLowerCase() + ", and kept the console from turning her mistakes into monsters. " + lore + " The Doctor has not closed the book yet. There is still one more door in today’s corridor, and it is waiting for her to open it.";
+    } else {
+      body = "The page is still mostly blank, which is how adventures usually begin. The TARDIS is awake, The Doctor is pretending not to be impatient, and Lizzie has a whole sky of echo windows ahead of her. Somewhere in the archives, old companions would recognize this moment: the breath before the first step, the ordinary day before it becomes a story.";
+    }
+    return { id: key + "-" + Date.now(), date: key, title: h.missionReward ? "Mission Path Complete" : "The Page Opens", body, xp: h.xp || 0, ans, acc, rev, doctor };
+  }
+  addJournalEntry(reason) {
+    const key = this.today();
+    const h = this.hist();
+    const weak = this.computeWeakTopics ? this.computeWeakTopics() : [];
+    const entry = this.generateJournalStory(key, h, weak);
+    entry.reason = reason || "daily";
+    this.p.journalEntries = (this.p.journalEntries || []).filter((e) => e.date !== key);
+    this.p.journalEntries.unshift(entry);
+    this.p.journalEntries = this.p.journalEntries.slice(0, 30);
+  }
+  computeWeakTopics() {
+    const D = this.D || {}; const p = this.p || {}; const topicMap = {};
+    for (const k in (p.q || {})) { const q = D.QUESTIONS && D.QUESTIONS[k]; if (!q) continue; const t = topicMap[q.topic] || (topicMap[q.topic] = { s: 0, c: 0 }); t.s += p.q[k].s; t.c += p.q[k].c; }
+    return Object.keys(topicMap).map((t) => ({ topic: t, acc: Math.round((topicMap[t].c / topicMap[t].s) * 100) })).filter((w) => w.acc < 75).sort((a, b) => a.acc - b.acc).slice(0, 4);
+  }
   collectDailyReward() {
     const h = this.hist();
     if (h.missionReward) { this.toast("Daily reward already collected", "The Companion Journal has it logged."); return; }
     h.missionReward = 1;
     this.gainXp(25);
     this.markActive();
+    this.addJournalEntry("daily_reward");
     this.save();
-    this.toast("Daily path complete", "+25 XP · journal entry saved");
+    this.toast("Daily path complete", "+25 XP · story entry saved");
     this.forceUpdate();
   }
   markActive() {
@@ -2142,7 +2217,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
     const acc = ans ? Math.round((cor / ans) * 100) : 0;
     const topicMap = {};
     for (const k in p.q) { const q = D.QUESTIONS[k]; if (!q) continue; const t = topicMap[q.topic] || (topicMap[q.topic] = { s: 0, c: 0 }); t.s += p.q[k].s; t.c += p.q[k].c; }
-    const weak = Object.keys(topicMap).map((t) => ({ topic: t, acc: Math.round((topicMap[t].c / topicMap[t].s) * 100) })).filter((w) => w.acc < 75).sort((a, b) => a.acc - b.acc).slice(0, 4);
+    const weak = this.computeWeakTopics();
     const days = []; const now = new Date();
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now); d.setDate(d.getDate() - i);
@@ -2165,10 +2240,11 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
         remaining === 0 ? "All current lessons complete. Hold the pace with daily reviews and drills." :
         remaining + " lessons remain across " + dl + " days. The TARDIS recommends " + (rate <= 0.5 ? "one lesson every other day" : rate <= 1.1 ? "about one lesson a day" : "about " + Math.ceil(rate) + " lessons a day") + ", plus clearing the Memory Core daily.";
     }
-    // note
-    const jNote = ans === 0 ? "Day one. The Doctor says every expert was once exactly this nervous. Deep breath — parasternal first." :
-      acc >= 80 ? "I'm starting to see the images before I place the probe. " + (weak[0] ? "Still wobbly on " + weak[0].topic.toLowerCase() + " — the Core will drill me." : "The Core is quiet tonight.") :
-      "Rough edges today — " + (weak[0] ? weak[0].topic.toLowerCase() + " keeps slipping" : "a few topics keep slipping") + ". But missed questions aren't failures, they're coordinates. Tomorrow I fly at them.";
+    // journal story
+    const todayKey = this.today();
+    const todayEntry = (p.journalEntries || []).find((e) => e.date === todayKey) || this.generateJournalStory(todayKey, this.hist(), weak);
+    const journalTimeline = [todayEntry].concat((p.journalEntries || []).filter((e) => e.date !== todayKey)).slice(0, 7);
+    const jNote = todayEntry.body;
     return {
       badgesShow: s.screen === "badges", journalShow: s.screen === "journal",
       charShow: s.screen === "character", doctorShow: s.screen === "doctor", adminShow: s.screen === "admin", bossesShow: s.screen === "bosses",
@@ -2184,7 +2260,9 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           tC: got ? "#F4F8FF" : "rgba(200,220,250,.45)",
           tagShow: false, tag: "" };
       }),
-      jNote, jAns: String(ans), jAcc: String(acc), jMins: String(Math.floor(p.secToday / 60)),
+      jNote, jTitle: todayEntry.title, jDate: this.storyDateLabel(todayEntry.date),
+      jTimeline: journalTimeline.map((e) => ({ title: e.title || "EchoLab Entry", date: this.storyDateLabel(e.date), body: e.body || "The page is quiet today.", xp: String(e.xp || 0), ans: String(e.ans || 0), acc: String(e.acc || 0), rev: String(e.rev || 0), doctor: String(e.doctor || 0) })),
+      jAns: String(ans), jAcc: String(acc), jMins: String(Math.floor(p.secToday / 60)),
       jDomains: D.DOMAINS.map((d) => {
         const m = this.domainMastery(d.id); const [ml, mc] = this.masteryLabel(m);
         const answered = Object.keys(p.q).some((k) => D.QUESTIONS[k] && D.QUESTIONS[k].d === d.id);
