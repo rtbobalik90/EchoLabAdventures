@@ -334,6 +334,28 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </div>
   </div>
 
+  <sc-if value="{{ lessonMenuShow }}" hint-placeholder-val="false">
+    <div style="display:flex;flex-direction:column;gap:14px;animation:popIn .3s ease">
+      <div style="background:linear-gradient(145deg,rgba(59,214,198,.10),rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.28);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:9px;font-weight:900;letter-spacing:2px;color:#7FE7DB">CHOOSE A LESSON SECTION</span>
+        <span style="font-family:'Marcellus',serif;font-size:25px;line-height:1.1;color:#F4F8FF">{{ lessonMenuTitle }}</span>
+        <span style="font-size:13px;line-height:1.55;color:rgba(214,232,255,.72)">{{ lessonMenuSub }}</span>
+      </div>
+      <sc-for list="{{ lessonSectionCards }}" as="sec" hint-placeholder-count="4">
+        <div onClick="{{ sec.go }}" style="display:flex;align-items:center;gap:12px;background:linear-gradient(145deg,rgba(13,28,56,.88),rgba(8,17,34,.92));border:1.5px solid {{ sec.bd }};border-radius:20px;padding:15px;cursor:pointer;box-shadow:{{ sec.sh }}">
+          <span style="flex:none;width:44px;height:44px;border-radius:15px;background:{{ sec.iconBg }};border:1.5px solid {{ sec.bd }};display:flex;align-items:center;justify-content:center;color:{{ sec.c }};font-size:16px;font-weight:900">{{ sec.n }}</span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0">
+            <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:{{ sec.c }}">{{ sec.k }}</span>
+            <span style="font-size:15px;font-weight:900;color:#F4F8FF;line-height:1.25">{{ sec.t }}</span>
+            <span style="font-size:11.5px;line-height:1.4;color:rgba(214,232,255,.62)">{{ sec.sub }}</span>
+          </div>
+          <span style="flex:none;font-size:18px;color:rgba(214,232,255,.45)">›</span>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ lessonSectionShow }}" hint-placeholder-val="false">
   <sc-if value="{{ aiLessonPanelShow }}" hint-placeholder-val="false">
     <div style="display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg,rgba(59,214,198,.10),rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.35);border-radius:22px;padding:15px;margin-bottom:13px;box-shadow:0 0 24px rgba(59,214,198,.08)">
       <div style="display:flex;align-items:center;gap:10px">
@@ -382,7 +404,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <span style="font-family:'Marcellus',serif;font-size:24px;line-height:1.15;color:#F4F8FF">{{ lsBeatTitle }}</span>
     <sc-if value="{{ lsBodyShow }}" hint-placeholder-val="{{ true }}">
       <div style="background:{{ lsCardBg }};border:1px solid {{ lsCardBd }};border-radius:22px;padding:17px">
-        <span style="font-size:14.5px;line-height:1.7;color:{{ lsBodyC }}">{{ lsBody }}</span>
+        <span style="font-size:14.5px;line-height:1.7;color:{{ lsBodyC }};white-space:pre-line">{{ lsBody }}</span>
       </div>
     </sc-if>
     <sc-if value="{{ lsTryShow }}" hint-placeholder-val="{{ false }}">
@@ -409,6 +431,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:8px">
     <div onClick="{{ lsNext }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:{{ lsNextBg }};color:{{ lsNextC }};font-size:14.5px;font-weight:900;letter-spacing:.3px;box-shadow:{{ lsNextSh }};cursor:pointer;border:{{ lsNextBd }}">{{ lsNextLabel }}</div>
   </div>
+  </sc-if>
 </div>
 </sc-if>
 
@@ -1352,7 +1375,7 @@ class Component extends DCLogic {
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
       apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
-      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {}, aiLessons: {}, sourceLibraryNote: "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant" };
+      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {}, aiLessons: {}, aiLessonSections: {}, sourceLibraryNote: "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant" };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1367,7 +1390,7 @@ class Component extends DCLogic {
     if (!Array.isArray(s.journalEntries)) s.journalEntries = [];
     s.journalEntries = s.journalEntries.slice(0, 30);
     s.intros = s.intros || {};
-    s.aiLessons = s.aiLessons || {};
+    s.aiLessons = s.aiLessons || {}; s.aiLessonSections = s.aiLessonSections || {};
     if (!s.sourceLibraryNote) s.sourceLibraryNote = "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant";
     if (!s.doctorLevel) s.doctorLevel = "intermediate";
     if (!s.gmUnlocked) s.gameMaster = false;
@@ -1954,39 +1977,121 @@ Return ONLY valid JSON, no markdown:
     }
     this.forceUpdate();
   }
+  aiSectionKey(id, beat) { return id + ":" + beat; }
+  lessonSectionSourceContext(id, beatIndex) {
+    const D = this.D || {}, L = D.LESSONS && D.LESSONS[id];
+    if (!L) return "";
+    const r = D.REGIONS.find((x) => x.id === L.region) || {};
+    const b = (L.beats || [])[beatIndex] || {};
+    const qLines = b.q ? `Question: ${b.q.stem}\nChoices: ${b.q.ch.join(" | ")}\nCorrect answer: ${b.q.ch[b.q.ans]}\nBuilt-in explanation: ${b.q.why}` : `Built-in teaching: ${b.b || ""}`;
+    const battleQs = (L.battle || []).slice(0, 6).map((qid) => {
+      const q = D.QUESTIONS[qid]; if (!q) return "";
+      return `- Topic: ${q.topic}; Stem: ${q.stem}; Correct: ${q.ch[q.ans]}; Explanation: ${q.exp}`;
+    }).filter(Boolean).join("\n");
+    return `Region: ${r.name || L.region}\nSection mentor/NPC: ${r.npc ? r.npc.name + " — " + r.npc.role : "section mentor"}\nLesson: ${L.title}\nLesson subtitle: ${L.sub}\nSelected section ${beatIndex + 1} of ${(L.beats || []).length}\nSection type/kicker: ${b.k || "SECTION"}\nSection title: ${b.t || "Lesson section"}\n${qLines}\n\nRelated practice objectives from this lesson:\n${battleQs}`;
+  }
+  buildAiLessonSectionPrompt(id, beatIndex) {
+    const L = this.D.LESSONS[id];
+    const r = this.D.REGIONS.find((x) => x.id === L.region) || {};
+    const b = (L.beats || [])[beatIndex] || {};
+    const npc = r.npc || { name: "the section mentor", role: "EchoLab mentor" };
+    const doctorStyle = this.doctorStyleKey ? this.doctorStyleKey() : "doctor_10_style";
+    return `Create ONE EchoLab AI lesson section, not a whole lesson. This is a single subsection screen inside the lesson "${L.title}."\n\nVisible teacher for this subsection: ${npc.name}, ${npc.role}. Teach through the section mentor first. The Doctor may be mentioned as available for help, but do not make the main lesson sound like a generic chatbot.\n\nUse The Doctor/EchoLab teaching philosophy: warm, clear, memorable, medically careful, CCI RCS exam-focused, story-driven, and encouraging. Hidden CURRENT_DOCTOR_STYLE for Doctor-help tone: ${doctorStyle}. Teaching level: ${this.teachingLevel()}.\n\nSOURCE / ACCURACY RULES:\n- Use the supplied EchoLab local source below as the primary source.\n- Align patient-safety, emergency, resuscitation, and cardiovascular-care statements with American Heart Association guidance where relevant.\n- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.\n- Do NOT invent thresholds, measurements, formulas, or guideline claims. If a cutoff is not in the supplied source or you are not certain, write exactly: "Verify the exact cutoff in the EchoLab source library before memorizing it."\n- Do not diagnose. Do not give patient-specific medical advice. Follow clinical protocol for urgent findings.\n- Never say numbered Doctor labels. Never mention regeneration, future Doctor changes, hidden variables, or backend logic.\n\nFORMAT RULES:\n- Return ONLY valid JSON. No markdown fences.\n- Do not write one giant paragraph. Use arrays so the app can create paragraph breaks and bullets.\n- Keep each paragraph short enough for a phone screen.\n- Do not answer the quick-check question directly if this selected section is a TRY IT / quick-check section.\n\nReturn this exact JSON shape:\n{\n  "kicker":"${b.k || "SECTION"}",\n  "title":"${b.t || "Lesson section"}",\n  "teacher":"${npc.name}",\n  "opening":"one short in-character line from the section mentor",\n  "paragraphs":["short paragraph 1", "short paragraph 2", "optional short paragraph 3"],\n  "clinicalBullets":["clinical/workflow point 1", "clinical/workflow point 2", "clinical/workflow point 3"],\n  "examAngle":"one concise exam angle",\n  "safetyNote":"one concise safety/AHA/protocol note when relevant, otherwise empty string",\n  "memoryHook":"one sticky memory hook, otherwise empty string",\n  "doctorHelpPrompt":"short prompt Lizzie can send to The Doctor about this exact subsection"\n}\n\nLOCAL ECHOLAB SOURCE FOR THIS SUBSECTION:\n${this.lessonSectionSourceContext(id, beatIndex)}`;
+  }
+  normalizeAiSectionData(data, fallbackBeat, npcName) {
+    if (!data || typeof data !== "object") return null;
+    const paragraphs = Array.isArray(data.paragraphs) ? data.paragraphs : (data.story ? String(data.story).split(/\n\n+/) : []);
+    const bullets = Array.isArray(data.clinicalBullets) ? data.clinicalBullets : (data.clinical ? [data.clinical] : []);
+    return {
+      kicker: data.kicker || fallbackBeat.k || "SECTION",
+      title: data.title || fallbackBeat.t || "Lesson section",
+      teacher: data.teacher || npcName || "Section Mentor",
+      opening: data.opening || "Let's steady this before we move on.",
+      paragraphs: paragraphs.map((x) => String(x).trim()).filter(Boolean).slice(0, 4),
+      clinicalBullets: bullets.map((x) => String(x).trim()).filter(Boolean).slice(0, 5),
+      examAngle: data.examAngle || "",
+      safetyNote: data.safetyNote || "",
+      memoryHook: data.memoryHook || "",
+      doctorHelpPrompt: data.doctorHelpPrompt || ""
+    };
+  }
+  async ensureAiLessonSection(id, beatIndex, force) {
+    if (!id || beatIndex < 0 || !this.p || !this.D || !this.D.LESSONS[id]) return;
+    const key = this.aiSectionKey(id, beatIndex);
+    this.p.aiLessonSections = this.p.aiLessonSections || {};
+    if (!force && this.p.aiLessonSections[key] && this.p.aiLessonSections[key].ok) return;
+    if (!this.p.apiKey) return;
+    const busyKey = key;
+    if (this.state.aiLessonBusyId === busyKey) return;
+    this.setState({ aiLessonBusyId: busyKey, aiLessonStatus: "Building this subsection with the section mentor..." });
+    try {
+      const txt = await this.callClaude(this.buildAiLessonSectionPrompt(id, beatIndex), 1400);
+      let clean = String(txt || "").trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+      let data = null;
+      try { data = JSON.parse(clean); } catch(e) {
+        const m = clean.match(/\{[\s\S]*\}/);
+        if (m) data = JSON.parse(m[0]);
+      }
+      const L = this.D.LESSONS[id], r = this.D.REGIONS.find((x) => x.id === L.region) || {}, npc = r.npc || {};
+      const norm = this.normalizeAiSectionData(data, L.beats[beatIndex] || {}, npc.name);
+      if (!norm || !norm.paragraphs.length) throw new Error("AI subsection came back without usable paragraphs.");
+      this.p.aiLessonSections[key] = { ok: true, at: Date.now(), data: norm };
+      this.save();
+      this.setState({ aiLessonBusyId: "", aiLessonStatus: "" });
+    } catch (e) {
+      this.p.aiLessonSections[key] = { ok: false, at: Date.now(), error: e.message || String(e) };
+      this.save();
+      this.setState({ aiLessonBusyId: "", aiLessonStatus: "AI subsection unavailable — using built-in EchoLab section." });
+    }
+    this.forceUpdate();
+  }
+
   refreshAiLesson() {
-    if (!this.state.lessonId) return;
+    if (!this.state.lessonId || this.state.beat < 0) return;
     if (!this.p.apiKey) { this.toast("Claude key needed", "Add the Claude API key in Admin to generate AI lessons."); return; }
-    this.ensureAiLesson(this.state.lessonId, true);
+    this.ensureAiLessonSection(this.state.lessonId, this.state.beat, true);
   }
   askDoctorLesson() {
     const id = this.state.lessonId;
     const L = this.D.LESSONS[id];
     if (!L) return;
-    const ai = this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok ? this.p.aiLessons[id].data : null;
-    const aiSection = ai && Array.isArray(ai.sections) ? ai.sections[this.state.beat || 0] : null;
-    const beat = L.beats[this.state.beat || 0];
-    const prompt = aiSection && aiSection.doctorHelpPrompt ? aiSection.doctorHelpPrompt : (ai && ai.doctorHelpPrompt ? ai.doctorHelpPrompt : `I am confused about the lesson ${L.title}, section ${beat ? beat.t : "current section"}. Please explain it at my teaching level, give the exam angle, one memory hook, and one quick check question.`);
+    const beatIndex = this.state.beat >= 0 ? this.state.beat : 0;
+    const key = this.aiSectionKey(id, beatIndex);
+    const rec = this.p.aiLessonSections && this.p.aiLessonSections[key];
+    const aiSection = rec && rec.ok ? rec.data : null;
+    const beat = L.beats[beatIndex];
+    const prompt = aiSection && aiSection.doctorHelpPrompt ? aiSection.doctorHelpPrompt : `I am confused about the lesson ${L.title}, section ${beat ? beat.t : "current section"}. Please explain it at my teaching level, give the exam angle, one memory hook, and one quick check question.`;
     this.openDoctorWithContext(prompt, { label: "Lesson help: " + L.title });
   }
 
   // ---------- lesson engine ----------
   startLesson(id) {
     const L = this.D.LESSONS[id];
-    this.go("lesson", { lessonId: id, regionId: L.region, beat: 0, tryPick: -1 });
-    setTimeout(() => this.ensureAiLesson(id), 40);
+    this.go("lesson", { lessonId: id, regionId: L.region, beat: -1, tryPick: -1 });
+  }
+  selectLessonSection(i) {
+    const id = this.state.lessonId;
+    if (!id) return;
+    this.setState({ beat: i, tryPick: -1 });
+    this.sClick();
+    setTimeout(() => this.ensureAiLessonSection(id, i), 40);
+    window.scrollTo(0, 0);
+  }
+  backFromLesson() {
+    if (this.state.lessonId && this.state.beat >= 0) { this.setState({ beat: -1, tryPick: -1 }); this.sClick(); window.scrollTo(0,0); return; }
+    this.back();
   }
   lsAdvance() {
     const id = this.state.lessonId, L = this.D.LESSONS[id];
-    const aiRec = this.p.aiLessons && this.p.aiLessons[id];
-    const hasAiSections = !!(aiRec && aiRec.ok && aiRec.data && Array.isArray(aiRec.data.sections));
-    if (this.p.apiKey && this.state.aiLessonBusyId === id && !hasAiSections) { this.toast("Building AI lesson", "Give Nurse Clara Vale one moment to prepare the lesson."); return; }
+    const key = this.aiSectionKey(id, this.state.beat);
+    const hasAiSection = !!(this.p.aiLessonSections && this.p.aiLessonSections[key] && this.p.aiLessonSections[key].ok);
+    if (this.p.apiKey && this.state.aiLessonBusyId === key && !hasAiSection) { this.toast("Building AI lesson", "Give the section mentor one moment to prepare this subsection."); return; }
     const beat = this.state.beat, last = L.beats.length - 1;
     const cur = L.beats[beat];
     if (cur.q && this.state.tryPick < 0) { this.toast("Choose an answer first", "The Doctor is watching. Kindly."); return; }
     const seen = this.p.beats[id] || 0;
     if (beat + 1 > seen) { this.p.beats[id] = beat + 1; this.gainXp(4); }
-    if (beat < last) { this.setState({ beat: beat + 1, tryPick: -1 }); this.sClick(); window.scrollTo(0, 0); }
+    if (beat < last) { this.setState({ beat: -1, tryPick: -1 }); this.sClick(); window.scrollTo(0, 0); }
     else this.startBattle(L.battle, "lesson", { lessonId: id });
   }
   tryPick(i) {
@@ -2214,50 +2319,79 @@ Return ONLY valid JSON, no markdown:
   rvLesson(s, p, D) {
     if (s.screen !== "lesson" || !s.lessonId) return { lessonShow: false, back: () => this.back() };
     const L = D.LESSONS[s.lessonId];
-    const beat = L.beats[s.beat], last = s.beat === L.beats.length - 1;
+    const region = D.REGIONS.find((x) => x.id === L.region) || {};
+    const npc = region.npc || { init: "NPC", name: "Section Mentor", color: "#3BD6C6" };
+    const inMenu = s.beat < 0;
+    const sectionCards = (L.beats || []).map((b, i) => {
+      const isTry = !!b.q, isHook = b.k === "MEMORY HOOK";
+      const c = isTry ? "#7FE7DB" : isHook ? "#FFD98F" : i === 0 ? (region.accent || "#3BD6C6") : "#9CC5FF";
+      const sub = b.q ? "Quick check before the drill" : (b.b || "").replace(/\s+/g, " ").slice(0, 92) + ((b.b || "").length > 92 ? "…" : "");
+      return { n: String(i + 1), k: b.k || "SECTION", t: b.t || "Lesson section", sub, c, bd: c + "66", iconBg: c + "18", sh: i === 0 ? "0 0 18px " + c + "18" : "none", go: () => this.selectLessonSection(i) };
+    });
+    if (inMenu) {
+      return {
+        lessonShow: true,
+        lessonMenuShow: true,
+        lessonSectionShow: false,
+        back: () => this.backFromLesson(),
+        lsTitle: L.title, lsSub: L.sub,
+        lsDots: L.beats.map((_, i) => ({ bg: "rgba(190,212,245,.25)" })),
+        lessonMenuTitle: L.title,
+        lessonMenuSub: "Pick one subsection. Each section can load its own AI lesson first, then fall back to EchoLab's built-in version if AI is unavailable.",
+        lessonSectionCards: sectionCards
+      };
+    }
+    const beatIndex = s.beat;
+    const beat = L.beats[beatIndex], last = beatIndex === L.beats.length - 1;
     const isTry = !!beat.q, isHook = beat.k === "MEMORY HOOK";
     const kc = isTry ? "#7FE7DB" : isHook ? "#FFD98F" : "#9CC5FF";
     const q = beat.q;
     const revealed = isTry && s.tryPick >= 0;
     const ok = revealed && s.tryPick === q.ans;
     const canGo = !isTry || revealed;
-    const region = D.REGIONS.find((x) => x.id === L.region) || {};
-    const npc = region.npc || { init: "NPC", name: "Section Mentor", color: "#3BD6C6" };
-    const aiRec = p.aiLessons && p.aiLessons[s.lessonId];
-    const rawAiData = aiRec && aiRec.ok ? aiRec.data : null;
-    const aiData = rawAiData && Array.isArray(rawAiData.sections) ? rawAiData : null;
-    const aiSection = aiData && aiData.sections ? aiData.sections[s.beat] : null;
-    const aiBusy = s.aiLessonBusyId === s.lessonId;
-    const aiPanel = !!(aiBusy || (aiRec && !aiRec.ok));
+    const key = this.aiSectionKey(s.lessonId, beatIndex);
+    const aiRec = p.aiLessonSections && p.aiLessonSections[key];
+    const aiData = aiRec && aiRec.ok ? aiRec.data : null;
+    const aiBusy = s.aiLessonBusyId === key;
+    const aiPanel = !!(aiBusy || (aiRec && !aiRec.ok) || aiData);
     const aiPending = !!(p.apiKey && aiBusy && !aiData);
     const canAdvance = aiPending ? false : canGo;
+    const paragraphs = aiData && Array.isArray(aiData.paragraphs) ? aiData.paragraphs : [];
+    const clinicalBullets = aiData && Array.isArray(aiData.clinicalBullets) ? aiData.clinicalBullets : [];
+    const builtBody = beat.b || "";
+    const aiBodyParts = [];
+    if (aiData) {
+      if (aiData.opening) aiBodyParts.push(aiData.opening);
+      paragraphs.forEach((x) => aiBodyParts.push(x));
+      if (clinicalBullets.length) aiBodyParts.push("Clinical core:\n• " + clinicalBullets.join("\n• "));
+      if (aiData.examAngle) aiBodyParts.push("Exam angle:\n" + aiData.examAngle);
+      if (aiData.safetyNote) aiBodyParts.push("Safety note:\n" + aiData.safetyNote);
+      if (aiData.memoryHook) aiBodyParts.push("Memory hook:\n" + aiData.memoryHook);
+    }
     return {
-      lessonShow: true, back: () => this.back(),
+      lessonShow: true,
+      lessonMenuShow: false,
+      lessonSectionShow: true,
+      back: () => this.backFromLesson(),
       aiLessonPanelShow: aiPanel,
       aiBusyShow: aiBusy,
       aiReadyShow: false,
       aiErrorShow: !!(aiRec && !aiRec.ok && !aiBusy),
-      aiStatus: s.aiLessonStatus || "Building the AI lesson with the section mentor...",
-      aiError: aiRec && aiRec.error ? "AI lesson unavailable: " + aiRec.error + " Using built-in EchoLab lesson below." : "AI lesson unavailable. Using built-in EchoLab lesson below.",
+      aiStatus: s.aiLessonStatus || "Building this subsection with the section mentor...",
+      aiError: aiRec && aiRec.error ? "AI subsection unavailable: " + aiRec.error + " Using built-in EchoLab section below." : "AI subsection unavailable. Using built-in EchoLab section below.",
       aiTeacher: aiData && aiData.teacher ? aiData.teacher : npc.name,
       aiNpcInit: npc.init || "NPC", aiNpcBg: (npc.color || region.accent || "#3BD6C6") + "22", aiNpcBd: (npc.color || region.accent || "#3BD6C6"),
       aiTitle: aiData && aiData.title ? aiData.title : L.title,
       aiOpening: aiData && aiData.opening ? aiData.opening : "",
-      aiGoals: aiData && Array.isArray(aiData.learningGoals) ? aiData.learningGoals : [],
-      aiStoryLesson: aiData && aiData.storyLesson ? aiData.storyLesson : "",
-      aiCore: aiData && Array.isArray(aiData.clinicalCore) ? aiData.clinicalCore : [],
-      aiExam: aiData && aiData.examAngle ? aiData.examAngle : "",
-      aiSafety: aiData && aiData.safetyNote ? aiData.safetyNote : "",
-      aiHook: aiData && aiData.memoryHook ? aiData.memoryHook : "",
-      aiCheck: aiData && aiData.checkQuestion ? aiData.checkQuestion : "",
+      aiGoals: [], aiStoryLesson: "", aiCore: [], aiExam: "", aiSafety: "", aiHook: "", aiCheck: "",
       aiRefresh: () => this.refreshAiLesson(),
       aiAskDoctor: () => this.askDoctorLesson(),
       lsTitle: L.title, lsSub: L.sub,
-      lsDots: L.beats.map((_, i) => ({ bg: i < s.beat ? "#3BD6C6" : i === s.beat ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
-      lsKicker: aiSection && aiSection.kicker ? aiSection.kicker : beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
-      lsBeatTitle: aiPending ? "Preparing the AI lesson…" : (aiSection && aiSection.title ? aiSection.title : beat.t),
+      lsDots: L.beats.map((_, i) => ({ bg: i < beatIndex ? "#3BD6C6" : i === beatIndex ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
+      lsKicker: aiData && aiData.kicker ? aiData.kicker : beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
+      lsBeatTitle: aiPending ? "Preparing the AI subsection…" : (aiData && aiData.title ? aiData.title : beat.t),
       lsBodyShow: aiPending ? true : !isTry,
-      lsBody: aiPending ? "Nurse Clara Vale is building this lesson from the approved EchoLab source material. If the AI lesson cannot load, the built-in lesson will appear automatically." : (aiSection ? [aiSection.story || "", aiSection.clinical ? "Clinical core: " + aiSection.clinical : "", aiSection.examAngle ? "Exam angle: " + aiSection.examAngle : "", aiSection.safetyNote ? "Safety note: " + aiSection.safetyNote : "", aiSection.memoryHook ? "Memory hook: " + aiSection.memoryHook : ""].filter(Boolean).join("\n\n") : (beat.b || "")),
+      lsBody: aiPending ? "The section mentor is building this subsection from the approved EchoLab source material. If the AI lesson cannot load, the built-in section will appear automatically." : (aiData ? aiBodyParts.filter(Boolean).join("\n\n") : builtBody),
       lsBodyC: isHook ? "#FFEBC9" : "rgba(228,240,255,.92)",
       lsCardBg: isHook ? "rgba(245,184,74,.09)" : "rgba(13,28,56,.66)",
       lsCardBd: isHook ? "rgba(245,184,74,.4)" : "rgba(122,180,255,.22)",
@@ -2273,7 +2407,7 @@ Return ONLY valid JSON, no markdown:
       }) : [],
       tryRevealed: revealed, tryIcon: ok ? "✓" : "✕", tryWhy: q ? q.why : "",
       lsNext: () => this.lsAdvance(),
-      lsNextLabel: aiPending ? "Building AI lesson…" : (!canAdvance ? "Pick an answer above" : last ? "Enter the Console Drill →" : "Continue"),
+      lsNextLabel: aiPending ? "Building AI subsection…" : (!canAdvance ? "Pick an answer above" : last ? "Enter the Console Drill →" : "Back to section list"),
       lsNextBg: canAdvance ? "linear-gradient(180deg,#FFCB6B,#F0A93C)" : "rgba(13,28,56,.5)",
       lsNextC: canAdvance ? "#2A2008" : "rgba(200,220,250,.4)",
       lsNextSh: canAdvance ? "0 8px 24px rgba(240,169,60,.32)" : "none",
