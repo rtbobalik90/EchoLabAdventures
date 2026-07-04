@@ -2352,7 +2352,7 @@ Return ONLY valid JSON, no markdown:
   medbayTriageCases() {
     return [
       {
-        title: "The Mismatched Wristband", tag: "PAUSE & VERIFY", glyph: "⌁", img: "art/MedBay/art/medtriage/medtriage-case-01-mismatched-wristband.webp",
+        title: "The Mismatched Wristband", tag: "PAUSE & VERIFY", glyph: "⌁", img: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-case-01-mismatched-wristband.webp",
         scene: "A patient arrives calmly, but the details don't line up.",
         patient: "Vell Tiran", wristband: "Wristband DOB: 04/17/2148", order: "Transthoracic echocardiogram", indication: "Order DOB: 03/11/2119 · Indication: chest pain",
         note: "The patient says, ‘My appointment nearly disappeared in the system this morning.’",
@@ -2371,7 +2371,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Wrong coordinates, wrong destination. The TARDIS hates that. So does patient safety."
       },
       {
-        title: "The Missing Indication", tag: "CLINICAL STORY", glyph: "☍", img: "art/MedBay/art/medtriage/medtriage-case-02-missing-indication.webp",
+        title: "The Missing Indication", tag: "CLINICAL STORY", glyph: "☍", img: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-case-02-missing-indication.webp",
         scene: "The patient is ready, but the order doesn't tell the full story.",
         patient: "Marin Sol", wristband: "Verified: full name + DOB match", order: "TTE ordered", indication: "Indication field blank · Prior study 6 months ago",
         note: "The patient says, ‘They told me it was because of shortness of breath, I think.’",
@@ -2390,7 +2390,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "No one scans blind on my watch. Not in space, not in time, and definitely not in a lab."
       },
       {
-        title: "The Unready Room", tag: "PREP THE BAY", glyph: "⚕", img: "art/MedBay/art/medtriage/medtriage-case-03-unready-room.webp",
+        title: "The Unready Room", tag: "PREP THE BAY", glyph: "⚕", img: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-case-03-unready-room.webp",
         scene: "The case is correct, but the environment is not.",
         patient: "Etta Rowan", wristband: "Verified: full name + DOB match", order: "TTE for murmur evaluation", indication: "Room note: bed high, chair low, probe not yet disinfected",
         note: "The patient is supine and uncomfortable. The transducer station shows low-level disinfection not completed after the previous case.",
@@ -2409,7 +2409,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Tilt the patient, not your spine. Heroic? Yes. Preventable shoulder injury? Absolutely not."
       },
       {
-        title: "The Results Question", tag: "EXPLAIN SAFELY", glyph: "✦", img: "art/MedBay/art/medtriage/medtriage-case-04-results-question.webp",
+        title: "The Results Question", tag: "EXPLAIN SAFELY", glyph: "✦", img: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-case-04-results-question.webp",
         scene: "Everything is in order, then the patient asks the question every learner eventually hears.",
         patient: "Hadi Neral", wristband: "Verified: full name + DOB match", order: "TTE for LV function", indication: "Patient asks, ‘Is my heart okay?’",
         note: "The scan is underway. The patient looks worried and wants an answer immediately.",
@@ -2428,7 +2428,7 @@ Return ONLY valid JSON, no markdown:
         doctor: "Journey, not destination. We can narrate the trip beautifully without spoiling the ending."
       },
       {
-        title: "The Red-Flag Finding", tag: "ESCALATE NOW", glyph: "⚠", img: "art/MedBay/art/medtriage/medtriage-case-05-red-flag-finding.webp",
+        title: "The Red-Flag Finding", tag: "ESCALATE NOW", glyph: "⚠", img: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-case-05-red-flag-finding.webp",
         scene: "The study uncovers a finding that should not wait quietly in a report queue.",
         patient: "Oren Pell", wristband: "Verified: full name + DOB match", order: "TTE for hypotension", indication: "Large pericardial effusion with RV collapse seen on images",
         note: "The patient is still in the room. The worksheet is open. This looks unstable.",
@@ -2530,7 +2530,7 @@ Return ONLY valid JSON, no markdown:
       mtWhy: c.why || '', mtNpcLine: c.npc || '', mtDoctorLine: c.doctor || '',
       mtNext: () => this.mtNext(), mtNextLabel: m.i + 1 < (m.cases || []).length ? 'Next case →' : 'Finish the shift',
       mtDoneTitle: m.cleared === (m.cases || []).length ? 'Five patients. Timeline stable.' : (m.cleared >= 3 ? 'The Med Bay holds.' : 'The shift needs another pass.'),
-      mtCleared: String(m.cleared || 0), mtFinalSafety: String(m.safety || 0), mtDoneImg: "art/MedBay/art/medtriage/medtriage-shift-complete.webp",
+      mtCleared: String(m.cleared || 0), mtFinalSafety: String(m.safety || 0), mtDoneImg: "art/MedBay/art/echolab_med_bay_triage_art_files/medtriage-shift-complete.webp",
       mtDoneMsg: m.cleared === (m.cases || []).length ? 'You cleared every case before the probe touched skin. Clara Vale logged a clean chain, and The Doctor is already calling it a fixed point in the shift.' : 'Not every case was stabilized on the first pass. That is still useful. Review the problem patterns, then run the shift again and strengthen the chain.',
       mtRestart: () => this.startMedTriage(),
     });
@@ -2722,6 +2722,8 @@ Return ONLY valid JSON, no markdown:
         lsDots: L.beats.map((_, i) => ({ bg: "rgba(190,212,245,.25)" })),
         lessonMenuTitle: L.title,
         lessonMenuSub: "Pick one subsection. Each section can load its own AI lesson first, then fall back to EchoLab's built-in version if AI is unavailable.",
+        lessonMenuHeroImg: this.medbayLessonHero(L.id),
+        lessonMenuHeroShow: !!this.medbayLessonHero(L.id),
         lessonSectionCards: sectionCards
       };
     }
@@ -2772,6 +2774,8 @@ Return ONLY valid JSON, no markdown:
       aiAskDoctor: () => this.askDoctorLesson(),
       lsTitle: L.title, lsSub: L.sub,
       lsDots: L.beats.map((_, i) => ({ bg: i < beatIndex ? "#3BD6C6" : i === beatIndex ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
+      lsImage: this.medbayBeatImage(L.id, beatIndex),
+      lsImageShow: !!this.medbayBeatImage(L.id, beatIndex),
       lsKicker: aiData && aiData.kicker ? aiData.kicker : beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
       lsBeatTitle: aiPending ? "Preparing the AI subsection…" : (aiData && aiData.title ? aiData.title : beat.t),
       lsBodyShow: aiPending ? true : !isTry,
