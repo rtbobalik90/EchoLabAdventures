@@ -650,6 +650,12 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <sc-if value="{{ memStartShow }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ memStart }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14.5px;font-weight:900;box-shadow:0 10px 30px rgba(240,169,60,.35);cursor:pointer;margin-bottom:14px">Begin review — {{ memDueN }} echoes waiting</div>
   </sc-if>
+  <sc-if value="{{ memDoctorToolsShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
+      <div onClick="{{ memDoctorExplainAll }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:15px;background:rgba(245,184,74,.12);border:1.5px solid rgba(245,184,74,.42);color:#FFE3B0;font-size:12px;font-weight:900;text-align:center;padding:0 10px;cursor:pointer">Ask The Doctor</div>
+      <div onClick="{{ memDoctorQuiz }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:15px;background:rgba(59,214,198,.10);border:1.5px solid rgba(59,214,198,.38);color:#BDEDE6;font-size:12px;font-weight:900;text-align:center;padding:0 10px;cursor:pointer">Quiz these echoes</div>
+    </div>
+  </sc-if>
   <sc-if value="{{ memEmptyShow }}" hint-placeholder-val="{{ false }}">
     <div style="display:flex;flex-direction:column;align-items:center;gap:9px;background:rgba(13,28,56,.5);border:1px dashed rgba(122,180,255,.3);border-radius:20px;padding:26px 20px;margin-bottom:14px;text-align:center">
       <span style="font-size:26px;color:#7FE7DB">❂</span>
@@ -658,13 +664,19 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </div>
   </sc-if>
   <sc-for list="{{ memDue }}" as="m" hint-placeholder-count="3">
-    <div style="display:flex;align-items:center;gap:11px;background:rgba(13,28,56,.62);border:1px solid rgba(180,140,242,.28);border-radius:16px;padding:11px 13px;margin-bottom:8px">
-      <span style="flex:none;width:34px;height:34px;border-radius:12px;background:rgba(180,140,242,.12);border:1.5px solid {{ m.color }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:{{ m.color }}">{{ m.dom }}</span>
-      <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
-        <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ m.topic }}</span>
-        <span style="font-size:10px;color:rgba(200,220,250,.55)">{{ m.dueLabel }}</span>
+    <div style="display:flex;flex-direction:column;gap:9px;background:rgba(13,28,56,.62);border:1px solid rgba(180,140,242,.28);border-radius:16px;padding:11px 13px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:11px">
+        <span style="flex:none;width:34px;height:34px;border-radius:12px;background:rgba(180,140,242,.12);border:1.5px solid {{ m.color }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:{{ m.color }}">{{ m.dom }}</span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+          <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ m.topic }}</span>
+          <span style="font-size:10px;color:rgba(200,220,250,.55)">{{ m.dueLabel }}</span>
+        </div>
+        <span style="flex:none;font-size:9px;font-weight:900;color:#F4998E;border:1px solid rgba(244,121,91,.4);border-radius:999px;padding:4px 8px">×{{ m.miss }}</span>
       </div>
-      <span style="flex:none;font-size:9px;font-weight:900;color:#F4998E;border:1px solid rgba(244,121,91,.4);border-radius:999px;padding:4px 8px">×{{ m.miss }}</span>
+      <div style="display:flex;gap:8px">
+        <div onClick="{{ m.askDoctor }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:13px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">Ask The Doctor</div>
+        <div onClick="{{ m.quizMe }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:13px;background:rgba(59,214,198,.1);border:1.5px solid rgba(59,214,198,.35);color:#BDEDE6;font-size:12px;font-weight:900;cursor:pointer">Quiz me</div>
+      </div>
     </div>
   </sc-for>
 </div>
@@ -1239,7 +1251,7 @@ class Component extends DCLogic {
   dayIdx() { return Math.floor(Date.now() / 864e5); }
 
   // ---------- answer recording / spaced repetition ----------
-  recordAnswer(qid, ok, isReview) {
+  recordAnswer(qid, ok, isReview, picked) {
     const st = this.p.q[qid] || (this.p.q[qid] = { s: 0, c: 0, w: 0 });
     st.s++; ok ? st.c++ : st.w++; st.last = ok;
     const h = this.hist(); h.ans++; if (ok) h.cor++;
@@ -1257,6 +1269,8 @@ class Component extends DCLogic {
     } else {
       const m = this.p.mem[qid] || (this.p.mem[qid] = { iv: 0, miss: 0 });
       m.miss++; m.iv = 0; m.due = Date.now() + 10 * 60e3;
+      if (typeof picked === "number") m.picked = picked;
+      m.lastMissedAt = Date.now();
     }
     this.markActive(); this.save();
   }
@@ -1352,6 +1366,34 @@ class Component extends DCLogic {
     if (kind === "weak") return `Quiz me on my weakest area: ${dom ? dom.name : "echo fundamentals"}. Ask one CCI-style question and explain the answer.`;
     return "Quiz me with one CCI-style echo question."
   }
+  memoryDoctorPrompt(qid, mode) {
+    const D = this.D || {};
+    const q = D.QUESTIONS && D.QUESTIONS[qid];
+    if (!q) return "Help me review this Memory Core item and quiz me with one similar CCI-style echo question.";
+    const dom = D.DOMAINS ? D.DOMAINS.find((d) => d.id === q.d) : null;
+    const m = this.p && this.p.mem ? this.p.mem[qid] : null;
+    const picked = m && typeof m.picked === "number" && q.ch[m.picked] ? q.ch[m.picked] : "unknown / not saved";
+    const correct = q.ch[q.ans] || "correct answer";
+    if (mode === "quiz") {
+      return `Quiz me on this weak Memory Core topic: ${q.topic} (${dom ? dom.name : q.d}). Ask one new original CCI-style question similar to this missed item, then wait for my answer before revealing the explanation. Original missed stem for context: ${q.stem}`;
+    }
+    return `Memory Core review. Lizzie missed this question. Domain: ${dom ? dom.name : q.d}. Topic: ${q.topic}. Question: ${q.stem} Choices: ${q.ch.map((c,i)=>String.fromCharCode(65+i)+". "+c).join(" | ")} Lizzie selected: ${picked}. Correct answer: ${correct}. Explanation from EchoLab: ${q.exp || ""} Wrong-answer note for Lizzie's pick: ${q.ww && typeof m?.picked === "number" ? (q.ww[m.picked] || "") : ""} Teach the concept at my selected level, explain why the right answer is right, why my answer was tempting or wrong, give one memory hook, then end with one short follow-up mini-question.`;
+  }
+  askDoctorAboutMemory(qid, mode) {
+    const q = this.D && this.D.QUESTIONS ? this.D.QUESTIONS[qid] : null;
+    const chip = q ? q.topic : "Memory Core";
+    const prompt = this.memoryDoctorPrompt(qid, mode || "explain");
+    this.go("doctor", { doctorInput: prompt, doctorReviewChip: chip });
+    setTimeout(() => this.doctorSend(), 80);
+  }
+  askDoctorMemoryAll(mode) {
+    const due = this.dueList ? this.dueList() : [];
+    if (!due.length) { this.go("doctor", { doctorInput: "My Memory Core is clear. Give me a smart short review plan for today based on my weakest echo topics.", doctorReviewChip: "Daily review" }); setTimeout(() => this.doctorSend(), 80); return; }
+    const top = due.slice(0, 5).map((qid) => { const q = this.D.QUESTIONS[qid]; return q ? `${q.topic}: ${q.stem}` : qid; }).join(" || ");
+    const prompt = mode === "quiz" ? `Quiz me from these due Memory Core echoes. Ask one original CCI-style question at a time, starting with the highest-yield trap. Due items: ${top}` : `Review these due Memory Core echoes with me. Identify the shared weak patterns, teach the highest-yield concepts, and give me a short plan. Due items: ${top}`;
+    this.go("doctor", { doctorInput: prompt, doctorReviewChip: mode === "quiz" ? "Memory Core quiz" : "Memory Core review" });
+    setTimeout(() => this.doctorSend(), 80);
+  }
   doctorPromptText(raw) {
     return String(raw || "").trim();
   }
@@ -1442,7 +1484,7 @@ class Component extends DCLogic {
     b.picked = i; b.rev = true; b.streak = ok ? b.streak + 1 : 0;
     b.line = this.pick(ok ? this.D.LINES.correct : this.D.LINES.wrong);
     if (ok) { b.cor++; const amt = 8 + 2 * q.diff; b.xp += amt; this.gainXp(amt); this.sGood(); } else this.sBad();
-    this.recordAnswer(qid, ok, b.mode === "review");
+    this.recordAnswer(qid, ok, b.mode === "review", i);
     this.forceUpdate();
   }
   btNext() {
@@ -1852,7 +1894,7 @@ class Component extends DCLogic {
     const ok = i === q.ans;
     b.picked = i; b.rev = true;
     if (ok) { b.cor++; this.gainXp(10); this.sGood(); } else { b.strikes++; this.sBad(); }
-    this.recordAnswer(qid, ok, false);
+    this.recordAnswer(qid, ok, false, i);
     if (b.strikes >= 4) this.bossEnd(false);
     this.forceUpdate();
   }
@@ -1936,12 +1978,17 @@ class Component extends DCLogic {
       memShow: s.screen === "memory",
       memDueN: String(due.length), memUpN: String(upN), memClearedN: String(p.reviewsCleared),
       memStartShow: due.length > 0, memEmptyShow: due.length === 0,
+      memDoctorToolsShow: true,
       memStart: () => this.memStart(),
+      memDoctorExplainAll: () => this.askDoctorMemoryAll("explain"),
+      memDoctorQuiz: () => this.askDoctorMemoryAll("quiz"),
       memDue: due.slice(0, 12).map((qid) => {
         const q = D.QUESTIONS[qid], m = p.mem[qid];
         const dom = D.DOMAINS.find((d) => d.id === q.d);
         return { topic: q.topic, dom: dom.short, color: dom.color, miss: String(m.miss),
-          dueLabel: m.iv === 0 ? "Fresh miss — due now" : "Interval " + m.iv + "d — due now" };
+          dueLabel: m.iv === 0 ? "Fresh miss — due now" : "Interval " + m.iv + "d — due now",
+          askDoctor: () => this.askDoctorAboutMemory(qid, "explain"),
+          quizMe: () => this.askDoctorAboutMemory(qid, "quiz") };
       }),
     };
   }
@@ -2198,6 +2245,8 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
         bd: ((p.doctorLevel || s.doctorLevel || "intermediate") === k) ? "rgba(245,184,74,.7)" : "rgba(122,180,255,.22)",
         c: ((p.doctorLevel || s.doctorLevel || "intermediate") === k) ? "#FFD98F" : "rgba(200,220,250,.65)" })),
       doctorAiChip: p.apiKey ? "LIVE AI" : "LOCAL MODE",
+      doctorReviewShow: !!s.doctorReviewChip,
+      doctorReviewChip: s.doctorReviewChip || "",
       doctorClear: () => this.clearDoctorChat(),
       doctorPrompts: [
         { t: "Missed question", q: this.doctorContextPrompt("missed") },
