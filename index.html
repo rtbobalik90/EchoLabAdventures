@@ -1981,8 +1981,9 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
   }
   gmDoctorPick(n) { if (!this.p.gmUnlocked) return; this.p.gmDoctor = n; this.save(); this.toast("Doctor style selected", "Previewing The Doctor in app text and chat."); this.forceUpdate(); }
   rvMeta(s, p, D, li) {
-    const earned = Object.keys(p.badges).length;
+    const gm = this.isGM();
     const mvpB = D.BADGES;
+    const earned = gm ? mvpB.length : Object.keys(p.badges).length;
     // journal numbers
     let ans = 0, cor = 0;
     for (const k in p.q) { ans += p.q[k].s; cor += p.q[k].c; }
@@ -2021,7 +2022,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       charShow: s.screen === "character", doctorShow: s.screen === "doctor", adminShow: s.screen === "admin", bossesShow: s.screen === "bosses",
       bvEarned: String(earned), bvTotal: String(mvpB.length),
       badgeList: mvpB.map((b) => {
-        const got = !!p.badges[b.id];
+        const got = gm || !!p.badges[b.id];
         return { name: b.name, how: b.how, glyph: b.glyph,
           bg: got ? "rgba(13,28,56,.75)" : "rgba(10,20,40,.45)",
           bd: got ? b.color + "88" : "rgba(122,180,255,.14)",
@@ -2055,9 +2056,9 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           actC: active ? d.color : "rgba(190,212,245,.4)" };
       }),
       mentorQuote: this.doctorFor(li.level).quote,
-      chBadges: earned ? mvpB.filter((b) => p.badges[b.id]).map((b) => ({ glyph: b.glyph, name: b.name, bd: b.color + "77", gC: b.color, tC: "#F4F8FF" })) : [{ glyph: "·", name: "No badges yet — the vault waits", bd: "rgba(122,180,255,.2)", gC: "rgba(150,180,220,.4)", tC: "rgba(200,220,250,.5)" }],
+      chBadges: gm ? mvpB.map((b) => ({ glyph: b.glyph, name: b.name, bd: b.color + "77", gC: b.color, tC: "#F4F8FF" })) : (earned ? mvpB.filter((b) => p.badges[b.id]).map((b) => ({ glyph: b.glyph, name: b.name, bd: b.color + "77", gC: b.color, tC: "#F4F8FF" })) : [{ glyph: "·", name: "No badges yet — the vault waits", bd: "rgba(122,180,255,.2)", gC: "rgba(150,180,220,.4)", tC: "rgba(200,220,250,.5)" }]),
       chArts: D.ARTIFACTS.map((a) => {
-        const got = !!p.arts[a.id];
+        const got = gm || !!p.arts[a.id];
         return { name: a.name, how: a.how, glyph: a.glyph,
           bd: got ? "rgba(245,184,74,.5)" : "rgba(122,180,255,.14)",
           gC: got ? "#FFCB6B" : "rgba(150,180,220,.35)",
@@ -2065,9 +2066,9 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           st: got ? "HELD" : "MISSING", stC: got ? "#7FE7DB" : "rgba(190,212,245,.4)" };
       }),
       bossList: D.BOSSES.map((b) => {
-        const gm = this.isGM();
-        const playable = b.id === "angels" && this.bossUnlocked();
-        const visibleOpen = playable || (gm && b.mvp);
+        const isBuilder = gm;
+        const playable = isBuilder || (b.id === "angels" && this.bossUnlocked());
+        const visibleOpen = playable;
         const won = b.id === "angels" && p.boss.angels && p.boss.angels.won;
         const lockedStatus = b.mvp ? "LEVEL " + b.unlockLevel : "LOCKED";
         return { name: b.name, sub: b.sub,
@@ -2075,14 +2076,14 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           bd: won ? "rgba(59,214,198,.45)" : visibleOpen ? "rgba(200,205,225,.4)" : "rgba(122,180,255,.12)",
           f: visibleOpen ? "grayscale(1) brightness(1.4)" : "grayscale(1) brightness(.7)",
           tC: visibleOpen ? "#F4F8FF" : "rgba(200,220,250,.45)",
-          status: won ? "DEFEATED" : playable ? "READY" : (gm && !b.mvp ? "PREVIEW" : lockedStatus),
+          status: won ? "DEFEATED" : playable ? "READY" : lockedStatus,
           stC: won ? "#7FE7DB" : visibleOpen ? "#FFD98F" : "rgba(190,212,245,.45)",
           stBd: won ? "rgba(59,214,198,.5)" : visibleOpen ? "rgba(245,184,74,.5)" : "rgba(150,180,220,.3)",
           stBdStyle: visibleOpen || won ? "solid" : "dashed",
           go: () => {
-            if (b.id !== "angels") { this.toast(gm ? "Preview only" : "Locked", "This threat is not active in the current build."); return; }
-            if (this.bossUnlocked()) this.go("bossBrief");
-            else { this.toast("Locked — reach Level 3", "The Angels only hunt companions worth hunting."); this.sBad(); }
+            if (isBuilder && b.id !== "angels") { this.toast("Game Master preview", "This boss is unlocked for layout testing. Its full battle engine is not built yet."); return; }
+            if (playable && b.id === "angels") this.go("bossBrief");
+            else { this.toast("Locked", "This threat is still locked."); this.sBad(); }
           } };
       }),
       examDate: p.examDate, onDate: (e) => this.onDate(e),
