@@ -302,7 +302,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </sc-for>
 
     <sc-if value="{{ rgGameShow }}" hint-placeholder-val="{{ false }}">
-      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">MINI-GAME</span>
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">{{ rgGameLabel }}</span>
       <div onClick="{{ rgGameGo }}" style="display:flex;align-items:center;gap:12px;background:linear-gradient(120deg, {{ rgAccentSoft }}, rgba(13,28,56,.66));border:1.5px solid {{ rgGameBd }};border-radius:20px;padding:14px 13px;cursor:pointer;box-shadow:0 0 24px {{ rgGameSh }}">
         <span style="flex:none;width:44px;height:44px;border-radius:16px;background:rgba(7,15,30,.72);border:1.5px solid {{ rgAccent }};display:flex;align-items:center;justify-content:center;font-size:20px;color:{{ rgAccent }}">{{ rgGameGlyph }}</span>
         <div style="flex:1;display:flex;flex-direction:column;gap:2px">
@@ -607,6 +607,127 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
       <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:300px">{{ duDoneMsg }}</span>
       <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Engine Room</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== MED BAY TRIAGE ===================== -->
+<sc-if value="{{ medTriageShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Med Bay Triage" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <sc-if value="{{ mtLive }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <div style="display:flex;flex-direction:column;min-width:0">
+        <span style="font-size:12.5px;font-weight:900;color:#7FE7DB">MED BAY TRIAGE</span>
+        <span style="font-size:9.5px;color:rgba(200,220,250,.55)">Case {{ mtRound }} of {{ mtRounds }} · UNIT Medical Bay</span>
+      </div>
+      <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+        <span style="font-size:10px;font-weight:900;color:#FFD98F">SAFETY {{ mtSafety }}%</span>
+        <span style="font-size:9px;color:rgba(200,220,250,.55)">Streak {{ mtStreak }}</span>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="flex:1;height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid rgba(122,180,255,.18)"><div style="width:{{ mtSafetyWidth }}%;height:100%;border-radius:99px;background:{{ mtSafetyColor }};box-shadow:0 0 14px {{ mtSafetyGlow }}"></div></div>
+      <span style="font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ mtCaseTagC }};border:1px solid {{ mtCaseTagBd }};border-radius:999px;padding:5px 8px;white-space:nowrap">{{ mtCaseTag }}</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg, rgba(59,214,198,.10), rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.26);border-radius:22px;padding:15px;margin-bottom:12px">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span style="flex:none;width:42px;height:42px;border-radius:14px;background:rgba(59,214,198,.12);border:1.5px solid rgba(59,214,198,.55);display:flex;align-items:center;justify-content:center;font-size:18px;color:#7FE7DB">{{ mtCaseGlyph }}</span>
+        <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+          <span style="font-size:9px;font-weight:900;letter-spacing:2px;color:#7FE7DB">SHIFT CASE</span>
+          <span style="font-family:'Marcellus',serif;font-size:24px;line-height:1.08;color:#F4F8FF">{{ mtCaseTitle }}</span>
+          <span style="font-size:11.5px;line-height:1.5;color:rgba(210,228,255,.72)">{{ mtCaseScene }}</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:rgba(6,13,27,.44);border:1px solid rgba(122,180,255,.18);border-radius:16px;padding:10px 11px;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.5px;color:#9CC5FF">PATIENT</span>
+          <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ mtPatient }}</span>
+          <span style="font-size:10.5px;color:rgba(210,228,255,.65)">{{ mtWristband }}</span>
+        </div>
+        <div style="background:rgba(6,13,27,.44);border:1px solid rgba(122,180,255,.18);border-radius:16px;padding:10px 11px;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:8px;font-weight:900;letter-spacing:1.5px;color:#9CC5FF">ORDER</span>
+          <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ mtOrder }}</span>
+          <span style="font-size:10.5px;color:rgba(210,228,255,.65)">{{ mtIndication }}</span>
+        </div>
+      </div>
+      <div style="background:rgba(6,13,27,.44);border:1px solid rgba(122,180,255,.18);border-radius:16px;padding:10px 11px;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:8px;font-weight:900;letter-spacing:1.5px;color:#9CC5FF">SCENE NOTE</span>
+        <span style="font-size:12px;line-height:1.55;color:rgba(224,238,255,.86)">{{ mtCaseNote }}</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55)">STEP 1 · SPOT THE UNSTABLE CLUE</span>
+      <sc-for list="{{ mtClues }}" as="c" hint-placeholder-count="3">
+        <div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ c.bg }};border:1.5px solid {{ c.bd }};border-radius:16px;padding:12px;cursor:pointer;box-shadow:{{ c.sh }}">
+          <span style="flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(7,15,30,.55);border:1px solid rgba(122,180,255,.18);font-size:11px;color:{{ c.mkC }}">{{ c.mk }}</span>
+          <span style="flex:1;font-size:12.5px;line-height:1.45;color:#EAF2FF">{{ c.t }}</span>
+        </div>
+      </sc-for>
+      <span style="font-size:10.5px;color:rgba(200,220,250,.58)">{{ mtClueHint }}</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55)">STEP 2 · CHOOSE THE ACTION</span>
+      <sc-for list="{{ mtActions }}" as="a" hint-placeholder-count="5">
+        <div onClick="{{ a.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ a.bg }};border:1.5px solid {{ a.bd }};border-radius:16px;padding:12px;cursor:pointer;opacity:{{ a.op }};box-shadow:{{ a.sh }}">
+          <span style="flex:none;width:28px;height:28px;border-radius:10px;background:rgba(7,15,30,.55);border:1px solid rgba(122,180,255,.18);display:flex;align-items:center;justify-content:center;font-size:14px;color:{{ a.iconC }}">{{ a.icon }}</span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ a.t }}</span>
+            <span style="font-size:10.5px;line-height:1.45;color:rgba(200,220,250,.58)">{{ a.sub }}</span>
+          </div>
+          <span style="flex:none;font-size:13px;color:{{ a.mkC }}">{{ a.mk }}</span>
+        </div>
+      </sc-for>
+      <span style="font-size:10.5px;color:rgba(200,220,250,.58)">{{ mtActionHint }}</span>
+    </div>
+
+    <sc-if value="{{ mtReviewShow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(9,19,38,.88);border:1px solid {{ mtReviewBd }};border-radius:18px;padding:14px;animation:popIn .3s ease">
+        <span style="font-size:9px;font-weight:900;letter-spacing:2px;color:{{ mtResultC }}">{{ mtResultLabel }}</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(224,238,255,.92)">{{ mtWhy }}</span>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(59,214,198,.22);border-radius:16px;padding:12px">
+          <span style="flex:none;width:34px;height:34px;border-radius:12px;background:rgba(59,214,198,.14);border:1px solid rgba(59,214,198,.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#7FE7DB">CV</span>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:8.5px;font-weight:900;letter-spacing:1.5px;color:#7FE7DB">NURSE CLARA VALE</span>
+            <span style="font-size:12px;line-height:1.5;color:rgba(224,238,255,.88)">{{ mtNpcLine }}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.22);border-radius:16px;padding:12px">
+          <div style="flex:none;width:34px;height:34px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
+            <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:8.5px;font-weight:900;letter-spacing:1.5px;color:#FFD98F">THE DOCTOR</span>
+            <span style="font-size:12px;line-height:1.5;color:rgba(224,238,255,.88)">{{ mtDoctorLine }}</span>
+          </div>
+        </div>
+      </div>
+      <div onClick="{{ mtNext }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer;margin-top:10px">{{ mtNextLabel }}</div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ mtDoneShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">SHIFT COMPLETE</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ mtDoneTitle }}</span>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(59,214,198,.35);border-radius:18px;padding:13px 18px;min-width:95px">
+          <span style="font-family:'Marcellus',serif;font-size:26px;color:#7FE7DB">{{ mtCleared }}</span>
+          <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">CASES CLEARED</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:rgba(13,28,56,.7);border:1px solid rgba(245,184,74,.35);border-radius:18px;padding:13px 18px;min-width:95px">
+          <span style="font-family:'Marcellus',serif;font-size:26px;color:#FFCB6B">{{ mtFinalSafety }}%</span>
+          <span style="font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:rgba(200,220,250,.6)">TIMELINE STABLE</span>
+        </div>
+      </div>
+      <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:320px">{{ mtDoneMsg }}</span>
+      <div onClick="{{ mtRestart }}" style="display:flex;align-items:center;justify-content:center;height:48px;min-width:240px;border-radius:16px;border:1.5px solid rgba(122,180,255,.28);background:rgba(13,28,56,.55);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer">Run another shift</div>
+      <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Med Bay</div>
     </div>
   </sc-if>
 </div>
@@ -1738,6 +1859,7 @@ Return ONLY valid JSON, no markdown:
       return this.go("home");
     }
     if (s === "mm" || s === "duel") return this.go("region");
+    if (s === "medtriage") return this.go("region", { regionId: "medbay" });
     if (s === "bossBrief" || s === "boss") { clearInterval(this._bt); return this.go("bosses"); }
     return this.go("home");
   }
@@ -2138,7 +2260,7 @@ Return ONLY valid JSON, no markdown:
         if (id === "g1") this.toast("Mini-game unlocked — Measure Match", "Forge the measurement chains.");
         if (id === "g5") this.toast("Room unlocked — Valvular Citadel", "The valve gates are opening.");
       }
-      if (["mb1", "mb2", "mb3"].every((l) => this.lessonDone(l))) { this.award("bedside"); this.artifact("sonic_case"); }
+      if (["mb1", "mb2", "mb3"].every((l) => this.lessonDone(l))) { this.award("bedside"); this.artifact("sonic_case"); if (id === "mb3") this.toast("Simulation unlocked — Med Bay Triage", "Run a five-patient shift and clear each case before the scan begins."); }
       if (id === "g1" && perfect) this.award("parasternal");
       if (["c1", "c2", "c3", "c4", "c5"].every((l) => this.lessonDone(l))) { this.award("valve_guardian"); this.artifact("valve_citadel_key"); }
     }
@@ -2159,6 +2281,195 @@ Return ONLY valid JSON, no markdown:
     let best = "A", bm = 2;
     for (const d of cands) { const m = this.domainMastery(d); if (m < bm) { bm = m; best = d; } }
     return best;
+  }
+
+  medbayTriageUnlocked() { return this.isGM() || ["mb1", "mb2", "mb3"].every((l) => this.lessonDone(l)); }
+  medbayTriageCases() {
+    return [
+      {
+        title: "The Mismatched Wristband", tag: "PAUSE & VERIFY", glyph: "⌁",
+        scene: "A patient arrives calmly, but the details don't line up.",
+        patient: "Vell Tiran", wristband: "Wristband DOB: 04/17/2148", order: "Transthoracic echocardiogram", indication: "Order DOB: 03/11/2119 · Indication: chest pain",
+        note: "The patient says, ‘My appointment nearly disappeared in the system this morning.’",
+        clues: ["The order and wristband show different dates of birth.", "The patient is sitting upright on the bed.", "The gel bottle is half full."],
+        clueAnswer: 0,
+        actions: [
+          { key: "proceed", title: "Proceed to scan", sub: "Start the exam now" },
+          { key: "verify", title: "Pause & verify", sub: "Stop and confirm the identifiers and order" },
+          { key: "prepare", title: "Prepare the room", sub: "Adjust positioning and equipment" },
+          { key: "explain", title: "Explain safely", sub: "Answer questions without interpreting" },
+          { key: "escalate", title: "Escalate now", sub: "Contact the interpreting physician urgently" }
+        ],
+        actionAnswer: "verify", penalty: 15,
+        why: "Two acceptable identifiers must match the order before the probe touches skin. A mismatch in the date of birth means the case is not cleared to scan until the identity and order are verified.",
+        npc: "Exactly right. Wrong-patient and wrong-exam events are never-events. We stop, verify, and only continue when the coordinates are correct.",
+        doctor: "Wrong coordinates, wrong destination. The TARDIS hates that. So does patient safety."
+      },
+      {
+        title: "The Missing Indication", tag: "CLINICAL STORY", glyph: "☍",
+        scene: "The patient is ready, but the order doesn't tell the full story.",
+        patient: "Marin Sol", wristband: "Verified: full name + DOB match", order: "TTE ordered", indication: "Indication field blank · Prior study 6 months ago",
+        note: "The patient says, ‘They told me it was because of shortness of breath, I think.’",
+        clues: ["The patient is wearing a watch.", "The indication is missing from the order.", "The patient has a previous echo in the chart."],
+        clueAnswer: 1,
+        actions: [
+          { key: "proceed", title: "Proceed to scan", sub: "Treat the missing reason as unimportant" },
+          { key: "verify", title: "Pause & verify", sub: "Clarify the indication and compare to the story" },
+          { key: "prepare", title: "Prepare the room", sub: "Focus only on bed and machine setup" },
+          { key: "explain", title: "Explain safely", sub: "Explain the workflow to the patient" },
+          { key: "escalate", title: "Escalate now", sub: "Call a physician emergency immediately" }
+        ],
+        actionAnswer: "verify", penalty: 12,
+        why: "The exam should match the clinical question. If the indication is unclear or the patient story doesn't fit, you verify with the ordering team so the study answers the right question.",
+        npc: "Good catch. Order, identity, story. If one leg of the stool is missing, the whole workflow wobbles.",
+        doctor: "No one scans blind on my watch. Not in space, not in time, and definitely not in a lab."
+      },
+      {
+        title: "The Unready Room", tag: "PREP THE BAY", glyph: "⚕",
+        scene: "The case is correct, but the environment is not.",
+        patient: "Etta Rowan", wristband: "Verified: full name + DOB match", order: "TTE for murmur evaluation", indication: "Room note: bed high, chair low, probe not yet disinfected",
+        note: "The patient is supine and uncomfortable. The transducer station shows low-level disinfection not completed after the previous case.",
+        clues: ["The patient has a blanket on.", "The room has not been prepared for safe scanning.", "The patient has already removed one shoe."],
+        clueAnswer: 1,
+        actions: [
+          { key: "proceed", title: "Proceed to scan", sub: "Start now and fix comfort later" },
+          { key: "verify", title: "Pause & verify", sub: "Check only the order and wristband again" },
+          { key: "prepare", title: "Prepare the room", sub: "Disinfect, position, and protect ergonomics first" },
+          { key: "explain", title: "Explain safely", sub: "Tell the patient what the scan will feel like" },
+          { key: "escalate", title: "Escalate now", sub: "Call the physician for a critical result" }
+        ],
+        actionAnswer: "prepare", penalty: 14,
+        why: "A safe scan includes infection control, proper positioning, and sonographer ergonomics. Noncritical TTE probes on intact skin still require low-level disinfection between patients, and the room should be set before scanning begins.",
+        npc: "That's the habit we want. Prepare the room, protect the patient, preserve your body. Good workflow is invisible because it happens before the image.",
+        doctor: "Tilt the patient, not your spine. Heroic? Yes. Preventable shoulder injury? Absolutely not."
+      },
+      {
+        title: "The Results Question", tag: "EXPLAIN SAFELY", glyph: "✦",
+        scene: "Everything is in order, then the patient asks the question every learner eventually hears.",
+        patient: "Hadi Neral", wristband: "Verified: full name + DOB match", order: "TTE for LV function", indication: "Patient asks, ‘Is my heart okay?’",
+        note: "The scan is underway. The patient looks worried and wants an answer immediately.",
+        clues: ["The patient asks for interpretation during the scan.", "The patient is lying in left lateral decubitus.", "The echo machine battery is full."],
+        clueAnswer: 0,
+        actions: [
+          { key: "proceed", title: "Proceed to scan", sub: "Ignore the question entirely" },
+          { key: "verify", title: "Pause & verify", sub: "Stop to re-check identifiers" },
+          { key: "prepare", title: "Prepare the room", sub: "Reposition and disinfect again" },
+          { key: "explain", title: "Explain safely", sub: "Describe the process, not the diagnosis" },
+          { key: "escalate", title: "Escalate now", sub: "Call the physician immediately" }
+        ],
+        actionAnswer: "explain", penalty: 10,
+        why: "Sonographers can explain what the exam involves, but they do not interpret or diagnose to the patient. The professional response is to explain the process and direct final results to the interpreting physician or provider.",
+        npc: "Perfect. Calm, kind, professional. We tell patients what will happen, not what the final diagnosis is.",
+        doctor: "Journey, not destination. We can narrate the trip beautifully without spoiling the ending."
+      },
+      {
+        title: "The Red-Flag Finding", tag: "ESCALATE NOW", glyph: "⚠",
+        scene: "The study uncovers a finding that should not wait quietly in a report queue.",
+        patient: "Oren Pell", wristband: "Verified: full name + DOB match", order: "TTE for hypotension", indication: "Large pericardial effusion with RV collapse seen on images",
+        note: "The patient is still in the room. The worksheet is open. This looks unstable.",
+        clues: ["The patient has a blue blanket.", "A large effusion with chamber collapse is visible.", "The patient arrived ten minutes early."],
+        clueAnswer: 1,
+        actions: [
+          { key: "proceed", title: "Proceed to scan", sub: "Finish later and send the worksheet routinely" },
+          { key: "verify", title: "Pause & verify", sub: "Double-check the order before doing anything else" },
+          { key: "prepare", title: "Prepare the room", sub: "Clean up and end the study first" },
+          { key: "explain", title: "Explain safely", sub: "Tell the patient the finding looks serious" },
+          { key: "escalate", title: "Escalate now", sub: "Notify the interpreting physician immediately per protocol" }
+        ],
+        actionAnswer: "escalate", penalty: 25,
+        why: "A large pericardial effusion with chamber collapse may indicate tamponade physiology and is a critical finding. It must be communicated immediately according to lab protocol, and the sonographer should not independently interpret the diagnosis to the patient.",
+        npc: "Yes. That cannot wait for routine reporting. Urgent findings are escalated immediately and documented clearly.",
+        doctor: "Some echoes whisper. That one shouts. When the timeline starts flashing red, you call it in now."
+      }
+    ];
+  }
+  startMedTriage() {
+    if (!this.medbayTriageUnlocked()) { this.toast("Locked", "Complete all three Med Bay lessons to unlock the five-patient shift."); this.sBad(); return; }
+    const cases = this.medbayTriageCases();
+    this.go("medtriage", { medtriage: { i: 0, cases, cluePicked: -1, actionPicked: "", stage: "clue", safety: 100, streak: 0, best: 0, cleared: 0, done: false } });
+  }
+  mtPickClue(i) {
+    const m = this.state.medtriage; if (!m || m.done || m.stage !== "clue") return;
+    m.cluePicked = i; m.stage = "action"; this.markActive();
+    if (m.cases[m.i].clueAnswer === i) this.sGood(); else { m.sBad(); m.safety = Math.max(0, m.safety - 5); }
+    this.forceUpdate();
+  }
+  mtPickAction(key) {
+    const m = this.state.medtriage; if (!m || m.done || m.stage !== "action") return;
+    const c = m.cases[m.i];
+    m.actionPicked = key; m.stage = "review";
+    const ok = key === c.actionAnswer;
+    if (ok) {
+      m.cleared++; m.streak++; m.best = Math.max(m.best, m.streak);
+      this.gainXp(10); this.sGood();
+    } else {
+      m.streak = 0; m.safety = Math.max(0, m.safety - (c.penalty || 12)); this.sBad();
+    }
+    this.markActive(); this.forceUpdate();
+  }
+  mtNext() {
+    const m = this.state.medtriage; if (!m) return;
+    if (m.i + 1 < m.cases.length) {
+      m.i++; m.cluePicked = -1; m.actionPicked = ""; m.stage = "clue"; this.forceUpdate(); window.scrollTo(0, 0); this.sClick(); return;
+    }
+    m.done = true;
+    this.p.games.medtriage = (this.p.games.medtriage || 0) + 1;
+    this.gainXp(20);
+    if (m.cleared === m.cases.length && m.safety >= 85) this.toast("Shift complete", "Clara Vale signed off the whole shift. The Med Bay is stable.");
+    else this.toast("Shift complete", "The Med Bay logged the cases. Run another shift to improve the timeline.");
+    this.spendEnergy(); this.save(); this.forceUpdate(); window.scrollTo(0, 0);
+  }
+  rvMedTriage(s, p, D, li) {
+    const out = { medTriageShow: s.screen === "medtriage" };
+    const m = s.medtriage;
+    if (!out.medTriageShow || !m) return out;
+    const c = m.cases[m.i] || {};
+    const clueLocked = m.stage === "clue";
+    const actionStage = m.stage === "action" || m.stage === "review";
+    const actionChosen = m.stage === "review";
+    const goodAction = actionChosen && m.actionPicked === c.actionAnswer;
+    const safetyColor = m.safety >= 80 ? "#3BD6C6" : m.safety >= 60 ? "#FFCB6B" : "#F4795B";
+    const actionIcons = { proceed: "▶", verify: "✓", prepare: "⚙", explain: "✦", escalate: "!" };
+    const actionSubs = {};
+    Object.assign(out, {
+      back: () => this.back(),
+      mtLive: !m.done, mtDoneShow: !!m.done,
+      mtRound: String((m.i || 0) + 1), mtRounds: String((m.cases || []).length),
+      mtSafety: String(m.safety), mtSafetyWidth: String(Math.max(0, Math.min(100, m.safety))), mtSafetyColor: safetyColor, mtSafetyGlow: safetyColor + '66',
+      mtStreak: String(m.streak || 0), mtCaseTag: c.tag || 'CASE', mtCaseTagC: c.tag === 'ESCALATE NOW' ? '#FFB49E' : '#7FE7DB', mtCaseTagBd: c.tag === 'ESCALATE NOW' ? 'rgba(244,121,91,.45)' : 'rgba(59,214,198,.4)',
+      mtCaseGlyph: c.glyph || '✚', mtCaseTitle: c.title || '', mtCaseScene: c.scene || '', mtPatient: c.patient || '', mtWristband: c.wristband || '', mtOrder: c.order || '', mtIndication: c.indication || '', mtCaseNote: c.note || '',
+      mtClues: (c.clues || []).map((t, i) => {
+        let bg = 'rgba(13,28,56,.7)', bd = 'rgba(122,180,255,.25)', mk = String(i + 1), mkC = 'rgba(190,212,245,.65)', sh = 'none';
+        if (m.cluePicked >= 0) {
+          if (i === c.clueAnswer) { bg = 'rgba(59,214,198,.13)'; bd = '#3BD6C6'; mk = '✓'; mkC = '#7FE7DB'; sh = '0 0 16px rgba(59,214,198,.12)'; }
+          else if (i === m.cluePicked) { bg = 'rgba(244,121,91,.15)'; bd = '#F4795B'; mk = '✕'; mkC = '#FFB49E'; }
+          else { bg = 'rgba(13,28,56,.42)'; bd = 'rgba(122,180,255,.10)'; }
+        }
+        return { t, bg, bd, mk, mkC, sh, pick: () => this.mtPickClue(i) };
+      }),
+      mtClueHint: m.stage === 'clue' ? 'Find the detail that makes the case unstable before you choose an action.' : (m.cluePicked === c.clueAnswer ? 'Good catch. Now choose the safest next step.' : 'That clue was not the key issue. Keep going and choose the safest action anyway.'),
+      mtActions: (c.actions || []).map((a) => {
+        let bg = 'rgba(13,28,56,.7)', bd = 'rgba(122,180,255,.25)', mk = '', mkC = '#7FE7DB', sh = 'none';
+        const disabled = clueLocked;
+        if (actionChosen) {
+          if (a.key === c.actionAnswer) { bg = 'rgba(59,214,198,.13)'; bd = '#3BD6C6'; mk = '✓'; sh = '0 0 16px rgba(59,214,198,.12)'; }
+          else if (a.key === m.actionPicked) { bg = 'rgba(244,121,91,.15)'; bd = '#F4795B'; mk = '✕'; mkC = '#FFB49E'; }
+          else { bg = 'rgba(13,28,56,.42)'; bd = 'rgba(122,180,255,.10)'; }
+        }
+        return { t: a.title, sub: a.sub, icon: actionIcons[a.key] || '•', iconC: disabled ? 'rgba(150,180,220,.45)' : '#9CC5FF', bg, bd, mk, mkC, sh, op: disabled ? '.55' : '1', pick: () => this.mtPickAction(a.key) };
+      }),
+      mtActionHint: clueLocked ? 'Choose a clue first to unlock the action step.' : (actionStage && !actionChosen ? 'Now decide what Clara Vale should do next.' : 'Review the case feedback, then continue the shift.'),
+      mtReviewShow: actionChosen,
+      mtReviewBd: goodAction ? 'rgba(59,214,198,.45)' : 'rgba(244,121,91,.45)', mtResultC: goodAction ? '#7FE7DB' : '#FFB49E',
+      mtResultLabel: goodAction ? 'CASE CLEARED' : 'CASE UNSTABLE',
+      mtWhy: c.why || '', mtNpcLine: c.npc || '', mtDoctorLine: c.doctor || '',
+      mtNext: () => this.mtNext(), mtNextLabel: m.i + 1 < (m.cases || []).length ? 'Next case →' : 'Finish the shift',
+      mtDoneTitle: m.cleared === (m.cases || []).length ? 'Five patients. Timeline stable.' : (m.cleared >= 3 ? 'The Med Bay holds.' : 'The shift needs another pass.'),
+      mtCleared: String(m.cleared || 0), mtFinalSafety: String(m.safety || 0),
+      mtDoneMsg: m.cleared === (m.cases || []).length ? 'You cleared every case before the probe touched skin. Clara Vale logged a clean chain, and The Doctor is already calling it a fixed point in the shift.' : 'Not every case was stabilized on the first pass. That is still useful. Review the problem patterns, then run the shift again and strengthen the chain.',
+      mtRestart: () => this.startMedTriage(),
+    });
+    return out;
   }
 
   // ---------- rv: home ----------
@@ -2278,8 +2589,9 @@ Return ONLY valid JSON, no markdown:
     const m = this.domainMastery(r.domain);
     const [ml, mc] = this.masteryLabel(m);
     const games = {
-      gallery: { name: "Measure Match", desc: "Forge the chain: measurement → window → modality → meaning.", glyph: "♦", un: this.mmUnlocked(), lock: "Complete Lesson 1 to unlock", go: () => this.startMM() },
-      engine: { name: "Doppler Duel", desc: "Draw the right Doppler weapon and outwit the rogue console.", glyph: "⚡", un: this.duelUnlocked(), lock: "Complete 3 Engine lessons to unlock", go: () => this.startDuel() },
+      medbay: { name: "Med Bay Triage", desc: "Run a five-patient shift. Spot the unstable clue, choose the safest action, and clear the patient before the scan begins.", glyph: "✚", un: this.medbayTriageUnlocked(), lock: "Complete all three Med Bay lessons to unlock", go: () => this.startMedTriage(), label: "SIMULATION" },
+      gallery: { name: "Measure Match", desc: "Forge the chain: measurement → window → modality → meaning.", glyph: "♦", un: this.mmUnlocked(), lock: "Complete Lesson 1 to unlock", go: () => this.startMM(), label: "MINI-GAME" },
+      engine: { name: "Doppler Duel", desc: "Draw the right Doppler weapon and outwit the rogue console.", glyph: "⚡", un: this.duelUnlocked(), lock: "Complete 3 Engine lessons to unlock", go: () => this.startDuel(), label: "MINI-GAME" },
     };
     const g = games[r.id];
     return {
@@ -2302,6 +2614,7 @@ Return ONLY valid JSON, no markdown:
           open: () => this.startLesson(id) };
       }),
       rgGameShow: !!g,
+      rgGameLabel: g && g.label ? g.label : "MINI-GAME",
       rgGameName: g ? g.name : "", rgGameDesc: g ? g.desc : "", rgGameGlyph: g ? g.glyph : "",
       rgGameBd: g && g.un ? r.accent + "77" : "rgba(122,180,255,.2)",
       rgGameSh: g && g.un ? r.accent + "22" : "transparent",
@@ -2981,7 +3294,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       disclaimer: this.D ? this.D.DISCLAIMER : "",
       splashShow: false, obShow: false, sheetShow: false, toastShow: false, navShow: false,
       homeShow: false, mapShow: false, regionShow: false, lessonShow: false, battleShow: false,
-      mmShow: false, duelShow: false, bossBriefShow: false, bossShow: false, medComicShow: false, memShow: false,
+      mmShow: false, duelShow: false, medTriageShow: false, bossBriefShow: false, bossShow: false, medComicShow: false, memShow: false,
       badgesShow: false, journalShow: false, charShow: false, doctorShow: false, adminShow: false, bossesShow: false,
       beginSplash: () => this.beginSplash(),
       beginLabel: "Knock four times",
@@ -2990,7 +3303,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
 
     const s = this.state, p = this.p, D = this.D;
     const li = this.levelInfo();
-    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvMedComic", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvBoss", "rvMemory", "rvMeta"];
+    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvMedComic", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvMedTriage", "rvBoss", "rvMemory", "rvMeta"];
     const out = Object.assign(base, {
       splashShow: s.screen === "splash",
       obShow: s.screen === "onboard",
