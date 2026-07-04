@@ -313,6 +313,19 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
     </sc-if>
 
+    <sc-if value="{{ rgCheckpointShow }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55);margin-top:4px">CHECKPOINT</span>
+      <div onClick="{{ rgCheckpointGo }}" style="position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;background:linear-gradient(120deg, rgba(244,121,91,.18), rgba(13,28,56,.72));border:1.5px solid {{ rgCheckpointBd }};border-radius:20px;padding:12px;cursor:pointer;box-shadow:0 0 24px {{ rgCheckpointSh }}">
+        <img src="{{ rgCheckpointImg }}" alt="The Misfiled Patient art" style="flex:none;width:82px;height:68px;border-radius:16px;object-fit:cover;border:1px solid rgba(244,121,91,.35);background:rgba(7,15,30,.7)">
+        <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#FFB49E">FINAL MED BAY CHECK</span>
+          <span style="font-size:14px;font-weight:900;color:#F4F8FF">The Misfiled Patient</span>
+          <span style="font-size:11px;line-height:1.4;color:rgba(210,228,255,.65)">Find every unsafe fragment, then choose the safest final response.</span>
+        </div>
+        <span style="flex:none;font-size:8.5px;font-weight:900;letter-spacing:1px;color:{{ rgCheckpointStC }};border:1.5px {{ rgCheckpointStBdStyle }} {{ rgCheckpointStBd }};border-radius:999px;padding:5px 8px;white-space:nowrap">{{ rgCheckpointStatus }}</span>
+      </div>
+    </sc-if>
+
     <div onClick="{{ rgDrill }}" style="display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:16px;border:1.5px solid rgba(122,180,255,.32);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer;background:rgba(13,28,56,.4)">⚡ Quick drill — 5 random questions</div>
   </div>
 </div>
@@ -749,6 +762,66 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
       <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:320px">{{ mtDoneMsg }}</span>
       <div onClick="{{ mtRestart }}" style="display:flex;align-items:center;justify-content:center;height:48px;min-width:240px;border-radius:16px;border:1.5px solid rgba(122,180,255,.28);background:rgba(13,28,56,.55);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer">Run another shift</div>
+      <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Med Bay</div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ===================== MISFILED PATIENT CHECKPOINT ===================== -->
+<sc-if value="{{ misfiledShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="The Misfiled Patient" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;padding:16px 16px 30px">
+  <sc-if value="{{ mfLive }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:14px;cursor:pointer">✕</span>
+      <div style="display:flex;flex-direction:column;min-width:0">
+        <span style="font-size:12.5px;font-weight:900;color:#FFB49E">THE MISFILED PATIENT</span>
+        <span style="font-size:9.5px;color:rgba(200,220,250,.55)">Final UNIT Medical Bay checkpoint · attempts {{ mfAttempts }}/3</span>
+      </div>
+      <span style="margin-left:auto;font-size:10px;font-weight:900;color:#FFD98F">{{ mfFound }}/{{ mfNeeded }} found</span>
+    </div>
+    <div style="position:relative;overflow:hidden;border-radius:22px;border:1.5px solid rgba(244,121,91,.38);background:rgba(7,15,30,.72);box-shadow:0 12px 34px rgba(0,0,0,.35);margin-bottom:12px">
+      <img src="{{ mfHeroImg }}" alt="The Misfiled Patient" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:center">
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:34px 13px 12px;background:linear-gradient(180deg, transparent, rgba(3,7,16,.9))">
+        <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF">Corrupted patient file detected.</span>
+        <span style="display:block;font-size:11.5px;line-height:1.45;color:rgba(224,238,255,.78);margin-top:3px">Tap every unsafe fragment before choosing the final response.</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:12px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55)">UNSTABLE FRAGMENTS</span>
+      <sc-for list="{{ mfFragments }}" as="f" hint-placeholder-count="7">
+        <div onClick="{{ f.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ f.bg }};border:1.5px solid {{ f.bd }};border-radius:17px;padding:10px;cursor:pointer;box-shadow:{{ f.sh }}">
+          <img src="{{ f.img }}" alt="{{ f.title }}" style="flex:none;width:56px;height:46px;border-radius:12px;object-fit:cover;border:1px solid rgba(122,180,255,.18);background:rgba(7,15,30,.7)">
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span style="font-size:12.5px;font-weight:900;color:#EAF2FF">{{ f.title }}</span>
+            <span style="font-size:10.5px;line-height:1.35;color:rgba(200,220,250,.62)">{{ f.note }}</span>
+          </div>
+          <span style="flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(7,15,30,.55);border:1px solid rgba(122,180,255,.18);font-size:11px;color:{{ f.mkC }}">{{ f.mk }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(190,212,245,.55)">FINAL RESPONSE</span>
+      <sc-for list="{{ mfActions }}" as="a" hint-placeholder-count="5">
+        <div onClick="{{ a.pick }}" style="display:flex;align-items:center;gap:10px;background:{{ a.bg }};border:1.5px solid {{ a.bd }};border-radius:16px;padding:12px;cursor:pointer;opacity:{{ a.op }}">
+          <span style="flex:none;width:28px;height:28px;border-radius:10px;background:rgba(7,15,30,.55);border:1px solid rgba(122,180,255,.18);display:flex;align-items:center;justify-content:center;font-size:14px;color:{{ a.iconC }}">{{ a.icon }}</span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span style="font-size:12.5px;font-weight:800;color:#EAF2FF">{{ a.t }}</span>
+            <span style="font-size:10.5px;line-height:1.45;color:rgba(200,220,250,.58)">{{ a.sub }}</span>
+          </div>
+          <span style="flex:none;font-size:13px;color:{{ a.mkC }}">{{ a.mk }}</span>
+        </div>
+      </sc-for>
+      <span style="font-size:10.5px;color:rgba(200,220,250,.58)">{{ mfHint }}</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{ mfDoneShow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin:auto 0;padding:20px 0;animation:popIn .35s ease">
+      <img src="{{ mfDoneImg }}" alt="Misfiled Patient result" style="width:100%;max-width:340px;border-radius:24px;aspect-ratio:16/10;object-fit:cover;border:1.5px solid {{ mfDoneBd }};box-shadow:0 14px 34px rgba(0,0,0,.35)">
+      <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:{{ mfDoneKickC }}">{{ mfDoneKick }}</span>
+      <span style="font-family:'Marcellus',serif;font-size:30px;color:#F4F8FF;text-align:center">{{ mfDoneTitle }}</span>
+      <span style="font-size:12.5px;line-height:1.6;color:rgba(210,228,255,.7);text-align:center;max-width:320px">{{ mfDoneMsg }}</span>
+      <div onClick="{{ mfRestart }}" style="display:flex;align-items:center;justify-content:center;height:48px;min-width:240px;border-radius:16px;border:1.5px solid rgba(122,180,255,.28);background:rgba(13,28,56,.55);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer">Retry checkpoint</div>
       <div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:52px;min-width:240px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.32);cursor:pointer">Back to the Med Bay</div>
     </div>
   </sc-if>
@@ -1516,7 +1589,7 @@ class Component extends DCLogic {
     return { v: 1, created: false, examDate: "", sound: true, xp: 0, energy: 5,
       lastDay: this.today(), streak: 0, lastActive: "", secToday: 0, createdAt: Date.now(),
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
-      games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
+      games: { mm: 0, duel: 0, medtriage: 0, misfiled: 0 }, hist: {}, reviewsCleared: 0,
       apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
       doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {}, aiLessons: {}, aiLessonSections: {}, sourceLibraryNote: "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant" };
   }
@@ -1925,6 +1998,7 @@ Return ONLY valid JSON, no markdown:
     }
     if (s === "mm" || s === "duel") return this.go("region");
     if (s === "medtriage") return this.go("region", { regionId: "medbay" });
+    if (s === "misfiled") return this.go("region", { regionId: "medbay" });
     if (s === "bossBrief" || s === "boss") { clearInterval(this._bt); return this.go("bosses"); }
     return this.go("home");
   }
@@ -2693,6 +2767,15 @@ Return ONLY valid JSON, no markdown:
       rgGameStBd: g && g.un ? "rgba(59,214,198,.5)" : "rgba(150,180,220,.3)",
       rgGameStBdStyle: g && g.un ? "solid" : "dashed",
       rgGameGo: () => { if (!g) return; if (g.un) g.go(); else { this.toast("Locked", g.lock); this.sBad(); } },
+      rgCheckpointShow: r.id === "medbay",
+      rgCheckpointImg: this.misfiledAssetsBase ? this.misfiledAssetsBase() + "misfiled-patient-boss-hero.webp" : "",
+      rgCheckpointBd: this.misfiledUnlocked && this.misfiledUnlocked() ? "rgba(244,121,91,.62)" : "rgba(122,180,255,.18)",
+      rgCheckpointSh: this.misfiledUnlocked && this.misfiledUnlocked() ? "rgba(244,121,91,.16)" : "transparent",
+      rgCheckpointStatus: this.misfiledUnlocked && this.misfiledUnlocked() ? ((p.games && p.games.misfiled) ? "CLEARED" : "READY") : "LOCKED",
+      rgCheckpointStC: this.misfiledUnlocked && this.misfiledUnlocked() ? "#FFD98F" : "rgba(190,212,245,.45)",
+      rgCheckpointStBd: this.misfiledUnlocked && this.misfiledUnlocked() ? "rgba(245,184,74,.5)" : "rgba(150,180,220,.3)",
+      rgCheckpointStBdStyle: this.misfiledUnlocked && this.misfiledUnlocked() ? "solid" : "dashed",
+      rgCheckpointGo: () => { if (this.misfiledUnlocked && this.misfiledUnlocked()) this.startMisfiledPatient(); else { this.toast("Locked", "Run Med Bay Triage once to unlock The Misfiled Patient."); this.sBad(); } },
       rgDrill: () => this.startDrill(r.domain, "drill"),
       back: () => this.back(),
     };
@@ -2961,6 +3044,108 @@ Return ONLY valid JSON, no markdown:
     const d = this.state.duel;
     if (d.r + 1 < this.D.DUEL_ROUNDS.length) { d.r++; d.picked = -1; d.rev = false; this.forceUpdate(); window.scrollTo(0, 0); this.sClick(); }
     else { d.done = true; this.p.games.duel++; this.gainXp(15); this.spendEnergy(); if (d.score >= 5) this.award("duelist"); this.save(); this.forceUpdate(); window.scrollTo(0, 0); }
+  }
+
+  misfiledAssetsBase() { return "art/echolab_misfiled_patient_art_assets/"; }
+  misfiledUnlocked() { return this.isGM() || !!(this.p && this.p.games && this.p.games.medtriage); }
+  misfiledFragments() {
+    const b = this.misfiledAssetsBase();
+    return [
+      { id: "identity", title: "Identity mismatch", note: "The patient identifiers do not agree.", unsafe: true, img: b + "misfiled-fragment-identity.webp" },
+      { id: "indication", title: "Missing indication", note: "The order does not explain the clinical question.", unsafe: true, img: b + "misfiled-fragment-indication.webp" },
+      { id: "cleaning", title: "Probe cleaning unclear", note: "Disinfection status is not documented.", unsafe: true, img: b + "misfiled-fragment-probe-cleaning.webp" },
+      { id: "results", title: "Patient asks for results", note: "Communication must explain process, not diagnose.", unsafe: true, img: b + "misfiled-fragment-results-question.webp" },
+      { id: "redflag", title: "Red-flag echo finding", note: "A dangerous finding needs immediate escalation.", unsafe: true, img: b + "misfiled-fragment-red-flag.webp" },
+      { id: "stableprior", title: "Prior study available", note: "Helpful comparison data, not unsafe by itself.", unsafe: false, img: b + "misfiled-patient-corrupted-file.webp" },
+      { id: "blanket", title: "Patient is comfortable", note: "Comfort is good; it is not the corrupted fragment.", unsafe: false, img: b + "misfiled-patient-boss-hero.webp" }
+    ];
+  }
+  startMisfiledPatient() {
+    if (!this.misfiledUnlocked()) { this.toast("Locked", "Run Med Bay Triage once to unlock The Misfiled Patient."); this.sBad(); return; }
+    this.go("misfiled", { misfiled: { picked: {}, action: "", attempts: 0, done: false, win: false } });
+  }
+  mfPickFragment(id) {
+    const m = this.state.misfiled; if (!m || m.done) return;
+    m.picked = m.picked || {};
+    m.picked[id] = !m.picked[id];
+    this.sClick(); this.forceUpdate();
+  }
+  mfUnsafeCount() {
+    return this.misfiledFragments().filter((f) => f.unsafe).length;
+  }
+  mfFoundCount(m) {
+    m = m || this.state.misfiled || {};
+    const picked = m.picked || {};
+    return this.misfiledFragments().filter((f) => f.unsafe && picked[f.id]).length;
+  }
+  mfPickAction(key) {
+    const m = this.state.misfiled; if (!m || m.done) return;
+    m.action = key;
+    const frags = this.misfiledFragments();
+    const picked = m.picked || {};
+    const allUnsafe = frags.filter((f) => f.unsafe).every((f) => !!picked[f.id]);
+    const noSafe = frags.filter((f) => !f.unsafe).every((f) => !picked[f.id]);
+    const ok = allUnsafe && noSafe && key === "escalate";
+    if (ok) {
+      m.done = true; m.win = true;
+      this.p.games.misfiled = (this.p.games.misfiled || 0) + 1;
+      this.gainXp(35); this.award("bedside"); this.artifact("sonic_case"); this.sLevel();
+      this.toast("Checkpoint cleared", "The Misfiled Patient is stable.");
+    } else {
+      m.attempts = (m.attempts || 0) + 1;
+      this.sBad();
+      if (m.attempts >= 3) { m.done = true; m.win = false; this.toast("Checkpoint unstable", "Review the file and retry the case."); }
+      else this.toast("Still corrupted", "Find every unsafe fragment, avoid distractors, then escalate the red-flag case.");
+    }
+    this.markActive(); this.save(); this.forceUpdate(); window.scrollTo(0, 0);
+  }
+  rvMisfiled(s, p, D, li) {
+    const out = { misfiledShow: s.screen === "misfiled" };
+    const m = s.misfiled;
+    if (!out.misfiledShow || !m) return out;
+    const base = this.misfiledAssetsBase();
+    const picked = m.picked || {};
+    const found = this.mfFoundCount(m), needed = this.mfUnsafeCount();
+    const actionRows = [
+      { key: "proceed", t: "Proceed to scan", sub: "Continue as if the file is stable", icon: "▶" },
+      { key: "verify", t: "Pause & verify only", sub: "Fix identifiers and order, but ignore the urgent finding", icon: "✓" },
+      { key: "prepare", t: "Prepare the room only", sub: "Clean and position, but do not escalate", icon: "⚙" },
+      { key: "explain", t: "Explain safely only", sub: "Answer the patient without interpreting", icon: "✦" },
+      { key: "escalate", t: "Escalate now", sub: "Notify the interpreting physician immediately per protocol", icon: "!" }
+    ];
+    const canAct = found === needed;
+    Object.assign(out, {
+      back: () => this.back(),
+      mfLive: !m.done, mfDoneShow: !!m.done,
+      mfAttempts: String(m.attempts || 0), mfFound: String(found), mfNeeded: String(needed),
+      mfHeroImg: base + "misfiled-patient-boss-hero.webp",
+      mfFragments: this.misfiledFragments().map((f) => {
+        const sel = !!picked[f.id];
+        return { title: f.title, note: f.note, img: f.img,
+          bg: sel ? (f.unsafe ? "rgba(59,214,198,.13)" : "rgba(244,121,91,.15)") : "rgba(13,28,56,.7)",
+          bd: sel ? (f.unsafe ? "#3BD6C6" : "#F4795B") : "rgba(122,180,255,.25)",
+          sh: sel && f.unsafe ? "0 0 16px rgba(59,214,198,.14)" : "none",
+          mk: sel ? (f.unsafe ? "✓" : "!") : "", mkC: sel ? (f.unsafe ? "#7FE7DB" : "#FFB49E") : "rgba(190,212,245,.5)",
+          pick: () => this.mfPickFragment(f.id) };
+      }),
+      mfActions: actionRows.map((a) => {
+        const chosen = m.action === a.key;
+        return { t: a.t, sub: a.sub, icon: a.icon,
+          bg: chosen ? (a.key === "escalate" ? "rgba(59,214,198,.13)" : "rgba(244,121,91,.15)") : "rgba(13,28,56,.7)",
+          bd: chosen ? (a.key === "escalate" ? "#3BD6C6" : "#F4795B") : "rgba(122,180,255,.25)",
+          op: canAct ? "1" : ".55", iconC: canAct ? "#9CC5FF" : "rgba(150,180,220,.45)",
+          mk: chosen ? (a.key === "escalate" ? "✓" : "✕") : "", mkC: chosen && a.key !== "escalate" ? "#FFB49E" : "#7FE7DB",
+          pick: () => { if (canAct) this.mfPickAction(a.key); else this.toast("Find the fragments first", "The file is still hiding unsafe clues."); } };
+      }),
+      mfHint: canAct ? "All unsafe fragments found. Choose the safest response to the red-flag case." : "Find all five unsafe fragments. Avoid the stable distractors.",
+      mfDoneImg: base + (m.win ? "misfiled-patient-cleared.webp" : "misfiled-patient-unstable.webp"),
+      mfDoneBd: m.win ? "rgba(59,214,198,.55)" : "rgba(244,121,91,.55)",
+      mfDoneKick: m.win ? "CHECKPOINT CLEARED" : "CHECKPOINT UNSTABLE", mfDoneKickC: m.win ? "#7FE7DB" : "#FFB49E",
+      mfDoneTitle: m.win ? "The file is stable." : "The file fought back.",
+      mfDoneMsg: m.win ? "Lizzie found every unsafe fragment and chose the right final response. Clara Vale clears the case, and The Doctor calls it a tidy little fixed point." : "The Med Bay logged missed fragments. Retry the checkpoint and stabilize every part of the patient story before acting.",
+      mfRestart: () => this.startMisfiledPatient(),
+    });
+    return out;
   }
 
   // ---------- boss ----------
@@ -3369,7 +3554,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       disclaimer: this.D ? this.D.DISCLAIMER : "",
       splashShow: false, obShow: false, sheetShow: false, toastShow: false, navShow: false,
       homeShow: false, mapShow: false, regionShow: false, lessonShow: false, battleShow: false,
-      mmShow: false, duelShow: false, medTriageShow: false, bossBriefShow: false, bossShow: false, medComicShow: false, memShow: false,
+      mmShow: false, duelShow: false, medTriageShow: false, misfiledShow: false, bossBriefShow: false, bossShow: false, medComicShow: false, memShow: false,
       badgesShow: false, journalShow: false, charShow: false, doctorShow: false, adminShow: false, bossesShow: false,
       beginSplash: () => this.beginSplash(),
       beginLabel: "Knock four times",
@@ -3378,7 +3563,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
 
     const s = this.state, p = this.p, D = this.D;
     const li = this.levelInfo();
-    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvMedComic", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvMedTriage", "rvBoss", "rvMemory", "rvMeta"];
+    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvMedComic", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvMedTriage", "rvMisfiled", "rvBoss", "rvMemory", "rvMeta"];
     const out = Object.assign(base, {
       splashShow: s.screen === "splash",
       obShow: s.screen === "onboard",
