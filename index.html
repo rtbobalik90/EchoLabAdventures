@@ -1030,17 +1030,36 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div data-screen-label="Daily Missions" style="position:relative;box-sizing:border-box;max-width:430px;width:100%;margin:0 auto;background:linear-gradient(180deg,#0E1D3A,#081226);border-radius:26px 26px 0 0;border:1px solid rgba(122,180,255,.24);border-bottom:none;padding:14px 18px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;animation:popIn .26s ease;max-height:82dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch">
     <div style="width:44px;height:5px;border-radius:99px;background:rgba(190,212,245,.3);margin:0 auto"></div>
     <div style="display:flex;align-items:center;justify-content:space-between">
-      <span style="font-size:10.5px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">TODAY'S MISSIONS</span>
+      <span style="font-size:10.5px;font-weight:900;letter-spacing:2.2px;color:#7FE7DB">TODAY'S MISSION PATH</span>
       <span style="font-size:11px;font-weight:800;color:rgba(200,220,250,.6)">{{ missionsDone }} / {{ missionsTotal }}</span>
+    </div>
+    <div style="height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden">
+      <div style="width:{{ missionPct }}%;height:100%;border-radius:99px;background:linear-gradient(90deg,#3BD6C6,#FFCB6B);box-shadow:0 0 10px rgba(59,214,198,.65)"></div>
     </div>
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(245,184,74,.08);border:1px solid rgba(245,184,74,.35);border-radius:16px;padding:12px">
       <span style="flex:none;width:8px;height:8px;margin-top:5px;border-radius:2px;transform:rotate(45deg);background:#F5B84A;box-shadow:0 0 8px rgba(245,184,74,.9)"></span>
-      <span style="min-width:0;font-size:12.5px;line-height:1.55;font-style:italic;color:#FFE3B0;overflow-wrap:anywhere">{{ doctorDaily }}</span>
+      <span style="min-width:0;font-size:12.5px;line-height:1.55;font-style:italic;color:#FFE3B0;overflow-wrap:anywhere">{{ missionIntro }}</span>
     </div>
+    <sc-if value="{{ missionNextShow }}" hint-placeholder-val="{{ true }}">
+      <div onClick="{{ nextMissionGo }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;height:52px;border-radius:17px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;padding:0 16px;box-shadow:0 10px 28px rgba(240,169,60,.34);cursor:pointer">
+        <span style="font-size:13.5px;font-weight:900">{{ nextMissionLabel }}</span>
+        <span style="font-size:16px;font-weight:900">→</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ missionCompleteShow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:10px;background:linear-gradient(140deg, rgba(59,214,198,.14), rgba(13,28,56,.72));border:1.5px solid rgba(59,214,198,.42);border-radius:18px;padding:14px">
+        <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">DAILY PATH COMPLETE</span>
+        <span style="font-size:13px;line-height:1.55;color:#EAF2FF">{{ missionCompleteText }}</span>
+        <sc-if value="{{ missionRewardShow }}" hint-placeholder-val="{{ true }}">
+          <div onClick="{{ collectMissionReward }}" style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12.5px;font-weight:900;cursor:pointer">Collect daily reward</div>
+        </sc-if>
+      </div>
+    </sc-if>
     <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="4">
-      <div style="display:flex;align-items:center;gap:12px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.2);border-radius:18px;padding:12px 13px">
-        <span style="flex:none;width:22px;height:22px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;background:{{ t.ckBg }};border:1.5px solid {{ t.ckBd }};color:#122B4F">{{ t.ck }}</span>
+      <div style="display:flex;align-items:center;gap:12px;background:{{ t.bg }};border:1px solid {{ t.bd }};border-radius:18px;padding:12px 13px">
+        <span style="flex:none;width:28px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:{{ t.ckBg }};border:1.5px solid {{ t.ckBd }};color:{{ t.ckC }}">{{ t.ck }}</span>
         <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:9px;font-weight:900;letter-spacing:1.4px;color:{{ t.stepC }}">{{ t.step }}</span>
           <span style="font-size:13px;font-weight:800;color:{{ t.tc }}">{{ t.t }}</span>
           <span style="font-size:10.5px;color:rgba(200,220,250,.55)">{{ t.sub }}</span>
         </div>
@@ -1171,7 +1190,17 @@ class Component extends DCLogic {
       this.save();
     }
   }
-  hist() { const t = this.today(); if (!this.p.hist[t]) this.p.hist[t] = { xp: 0, ans: 0, cor: 0, rev: 0, drill: 0, lesson: "" }; return this.p.hist[t]; }
+  hist() { const t = this.today(); if (!this.p.hist[t]) this.p.hist[t] = { xp: 0, ans: 0, cor: 0, rev: 0, drill: 0, lesson: "", doctor: 0, missionReward: 0 }; return this.p.hist[t]; }
+  collectDailyReward() {
+    const h = this.hist();
+    if (h.missionReward) { this.toast("Daily reward already collected", "The Companion Journal has it logged."); return; }
+    h.missionReward = 1;
+    this.gainXp(25);
+    this.markActive();
+    this.save();
+    this.toast("Daily path complete", "+25 XP · journal entry saved");
+    this.forceUpdate();
+  }
   markActive() {
     const t = this.today();
     if (this.p.lastActive !== t) {
@@ -1428,6 +1457,8 @@ class Component extends DCLogic {
     const msgs = [...this.doctorMsgs(), { who: "lizzie", text: q }];
     const thinking = [...msgs, { who: "doctor", text: "One moment, Lizzie — I’m stabilizing the signal..." }];
     this.saveDoctorMsgs(thinking);
+    this.hist().doctor = 1;
+    this.save();
     this.setState({ doctorInput: "" });
     this.sClick();
     try {
@@ -1536,14 +1567,18 @@ class Component extends DCLogic {
     const next = this.nextLesson();
     const won = p.boss.angels && p.boss.angels.won;
     const h = p.hist[this.today()] || {};
-    // tasks
-    const tasks = [];
-    tasks.push({ t: next ? "Lesson: " + D.LESSONS[next].title : "All MVP lessons complete", sub: next ? D.REGIONS.find((r) => r.id === D.LESSONS[next].region).name : "The archive is complete for now", done: !!h.lesson || !next, go: () => next && this.startLesson(next) , cta: !!next });
-    tasks.push({ t: due.length ? "Clear the Memory Core" : "Memory Core is clear", sub: due.length ? due.length + " echoes due for review" : "Nothing due — nicely done", done: !due.length, go: () => this.memStart(), cta: !!due.length });
+    // Daily Mission Path 2.0
     const wd = this.weakestDomain();
-    tasks.push({ t: "Weak-signal drill", sub: "5 questions · " + D.DOMAINS.find((d) => d.id === wd).name, done: !!h.drill, go: () => this.startDrill(wd, "weak"), cta: !h.drill });
-    tasks.push({ t: won ? "Angels defeated" : "Boss: the Weeping Angels", sub: won ? "The statue garden is silent" : (this.bossUnlocked() ? "Timed trial — don't blink" : "Unlocks at Level 3"), done: !!won, go: () => this.bossUnlocked() && this.go("bossBrief"), cta: !won && this.bossUnlocked() });
+    const weakName = D.DOMAINS.find((d) => d.id === wd).name;
+    const reviewTarget = due.length ? Math.min(3, due.length) : 0;
+    const tasks = [];
+    tasks.push({ step: "STEP 1", icon: "↻", t: reviewTarget ? "Warm-up Review" : "Warm-up Review Complete", sub: reviewTarget ? "Clear " + reviewTarget + " Memory Core echo" + (reviewTarget > 1 ? "es" : "") + " before the main mission" : "No review echoes due right now", done: !reviewTarget || (h.rev || 0) >= reviewTarget, go: () => this.memStart(), cta: !!reviewTarget });
+    tasks.push({ step: "STEP 2", icon: "▣", t: next ? "Main Lesson: " + D.LESSONS[next].title : "Main Lesson Complete", sub: next ? D.REGIONS.find((r) => r.id === D.LESSONS[next].region).name : "All current lessons are complete", done: !!h.lesson || !next, go: () => next && this.startLesson(next), cta: !!next });
+    tasks.push({ step: "STEP 3", icon: "⚡", t: "Battle Practice", sub: "5-question weak-area drill · " + weakName, done: !!h.drill, go: () => this.startDrill(wd, "weak"), cta: !h.drill });
+    tasks.push({ step: "STEP 4", icon: "✦", t: "Ask The Doctor", sub: "Review a weak concept or ask for one quick quiz", done: !!h.doctor, go: () => { this.go("doctor", { doctorInput: this.doctorContextPrompt("weak"), doctorReviewChip: "Daily mission" }); setTimeout(() => this.doctorSend(), 80); }, cta: !h.doctor });
     const doneN = tasks.filter((t) => t.done).length;
+    const allMissionsDone = doneN === tasks.length;
+    const nextMission = tasks.find((t) => !t.done) || null;
     // continue cta
     let cLabel, cGo;
     if (due.length >= 4) { cLabel = "Clear the Memory Core — " + due.length + " due"; cGo = () => this.memStart(); }
@@ -1578,12 +1613,22 @@ class Component extends DCLogic {
       doctorName: "THE DOCTOR", doctorAct: "", doctorDaily: daily,
       continueLabel: cLabel, continueGo: cGo,
       openSheet: () => this.setState({ sheet: true }),
-      missionsDone: String(doneN), missionsTotal: "4",
+      missionsDone: String(doneN), missionsTotal: String(tasks.length),
+      missionPct: String(Math.round((doneN / Math.max(1, tasks.length)) * 100)),
+      missionIntro: allMissionsDone ? "Daily path complete, Lizzie. The TARDIS likes a tidy timeline — collect the reward and let the Companion Journal remember this one." : "Four focused moves today: review what slipped, learn what is next, battle the weak signal, then ask The Doctor to lock the concept in.",
+      missionNextShow: !allMissionsDone,
+      nextMissionLabel: nextMission ? "Start next mission: " + nextMission.t : "Daily path complete",
+      nextMissionGo: () => { if (nextMission) { this.setState({ sheet: false }); nextMission.go(); } },
+      missionCompleteShow: allMissionsDone,
+      missionRewardShow: allMissionsDone && !h.missionReward,
+      missionCompleteText: h.missionReward ? "Reward collected. Today’s progress is saved in the Companion Journal." : "You completed the full daily path. Collect the reward to bank XP and close today’s loop.",
+      collectMissionReward: () => this.collectDailyReward(),
       readiness: String(ready), readyColor: rc, readyLabelText: rl, paceChip,
-      tasks: tasks.map((t) => ({
-        t: t.t, sub: t.sub, done: t.done,
-        ck: t.done ? "✓" : "", ckBg: t.done ? "#3BD6C6" : "rgba(13,28,56,.4)", ckBd: t.done ? "#3BD6C6" : "rgba(150,190,240,.4)",
-        tc: t.done ? "rgba(200,220,250,.45)" : "#EAF2FF",
+      tasks: tasks.map((t, i) => ({
+        step: t.step || ("STEP " + (i + 1)), t: t.t, sub: t.sub, done: t.done,
+        ck: t.done ? "✓" : (t.icon || String(i + 1)), ckBg: t.done ? "#3BD6C6" : "rgba(13,28,56,.4)", ckBd: t.done ? "#3BD6C6" : "rgba(150,190,240,.4)", ckC: t.done ? "#122B4F" : "#FFD98F",
+        bg: t.done ? "rgba(59,214,198,.07)" : "rgba(13,28,56,.66)", bd: t.done ? "rgba(59,214,198,.28)" : "rgba(122,180,255,.2)",
+        stepC: t.done ? "#7FE7DB" : "#FFD98F", tc: t.done ? "rgba(200,220,250,.45)" : "#EAF2FF",
         ctaShow: !!t.cta && !t.done, go: () => { this.setState({ sheet: false }); t.go(); },
       })),
     };
