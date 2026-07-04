@@ -334,6 +334,49 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </div>
   </div>
 
+  <sc-if value="{{ aiLessonPanelShow }}" hint-placeholder-val="false">
+    <div style="display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg,rgba(59,214,198,.10),rgba(13,28,56,.82));border:1.5px solid rgba(59,214,198,.35);border-radius:22px;padding:15px;margin-bottom:13px;box-shadow:0 0 24px rgba(59,214,198,.08)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="flex:none;width:42px;height:42px;border-radius:15px;background:{{ aiNpcBg }};border:1.5px solid {{ aiNpcBd }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#EAF2FF">{{ aiNpcInit }}</span>
+        <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+          <span style="font-size:9px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">AI LESSON · TAUGHT BY THE SECTION MENTOR</span>
+          <span style="font-size:14px;font-weight:900;color:#F4F8FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ aiTeacher }}</span>
+        </div>
+        <span onClick="{{ aiRefresh }}" style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:#FFD98F;border:1px solid rgba(245,184,74,.45);border-radius:999px;padding:7px 9px;cursor:pointer">REBUILD</span>
+      </div>
+      <sc-if value="{{ aiBusyShow }}" hint-placeholder-val="false">
+        <div style="font-size:12.5px;line-height:1.55;color:rgba(214,232,255,.75)">{{ aiStatus }}</div>
+      </sc-if>
+      <sc-if value="{{ aiReadyShow }}" hint-placeholder-val="false">
+        <span style="font-family:'Marcellus',serif;font-size:21px;line-height:1.15;color:#F4F8FF">{{ aiTitle }}</span>
+        <span style="font-size:13px;line-height:1.6;color:#DDF7FF;font-style:italic">{{ aiOpening }}</span>
+        <div style="display:flex;flex-direction:column;gap:6px;background:rgba(7,15,30,.42);border:1px solid rgba(122,180,255,.18);border-radius:16px;padding:11px">
+          <span style="font-size:9px;font-weight:900;letter-spacing:1.5px;color:#9CC5FF">LEARNING GOALS</span>
+          <sc-for list="{{ aiGoals }}" as="g" hint-placeholder-count="3">
+            <span style="font-size:12px;line-height:1.45;color:rgba(228,240,255,.9)">• {{ g }}</span>
+          </sc-for>
+        </div>
+        <span style="font-size:13.5px;line-height:1.7;color:rgba(228,240,255,.92);white-space:pre-line">{{ aiStoryLesson }}</span>
+        <div style="display:flex;flex-direction:column;gap:7px;background:rgba(245,184,74,.08);border:1px solid rgba(245,184,74,.25);border-radius:16px;padding:12px">
+          <span style="font-size:9px;font-weight:900;letter-spacing:1.5px;color:#FFD98F">CLINICAL CORE</span>
+          <sc-for list="{{ aiCore }}" as="c" hint-placeholder-count="4">
+            <span style="font-size:12px;line-height:1.45;color:#FFEBC9">• {{ c }}</span>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <span style="font-size:12px;line-height:1.5;color:rgba(224,238,255,.85)"><b>Exam angle:</b> {{ aiExam }}</span>
+          <span style="font-size:12px;line-height:1.5;color:rgba(224,238,255,.85)"><b>Safety note:</b> {{ aiSafety }}</span>
+          <span style="font-size:12px;line-height:1.5;color:#FFE3B0"><b>Memory hook:</b> {{ aiHook }}</span>
+          <span style="font-size:12px;line-height:1.5;color:#DDF7FF"><b>Check:</b> {{ aiCheck }}</span>
+        </div>
+        <div onClick="{{ aiAskDoctor }}" style="display:flex;align-items:center;justify-content:center;height:46px;border-radius:15px;background:rgba(13,28,56,.72);border:1.5px solid rgba(122,180,255,.35);color:#EAF2FF;font-size:12.5px;font-weight:900;cursor:pointer">Talk about this with The Doctor</div>
+      </sc-if>
+      <sc-if value="{{ aiErrorShow }}" hint-placeholder-val="false">
+        <span style="font-size:12px;line-height:1.5;color:#FFB49E">{{ aiError }}</span>
+      </sc-if>
+    </div>
+  </sc-if>
+
   <div style="display:flex;flex-direction:column;gap:12px;animation:popIn .3s ease">
     <span style="align-self:flex-start;font-size:9.5px;font-weight:900;letter-spacing:2px;color:{{ lsKickC }};background:{{ lsKickBg }};border:1px solid {{ lsKickBd }};border-radius:999px;padding:6px 12px">{{ lsKicker }}</span>
     <span style="font-family:'Marcellus',serif;font-size:24px;line-height:1.15;color:#F4F8FF">{{ lsBeatTitle }}</span>
@@ -1307,7 +1350,7 @@ class Component extends DCLogic {
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
       apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
-      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {} };
+      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {}, aiLessons: {}, sourceLibraryNote: "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant" };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1322,6 +1365,8 @@ class Component extends DCLogic {
     if (!Array.isArray(s.journalEntries)) s.journalEntries = [];
     s.journalEntries = s.journalEntries.slice(0, 30);
     s.intros = s.intros || {};
+    s.aiLessons = s.aiLessons || {};
+    if (!s.sourceLibraryNote) s.sourceLibraryNote = "EchoLab lesson library, CCI RCS-style objectives, and American Heart Association guidance when relevant";
     if (!s.doctorLevel) s.doctorLevel = "intermediate";
     if (!s.gmUnlocked) s.gameMaster = false;
     s.gameMaster = !!(s.gmUnlocked && s.gameMaster);
@@ -1860,10 +1905,72 @@ Return ONLY valid JSON, no markdown:
   obFinish() { this.p.created = true; this.save(); this.markActive(); this.go("home"); this.toast("Welcome aboard, Lizzie", "Day 1 of the Time Heart Registry begins."); }
   obSkip() { this.obFinish(); }
 
+
+  // ---------- AI lesson engine ----------
+  lessonSourceContext(id) {
+    const D = this.D || {}, L = D.LESSONS && D.LESSONS[id];
+    if (!L) return "";
+    const r = D.REGIONS.find((x) => x.id === L.region) || {};
+    const dom = D.DOMAINS.find((d) => d.id === L.id?.[0]?.toUpperCase() || d.id === (r.domain || "")) || {};
+    const beats = (L.beats || []).map((b, i) => {
+      if (b.q) return `${i + 1}. ${b.k}: ${b.t}\nQuestion: ${b.q.stem}\nChoices: ${b.q.ch.join(" | ")}\nCorrect: ${b.q.ch[b.q.ans]}\nWhy: ${b.q.why}`;
+      return `${i + 1}. ${b.k}: ${b.t}\n${b.b || ""}`;
+    }).join("\n\n");
+    const qs = (L.battle || []).map((qid) => {
+      const q = D.QUESTIONS[qid]; if (!q) return "";
+      return `- Topic: ${q.topic}\n  Stem: ${q.stem}\n  Correct: ${q.ch[q.ans]}\n  Explanation: ${q.exp}\n  Memory pearl: ${q.pearl || ""}`;
+    }).filter(Boolean).join("\n");
+    return `Region: ${r.name || L.region}\nRegion mentor/NPC: ${r.npc ? r.npc.name + " — " + r.npc.role : "section mentor"}\nDomain: ${dom.name || r.domain || "EchoLab"}\nLesson: ${L.title}\nSubtitle: ${L.sub}\nCurrent local EchoLab lesson beats:\n${beats}\n\nPractice question objectives:\n${qs}`;
+  }
+  buildAiLessonPrompt(id) {
+    const L = this.D.LESSONS[id];
+    const r = this.D.REGIONS.find((x) => x.id === L.region) || {};
+    const npc = r.npc || { name: "the section mentor", role: "EchoLab mentor" };
+    const styleNote = r.id === "medbay" ? "Teach as the UNIT Medical Bay NPC mentor, calm, practical, patient-safety-first, with The Doctor nearby as a possible helper." : "Teach as the region NPC mentor, with light EchoLab story atmosphere.";
+    return `Create the default AI lesson for EchoLab. This lesson will be shown before the built-in fallback lesson.\n\n${styleNote}\nVisible teacher for this lesson: ${npc.name}, ${npc.role}. The NPC should teach the lesson directly. Learner is Lizzie. The Doctor may be mentioned as available for help, but this lesson is taught by the NPC.\n\nSOURCE / ACCURACY RULES:\n- Use the supplied EchoLab local lesson data below as the primary source.\n- Align clinical safety, patient-care, emergency, and cardiovascular-care statements with American Heart Association guidance where relevant.\n- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.\n- Do NOT invent thresholds, measurements, formulas, or guideline claims. If a cutoff is not in the supplied source or you are not certain, write: “Verify the exact cutoff in the EchoLab source library before memorizing it.”\n- No patient-specific diagnosis or treatment instructions.\n- Keep it medically careful and test-prep useful.\n\nSTYLE:\n- EchoLab magical medical sci-fi RPG world, but the teaching must be clear and grounded.\n- Hybrid feel: real clinical workflow + story adventure.\n- No numbered Doctor labels. No regeneration. No hidden backend language.\n- Short paragraphs, mobile-friendly, not a wall of text.\n\nTEACHING LEVEL: ${this.teachingLevel()}\n\nReturn ONLY valid JSON, no markdown:\n{\n  "title":"lesson title",\n  "teacher":"NPC teacher name",\n  "opening":"short in-character lesson opening from the NPC",\n  "learningGoals":["goal 1","goal 2","goal 3"],\n  "storyLesson":"2-4 short paragraphs teaching the concept through the EchoLab scene",\n  "clinicalCore":["key clinical/test point 1","key point 2","key point 3","key point 4"],\n  "examAngle":"how this shows up on a CCI-style exam",\n  "safetyNote":"AHA/patient-safety note when relevant, otherwise a brief professional safety note",\n  "memoryHook":"short sticky memory phrase",\n  "checkQuestion":"one quick check-for-understanding question",\n  "doctorHelpPrompt":"a short prompt Lizzie can send to The Doctor if confused"\n}\n\nLOCAL ECHOLAB SOURCE DATA:\n${this.lessonSourceContext(id)}`;
+  }
+  async ensureAiLesson(id, force) {
+    if (!id || !this.p || !this.D || !this.D.LESSONS[id]) return;
+    if (!force && this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok) return;
+    if (!this.p.apiKey) { return; }
+    if (this.state.aiLessonBusyId === id) return;
+    this.setState({ aiLessonBusyId: id, aiLessonStatus: "Building the AI lesson with the section mentor..." });
+    try {
+      const txt = await this.callClaude(this.buildAiLessonPrompt(id), 1200);
+      let data = null;
+      try { data = JSON.parse(txt.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim()); } catch(e) {}
+      if (!data || !data.storyLesson) throw new Error("AI lesson came back in the wrong format.");
+      this.p.aiLessons = this.p.aiLessons || {};
+      this.p.aiLessons[id] = { ok: true, at: Date.now(), data };
+      this.save();
+      this.setState({ aiLessonBusyId: "", aiLessonStatus: "" });
+    } catch (e) {
+      this.p.aiLessons = this.p.aiLessons || {};
+      this.p.aiLessons[id] = { ok: false, at: Date.now(), error: e.message || String(e) };
+      this.save();
+      this.setState({ aiLessonBusyId: "", aiLessonStatus: "AI lesson unavailable — using the built-in EchoLab lesson." });
+    }
+    this.forceUpdate();
+  }
+  refreshAiLesson() {
+    if (!this.state.lessonId) return;
+    if (!this.p.apiKey) { this.toast("Claude key needed", "Add the Claude API key in Admin to generate AI lessons."); return; }
+    this.ensureAiLesson(this.state.lessonId, true);
+  }
+  askDoctorLesson() {
+    const id = this.state.lessonId;
+    const L = this.D.LESSONS[id];
+    if (!L) return;
+    const ai = this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok ? this.p.aiLessons[id].data : null;
+    const prompt = ai && ai.doctorHelpPrompt ? ai.doctorHelpPrompt : `I am confused about the lesson ${L.title}. Please explain it at my teaching level, give the exam angle, one memory hook, and one quick check question.`;
+    this.openDoctorWithContext(prompt, { label: "Lesson help: " + L.title });
+  }
+
   // ---------- lesson engine ----------
   startLesson(id) {
     const L = this.D.LESSONS[id];
     this.go("lesson", { lessonId: id, regionId: L.region, beat: 0, tryPick: -1 });
+    setTimeout(() => this.ensureAiLesson(id), 40);
   }
   lsAdvance() {
     const id = this.state.lessonId, L = this.D.LESSONS[id];
@@ -2107,8 +2214,33 @@ Return ONLY valid JSON, no markdown:
     const revealed = isTry && s.tryPick >= 0;
     const ok = revealed && s.tryPick === q.ans;
     const canGo = !isTry || revealed;
+    const region = D.REGIONS.find((x) => x.id === L.region) || {};
+    const npc = region.npc || { init: "NPC", name: "Section Mentor", color: "#3BD6C6" };
+    const aiRec = p.aiLessons && p.aiLessons[s.lessonId];
+    const aiData = aiRec && aiRec.ok ? aiRec.data : null;
+    const aiBusy = s.aiLessonBusyId === s.lessonId;
+    const aiPanel = !!(p.apiKey || aiData || aiBusy || (aiRec && !aiRec.ok));
     return {
       lessonShow: true, back: () => this.back(),
+      aiLessonPanelShow: aiPanel,
+      aiBusyShow: aiBusy,
+      aiReadyShow: !!aiData,
+      aiErrorShow: !!(aiRec && !aiRec.ok && !aiBusy),
+      aiStatus: s.aiLessonStatus || "Building the AI lesson with the section mentor...",
+      aiError: aiRec && aiRec.error ? "AI lesson unavailable: " + aiRec.error + " Using built-in EchoLab lesson below." : "AI lesson unavailable. Using built-in EchoLab lesson below.",
+      aiTeacher: aiData && aiData.teacher ? aiData.teacher : npc.name,
+      aiNpcInit: npc.init || "NPC", aiNpcBg: (npc.color || region.accent || "#3BD6C6") + "22", aiNpcBd: (npc.color || region.accent || "#3BD6C6"),
+      aiTitle: aiData && aiData.title ? aiData.title : L.title,
+      aiOpening: aiData && aiData.opening ? aiData.opening : "",
+      aiGoals: aiData && Array.isArray(aiData.learningGoals) ? aiData.learningGoals : [],
+      aiStoryLesson: aiData && aiData.storyLesson ? aiData.storyLesson : "",
+      aiCore: aiData && Array.isArray(aiData.clinicalCore) ? aiData.clinicalCore : [],
+      aiExam: aiData && aiData.examAngle ? aiData.examAngle : "",
+      aiSafety: aiData && aiData.safetyNote ? aiData.safetyNote : "",
+      aiHook: aiData && aiData.memoryHook ? aiData.memoryHook : "",
+      aiCheck: aiData && aiData.checkQuestion ? aiData.checkQuestion : "",
+      aiRefresh: () => this.refreshAiLesson(),
+      aiAskDoctor: () => this.askDoctorLesson(),
       lsTitle: L.title, lsSub: L.sub,
       lsDots: L.beats.map((_, i) => ({ bg: i < s.beat ? "#3BD6C6" : i === s.beat ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
       lsKicker: beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
