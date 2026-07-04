@@ -404,6 +404,8 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     </sc-if>
   </div>
 
+  <div onClick="{{ aiAskDoctor }}" style="margin-top:14px;display:flex;align-items:center;justify-content:center;height:46px;border-radius:15px;background:rgba(13,28,56,.72);border:1.5px solid rgba(122,180,255,.35);color:#EAF2FF;font-size:12.5px;font-weight:900;cursor:pointer">Talk about this with The Doctor</div>
+
   <div style="margin-top:auto;padding-top:18px;display:flex;flex-direction:column;gap:8px">
     <div onClick="{{ lsNext }}" style="display:flex;align-items:center;justify-content:center;height:54px;border-radius:18px;background:{{ lsNextBg }};color:{{ lsNextC }};font-size:14.5px;font-weight:900;letter-spacing:.3px;box-shadow:{{ lsNextSh }};cursor:pointer;border:{{ lsNextBd }}">{{ lsNextLabel }}</div>
   </div>
@@ -1927,19 +1929,19 @@ Return ONLY valid JSON, no markdown:
     const r = this.D.REGIONS.find((x) => x.id === L.region) || {};
     const npc = r.npc || { name: "the section mentor", role: "EchoLab mentor" };
     const styleNote = r.id === "medbay" ? "Teach as the UNIT Medical Bay NPC mentor, calm, practical, patient-safety-first, with The Doctor nearby as a possible helper." : "Teach as the region NPC mentor, with light EchoLab story atmosphere.";
-    return `Create the default AI lesson for EchoLab. This lesson will be shown before the built-in fallback lesson.\n\n${styleNote}\nVisible teacher for this lesson: ${npc.name}, ${npc.role}. The NPC should teach the lesson directly. Learner is Lizzie. The Doctor may be mentioned as available for help, but this lesson is taught by the NPC.\n\nSOURCE / ACCURACY RULES:\n- Use the supplied EchoLab local lesson data below as the primary source.\n- Align clinical safety, patient-care, emergency, and cardiovascular-care statements with American Heart Association guidance where relevant.\n- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.\n- Do NOT invent thresholds, measurements, formulas, or guideline claims. If a cutoff is not in the supplied source or you are not certain, write: “Verify the exact cutoff in the EchoLab source library before memorizing it.”\n- No patient-specific diagnosis or treatment instructions.\n- Keep it medically careful and test-prep useful.\n\nSTYLE:\n- EchoLab magical medical sci-fi RPG world, but the teaching must be clear and grounded.\n- Hybrid feel: real clinical workflow + story adventure.\n- No numbered Doctor labels. No regeneration. No hidden backend language.\n- Short paragraphs, mobile-friendly, not a wall of text.\n\nTEACHING LEVEL: ${this.teachingLevel()}\n\nReturn ONLY valid JSON, no markdown:\n{\n  "title":"lesson title",\n  "teacher":"NPC teacher name",\n  "opening":"short in-character lesson opening from the NPC",\n  "learningGoals":["goal 1","goal 2","goal 3"],\n  "storyLesson":"2-4 short paragraphs teaching the concept through the EchoLab scene",\n  "clinicalCore":["key clinical/test point 1","key point 2","key point 3","key point 4"],\n  "examAngle":"how this shows up on a CCI-style exam",\n  "safetyNote":"AHA/patient-safety note when relevant, otherwise a brief professional safety note",\n  "memoryHook":"short sticky memory phrase",\n  "checkQuestion":"one quick check-for-understanding question",\n  "doctorHelpPrompt":"a short prompt Lizzie can send to The Doctor if confused"\n}\n\nLOCAL ECHOLAB SOURCE DATA:\n${this.lessonSourceContext(id)}`;
+    return `Create the default AI lesson for EchoLab. This lesson will be shown before the built-in fallback lesson.\n\n${styleNote}\nVisible teacher for this lesson: ${npc.name}, ${npc.role}. The NPC should teach the lesson directly. Learner is Lizzie. The Doctor may be mentioned as available for help, but this lesson is taught by the NPC.\n\nSOURCE / ACCURACY RULES:\n- Use the supplied EchoLab local lesson data below as the primary source.\n- Align clinical safety, patient-care, emergency, and cardiovascular-care statements with American Heart Association guidance where relevant.\n- Align exam framing with CCI RCS-style adult echocardiography objectives and the approved EchoLab source library: ${this.p.sourceLibraryNote || "EchoLab approved source library"}.\n- Do NOT invent thresholds, measurements, formulas, or guideline claims. If a cutoff is not in the supplied source or you are not certain, write: “Verify the exact cutoff in the EchoLab source library before memorizing it.”\n- No patient-specific diagnosis or treatment instructions.\n- Keep it medically careful and test-prep useful.\n\nSTYLE:\n- EchoLab magical medical sci-fi RPG world, but the teaching must be clear and grounded.\n- Hybrid feel: real clinical workflow + story adventure.\n- No numbered Doctor labels. No regeneration. No hidden backend language.\n- Short paragraphs, mobile-friendly, not a wall of text.\n\nTEACHING LEVEL: ${this.teachingLevel()}\n\nReturn ONLY valid JSON, no markdown. Preserve the lesson as a sequence of sections matching the supplied EchoLab lesson beats. Do not compress all beats into one long lesson. Each section should correspond to one beat in order. For a built-in TRY IT / quick-check beat, create a short section that introduces the question without giving away the answer.\n\nRequired JSON shape:\n{\n  "title":"lesson title",\n  "teacher":"NPC teacher name",\n  "opening":"short in-character opening from the NPC",\n  "learningGoals":["goal 1","goal 2","goal 3"],\n  "sections":[\n    {\n      "kicker":"CONCEPT / WHY IT MATTERS / MEMORY HOOK / TRY IT",\n      "title":"section title matching this beat",\n      "story":"1-2 short paragraphs taught by the NPC inside the EchoLab scene",\n      "clinical":"clear clinical or workflow teaching for this exact beat",\n      "examAngle":"how this exact beat may show up on a CCI-style exam",\n      "safetyNote":"patient-safety/AHA-relevant note if relevant, otherwise empty string",\n      "memoryHook":"short sticky memory phrase if relevant, otherwise empty string",\n      "doctorHelpPrompt":"short prompt Lizzie can send to The Doctor about this exact section"\n    }\n  ],\n  "doctorHelpPrompt":"overall prompt Lizzie can send to The Doctor if confused"\n}\n\nRules for sections:\n- The sections array MUST have the same number of items and same order as the local lesson beats.\n- Do not merge Verify, Wrong-exam events, and Memory Hook into one block. They must remain separate screens.\n- Keep each section mobile-friendly: short paragraphs, strong teaching, no wall of text.\n- If the source beat includes a practice question, do not reveal the answer in that section text; the app will display the interactive question separately.\n\nLOCAL ECHOLAB SOURCE DATA:\n${this.lessonSourceContext(id)}`;
   }
   async ensureAiLesson(id, force) {
     if (!id || !this.p || !this.D || !this.D.LESSONS[id]) return;
-    if (!force && this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok) return;
+    if (!force && this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok && this.p.aiLessons[id].data && Array.isArray(this.p.aiLessons[id].data.sections)) return;
     if (!this.p.apiKey) { return; }
     if (this.state.aiLessonBusyId === id) return;
     this.setState({ aiLessonBusyId: id, aiLessonStatus: "Building the AI lesson with the section mentor..." });
     try {
-      const txt = await this.callClaude(this.buildAiLessonPrompt(id), 1200);
+      const txt = await this.callClaude(this.buildAiLessonPrompt(id), 1800);
       let data = null;
       try { data = JSON.parse(txt.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim()); } catch(e) {}
-      if (!data || !data.storyLesson) throw new Error("AI lesson came back in the wrong format.");
+      if (!data || !Array.isArray(data.sections) || !data.sections.length) throw new Error("AI lesson came back in the wrong section format.");
       this.p.aiLessons = this.p.aiLessons || {};
       this.p.aiLessons[id] = { ok: true, at: Date.now(), data };
       this.save();
@@ -1962,7 +1964,9 @@ Return ONLY valid JSON, no markdown:
     const L = this.D.LESSONS[id];
     if (!L) return;
     const ai = this.p.aiLessons && this.p.aiLessons[id] && this.p.aiLessons[id].ok ? this.p.aiLessons[id].data : null;
-    const prompt = ai && ai.doctorHelpPrompt ? ai.doctorHelpPrompt : `I am confused about the lesson ${L.title}. Please explain it at my teaching level, give the exam angle, one memory hook, and one quick check question.`;
+    const aiSection = ai && Array.isArray(ai.sections) ? ai.sections[this.state.beat || 0] : null;
+    const beat = L.beats[this.state.beat || 0];
+    const prompt = aiSection && aiSection.doctorHelpPrompt ? aiSection.doctorHelpPrompt : (ai && ai.doctorHelpPrompt ? ai.doctorHelpPrompt : `I am confused about the lesson ${L.title}, section ${beat ? beat.t : "current section"}. Please explain it at my teaching level, give the exam angle, one memory hook, and one quick check question.`);
     this.openDoctorWithContext(prompt, { label: "Lesson help: " + L.title });
   }
 
@@ -1974,6 +1978,9 @@ Return ONLY valid JSON, no markdown:
   }
   lsAdvance() {
     const id = this.state.lessonId, L = this.D.LESSONS[id];
+    const aiRec = this.p.aiLessons && this.p.aiLessons[id];
+    const hasAiSections = !!(aiRec && aiRec.ok && aiRec.data && Array.isArray(aiRec.data.sections));
+    if (this.p.apiKey && this.state.aiLessonBusyId === id && !hasAiSections) { this.toast("Building AI lesson", "Give Nurse Clara Vale one moment to prepare the lesson."); return; }
     const beat = this.state.beat, last = L.beats.length - 1;
     const cur = L.beats[beat];
     if (cur.q && this.state.tryPick < 0) { this.toast("Choose an answer first", "The Doctor is watching. Kindly."); return; }
@@ -2217,14 +2224,18 @@ Return ONLY valid JSON, no markdown:
     const region = D.REGIONS.find((x) => x.id === L.region) || {};
     const npc = region.npc || { init: "NPC", name: "Section Mentor", color: "#3BD6C6" };
     const aiRec = p.aiLessons && p.aiLessons[s.lessonId];
-    const aiData = aiRec && aiRec.ok ? aiRec.data : null;
+    const rawAiData = aiRec && aiRec.ok ? aiRec.data : null;
+    const aiData = rawAiData && Array.isArray(rawAiData.sections) ? rawAiData : null;
+    const aiSection = aiData && aiData.sections ? aiData.sections[s.beat] : null;
     const aiBusy = s.aiLessonBusyId === s.lessonId;
-    const aiPanel = !!(p.apiKey || aiData || aiBusy || (aiRec && !aiRec.ok));
+    const aiPanel = !!(aiBusy || (aiRec && !aiRec.ok));
+    const aiPending = !!(p.apiKey && aiBusy && !aiData);
+    const canAdvance = aiPending ? false : canGo;
     return {
       lessonShow: true, back: () => this.back(),
       aiLessonPanelShow: aiPanel,
       aiBusyShow: aiBusy,
-      aiReadyShow: !!aiData,
+      aiReadyShow: false,
       aiErrorShow: !!(aiRec && !aiRec.ok && !aiBusy),
       aiStatus: s.aiLessonStatus || "Building the AI lesson with the section mentor...",
       aiError: aiRec && aiRec.error ? "AI lesson unavailable: " + aiRec.error + " Using built-in EchoLab lesson below." : "AI lesson unavailable. Using built-in EchoLab lesson below.",
@@ -2243,14 +2254,14 @@ Return ONLY valid JSON, no markdown:
       aiAskDoctor: () => this.askDoctorLesson(),
       lsTitle: L.title, lsSub: L.sub,
       lsDots: L.beats.map((_, i) => ({ bg: i < s.beat ? "#3BD6C6" : i === s.beat ? "#FFCB6B" : "rgba(190,212,245,.25)" })),
-      lsKicker: beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
-      lsBeatTitle: beat.t,
-      lsBodyShow: !isTry,
-      lsBody: beat.b || "",
+      lsKicker: aiSection && aiSection.kicker ? aiSection.kicker : beat.k, lsKickC: kc, lsKickBg: kc + "14", lsKickBd: kc + "55",
+      lsBeatTitle: aiPending ? "Preparing the AI lesson…" : (aiSection && aiSection.title ? aiSection.title : beat.t),
+      lsBodyShow: aiPending ? true : !isTry,
+      lsBody: aiPending ? "Nurse Clara Vale is building this lesson from the approved EchoLab source material. If the AI lesson cannot load, the built-in lesson will appear automatically." : (aiSection ? [aiSection.story || "", aiSection.clinical ? "Clinical core: " + aiSection.clinical : "", aiSection.examAngle ? "Exam angle: " + aiSection.examAngle : "", aiSection.safetyNote ? "Safety note: " + aiSection.safetyNote : "", aiSection.memoryHook ? "Memory hook: " + aiSection.memoryHook : ""].filter(Boolean).join("\n\n") : (beat.b || "")),
       lsBodyC: isHook ? "#FFEBC9" : "rgba(228,240,255,.92)",
       lsCardBg: isHook ? "rgba(245,184,74,.09)" : "rgba(13,28,56,.66)",
       lsCardBd: isHook ? "rgba(245,184,74,.4)" : "rgba(122,180,255,.22)",
-      lsTryShow: isTry, lsTryStem: q ? q.stem : "",
+      lsTryShow: aiPending ? false : isTry, lsTryStem: q ? q.stem : "",
       tryChoices: q ? q.ch.map((t, i) => {
         let bg = "rgba(13,28,56,.7)", bd = "rgba(122,180,255,.25)", mark = String.fromCharCode(65 + i), markC = "#9CC5FF";
         if (revealed) {
@@ -2262,11 +2273,11 @@ Return ONLY valid JSON, no markdown:
       }) : [],
       tryRevealed: revealed, tryIcon: ok ? "✓" : "✕", tryWhy: q ? q.why : "",
       lsNext: () => this.lsAdvance(),
-      lsNextLabel: !canGo ? "Pick an answer above" : last ? "Enter the Console Drill →" : "Continue",
-      lsNextBg: canGo ? "linear-gradient(180deg,#FFCB6B,#F0A93C)" : "rgba(13,28,56,.5)",
-      lsNextC: canGo ? "#2A2008" : "rgba(200,220,250,.4)",
-      lsNextSh: canGo ? "0 8px 24px rgba(240,169,60,.32)" : "none",
-      lsNextBd: canGo ? "none" : "1.5px solid rgba(122,180,255,.2)",
+      lsNextLabel: aiPending ? "Building AI lesson…" : (!canAdvance ? "Pick an answer above" : last ? "Enter the Console Drill →" : "Continue"),
+      lsNextBg: canAdvance ? "linear-gradient(180deg,#FFCB6B,#F0A93C)" : "rgba(13,28,56,.5)",
+      lsNextC: canAdvance ? "#2A2008" : "rgba(200,220,250,.4)",
+      lsNextSh: canAdvance ? "0 8px 24px rgba(240,169,60,.32)" : "none",
+      lsNextBd: canAdvance ? "none" : "1.5px solid rgba(122,180,255,.2)",
     };
   }
 
