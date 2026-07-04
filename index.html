@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -12,8 +12,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Nunito+Sans:opsz,wght@6..12,400..1000&amp;display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;padding:0;background:#04070F}
-body{-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+html,body{margin:0;padding:0;background:#04070F;touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;touch-action:manipulation}
+*{-webkit-tap-highlight-color:transparent}
+input,textarea,select,button{font-size:16px !important;touch-action:manipulation}
 @keyframes vx{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes pulseRing{0%{transform:scale(.55);opacity:.9}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
 @keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:1}}
@@ -925,11 +927,11 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
           <span style="font-size:10px;font-weight:900;letter-spacing:2px;color:#7FE7DB">THE DOCTOR AI</span>
-          <span style="font-size:11px;line-height:1.45;color:rgba(200,220,250,.62)">Add your OpenAI API key to power the chat. It is stored only in this browser/app save.</span>
+          <span style="font-size:11px;line-height:1.45;color:rgba(200,220,250,.62)">Add your Claude API key to power the chat. It is stored only in this browser/app save. Do not share this key publicly.</span>
         </div>
         <span style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:{{ aiStatusC }};border:1px solid {{ aiStatusBd }};border-radius:999px;padding:6px 9px;background:{{ aiStatusBg }}">{{ aiStatus }}</span>
       </div>
-      <input type="password" value="{{ apiKey }}" onInput="{{ apiKeyInput }}" placeholder="Paste OpenAI API key" autocomplete="off" spellcheck="false" style="height:48px;border-radius:14px;border:1.5px solid rgba(122,180,255,.32);background:rgba(6,13,27,.82);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;font-weight:700;padding:0 13px;outline:none;box-sizing:border-box;width:100%">
+      <input type="password" value="{{ apiKey }}" onInput="{{ apiKeyInput }}" placeholder="Paste Claude API key" autocomplete="off" spellcheck="false" style="height:48px;border-radius:14px;border:1.5px solid rgba(122,180,255,.32);background:rgba(6,13,27,.82);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:13px;font-weight:700;padding:0 13px;outline:none;box-sizing:border-box;width:100%">
       <div style="display:flex;gap:9px;align-items:center">
         <input value="{{ aiModel }}" onInput="{{ aiModelInput }}" placeholder="Model" spellcheck="false" style="flex:1;min-width:0;height:44px;border-radius:14px;border:1.5px solid rgba(122,180,255,.26);background:rgba(6,13,27,.72);color:#EAF2FF;font-family:'Nunito Sans',system-ui,sans-serif;font-size:12.5px;font-weight:800;padding:0 12px;outline:none;box-sizing:border-box">
         <div onClick="{{ testApiKey }}" style="flex:none;display:flex;align-items:center;justify-content:center;height:44px;padding:0 15px;border-radius:14px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:12px;font-weight:900;cursor:pointer">TEST</div>
@@ -1111,7 +1113,7 @@ class Component extends DCLogic {
       lastDay: this.today(), streak: 0, lastActive: "", secToday: 0, createdAt: Date.now(),
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
-      apiKey: "", aiModel: "gpt-4.1-mini", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10 };
+      apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10 };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1119,7 +1121,8 @@ class Component extends DCLogic {
     s.games = Object.assign(b.games, s.games || {});
     s.lessons = s.lessons || {}; s.beats = s.beats || {}; s.q = s.q || {}; s.mem = s.mem || {};
     s.badges = s.badges || {}; s.arts = s.arts || {}; s.boss = s.boss || {}; s.hist = s.hist || {};
-    if (!s.aiModel) s.aiModel = "gpt-4.1-mini";
+    if (!s.aiModel) s.aiModel = "claude-haiku-4-5";
+    if (String(s.aiModel || "").toLowerCase().startsWith("gpt-")) s.aiModel = "claude-haiku-4-5";
     if (!s.gmDoctor) s.gmDoctor = 10;
     return s;
   }
@@ -1322,7 +1325,7 @@ class Component extends DCLogic {
     this.sClick();
     try {
       const chatInput = msgs.slice(-8).map((m) => (m.who === "lizzie" ? "Lizzie: " : "The Doctor: ") + m.text).join("\n\n");
-      const reply = this.p.apiKey ? await this.callOpenAI(chatInput, 950) : this.doctorAnswer(q);
+      const reply = this.p.apiKey ? await this.callClaude(chatInput, 950) : this.doctorAnswer(q);
       const finalMsgs = [...msgs, { who: "doctor", text: reply }];
       this.setState({ doctorMsgs: finalMsgs });
     } catch (e) {
@@ -1890,7 +1893,7 @@ class Component extends DCLogic {
     window.scrollTo(0, 0);
   }
   apiKeyInput(e) { this.p.apiKey = e.target.value.trim(); this.p.aiTest = this.p.apiKey ? "Key saved locally. Tap TEST to verify." : "No key saved yet."; this.save(); this.forceUpdate(); }
-  aiModelInput(e) { this.p.aiModel = e.target.value.trim() || "gpt-4.1-mini"; this.save(); this.forceUpdate(); }
+  aiModelInput(e) { this.p.aiModel = e.target.value.trim() || "claude-haiku-4-5"; this.save(); this.forceUpdate(); }
   doctorStyleKey() {
     const n = this.doctorFor(this.levelInfo().level).n;
     return n === 11 ? "doctor_11_style" : n === 12 ? "doctor_12_style" : "doctor_10_style";
@@ -1915,38 +1918,46 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
   }
   extractAiText(data) {
     if (!data) return "";
-    if (typeof data.output_text === "string") return data.output_text;
-    if (Array.isArray(data.output)) {
-      const parts = [];
-      data.output.forEach((o) => (o.content || []).forEach((c) => { if (c.text) parts.push(c.text); if (c.type === "output_text" && c.text) parts.push(c.text); }));
-      return parts.join("\n").trim();
+    if (Array.isArray(data.content)) {
+      return data.content.map((c) => c && c.text ? c.text : "").filter(Boolean).join("\n").trim();
     }
+    if (typeof data.output_text === "string") return data.output_text;
     return "";
   }
-  async callOpenAI(input, maxTokens) {
+  async callClaude(input, maxTokens) {
     const key = (this.p.apiKey || "").trim();
-    if (!key) throw new Error("No API key saved in Admin.");
-    const res = await fetch("https://api.openai.com/v1/responses", {
+    if (!key) throw new Error("No Claude API key saved in Admin.");
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
-      body: JSON.stringify({ model: this.p.aiModel || "gpt-4.1-mini", instructions: this.doctorInstructions(), input, max_output_tokens: maxTokens || 900 })
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: this.p.aiModel || "claude-haiku-4-5",
+        max_tokens: maxTokens || 900,
+        system: this.doctorInstructions(),
+        messages: [{ role: "user", content: input }]
+      })
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error((data.error && data.error.message) || ("API error " + res.status));
+    if (!res.ok) throw new Error((data.error && data.error.message) || ("Claude API error " + res.status));
     const txt = this.extractAiText(data);
-    if (!txt) throw new Error("The API responded, but no text came back.");
+    if (!txt) throw new Error("Claude responded, but no text came back.");
     return txt;
   }
   async testApiKey() {
-    if (!this.p.apiKey) { this.p.aiTest = "Paste an API key first."; this.save(); this.forceUpdate(); return; }
-    this.p.aiTest = "Testing The Doctor link..."; this.save(); this.forceUpdate();
+    if (!this.p.apiKey) { this.p.aiTest = "Paste a Claude API key first."; this.save(); this.forceUpdate(); return; }
+    this.p.aiTest = "Testing The Doctor link with Claude..."; this.save(); this.forceUpdate();
     try {
-      const txt = await this.callOpenAI("Reply with one short sentence saying The Doctor AI link is online.", 80);
+      const txt = await this.callClaude("Reply with one short sentence saying The Doctor AI link is online.", 80);
       this.p.aiTest = "Connected: " + txt.slice(0, 140);
       this.save(); this.toast("The Doctor is online", "API test passed.");
     } catch (e) {
       this.p.aiTest = "Test failed: " + (e.message || e);
-      this.save(); this.toast("API test failed", "Check the key/model and try again.");
+      this.save(); this.toast("API test failed", "Check the Claude key/model and try again.");
     }
     this.forceUpdate();
   }
@@ -2067,7 +2078,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       rstBg: s.resetArm ? "rgba(244,121,91,.18)" : "rgba(13,28,56,.66)",
       rstLabel: s.resetArm ? "Tap again to confirm reset" : "Reset progress",
       rstSub: s.resetArm ? "This erases Lizzie's entire save. No take-backs." : "Wipe all progress and start from Day 1",
-      apiKey: p.apiKey || "", aiModel: p.aiModel || "gpt-4.1-mini",
+      apiKey: p.apiKey || "", aiModel: p.aiModel || "claude-haiku-4-5",
       apiKeyInput: (e) => this.apiKeyInput(e), aiModelInput: (e) => this.aiModelInput(e), testApiKey: () => this.testApiKey(),
       aiStatus: p.apiKey ? "KEY SAVED" : "OFFLINE", aiStatusC: p.apiKey ? "#7FE7DB" : "rgba(190,212,245,.55)",
       aiStatusBd: p.apiKey ? "rgba(59,214,198,.55)" : "rgba(150,180,220,.25)", aiStatusBg: p.apiKey ? "rgba(59,214,198,.10)" : "rgba(122,180,255,.06)",
