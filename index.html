@@ -744,6 +744,10 @@ image-slot{display:block !important;width:100% !important;height:100% !important
       </div>
     </div>
     <span style="font-size:13px;line-height:1.72;color:#FFE9C4">{{ jNote }}</span>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:2px">
+      <div onClick="{{ generateJournalAi }}" style="display:flex;align-items:center;justify-content:center;height:38px;border-radius:13px;background:rgba(59,214,198,.12);border:1.5px solid rgba(59,214,198,.36);color:#BDEDE6;font-size:11px;font-weight:900;letter-spacing:.6px;padding:0 12px;cursor:pointer">{{ jAiButton }}</div>
+      <span style="font-size:10.5px;line-height:1.35;color:rgba(210,228,255,.52)">{{ jAiStatus }}</span>
+    </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px">
     <div style="display:flex;flex-direction:column;gap:1px;background:rgba(13,28,56,.66);border:1px solid rgba(122,180,255,.22);border-radius:16px;padding:12px 14px">
@@ -1250,31 +1254,151 @@ class Component extends DCLogic {
     }
     return { id: key + "-" + Date.now(), date: key, title: h.missionReward ? "Mission Path Complete" : "The Page Opens", body, xp: h.xp || 0, ans, acc, rev, doctor };
   }
-  addJournalEntry(reason) {
+  addJournalEntry(reason, entryOverride) {
     const key = this.today();
     const h = this.hist();
     const weak = this.computeWeakTopics ? this.computeWeakTopics() : [];
-    const entry = this.generateJournalStory(key, h, weak);
+    const entry = entryOverride || this.generateJournalStory(key, h, weak);
     entry.reason = reason || "daily";
+    entry.date = entry.date || key;
     this.p.journalEntries = (this.p.journalEntries || []).filter((e) => e.date !== key);
     this.p.journalEntries.unshift(entry);
     this.p.journalEntries = this.p.journalEntries.slice(0, 30);
+  }
+  journalLoreBank() {
+    const style = this.doctorStyleKey ? this.doctorStyleKey() : "doctor_10_style";
+    const common = [
+      "Gallifrey — The Doctor's lost home world; use as a solemn, star-bright archive reference, not a reveal.",
+      "Skaro — ruined world of the Daleks; useful as a shorthand for dangerous old memories.",
+      "Mondas — the twin-world origin of the Cybermen; use lightly as an old warning in the archive.",
+      "K9 and Sarah Jane — old friends associated with brave investigation and loyalty.",
+      "UNIT — Earth-based scientific/military allies; fits patient-care and lab-protocol entries.",
+      "The Library / Vashta Nerada — use only as an allusive archive-shadow reference, not direct scene retelling.",
+      "New Earth — use as a bright future-city image when Lizzie improves.",
+      "The Shadow Proclamation — use as a playful cosmic-rules metaphor for protocols."
+    ];
+    const byStyle = {
+      doctor_10_style: [
+        "Rose Tyler — ordinary courage becoming extraordinary.",
+        "Martha Jones — medical intelligence, steady bravery, and clinical thinking.",
+        "Donna Noble — sharp heart, practical questions, and not being impressed by nonsense.",
+        "Captain Jack — bold confidence and field-ready energy.",
+        "Barcelona — a whimsical place The Doctor once described as strange and memorable; use as a tiny joke, no direct quote."
+      ],
+      doctor_11_style: [
+        "Amy Pond and Rory Williams — loyalty, waiting, courage, and asking the question twice.",
+        "River Song — mystery, records, and notes left in the margins.",
+        "Clara Oswald — clever pattern-recognition and classroom courage.",
+        "Starship UK — a whole world moving through space; useful for momentum and study-path imagery.",
+        "Trenzalore — use very sparingly as an old battlefield-shadow, never about endings or transitions."
+      ],
+      doctor_12_style: [
+        "Clara Oswald — questions, bravery, and refusing easy answers.",
+        "Bill Potts — curiosity, direct questions, and learning without shame.",
+        "Nardole — checklists, controls, and practical safety warnings.",
+        "Missy — do not glamorize; use only as a caution about cleverness without kindness.",
+        "The university vault — a quiet place for discipline, records, and hard-won understanding."
+      ]
+    };
+    return common.concat(byStyle[style] || byStyle.doctor_10_style).join("\n- ");
+  }
+  buildJournalAiPrompt(key, h, weak, reason) {
+    const D = this.D || {};
+    h = h || this.hist(); weak = weak || [];
+    const ans = h.ans || 0, cor = h.cor || 0, rev = h.rev || 0, doctor = h.doctor || 0;
+    const acc = ans ? Math.round((cor / ans) * 100) : 0;
+    const lessonTitle = h.lesson && D.LESSONS && D.LESSONS[h.lesson] ? D.LESSONS[h.lesson].title : "none recorded";
+    const weakList = weak.length ? weak.map((w) => w.topic + " (" + w.acc + "% accuracy)").join(", ") : "none detected yet";
+    return `Write one Companion Journal entry for EchoLab as an in-universe mini-story, not a checklist.
+
+Hidden Doctor style: ${this.doctorStyleKey()}
+Date key: ${key}
+Reason: ${reason || "daily"}
+Today’s actual EchoLab progress:
+- XP earned today: ${h.xp || 0}
+- Questions answered: ${ans}
+- Correct answers: ${cor}
+- Accuracy: ${acc}%
+- Memory Core reviews cleared: ${rev}
+- Doctor chats started: ${doctor}
+- Lesson corridor touched: ${lessonTitle}
+- Weak signals: ${weakList}
+
+Lore bank you may reference lightly and accurately. Use one to three brief allusions only, naturally woven in; do not dump trivia.
+- ${this.journalLoreBank()}
+
+Rules:
+- Learner-facing name is always The Doctor. Never write numbered Doctor labels.
+- Never mention regeneration, future Doctors, actor names, episodes, show titles, or hidden variables.
+- Do not copy exact dialogue/catchphrases or quote copyrighted lines.
+- Keep it safe for a study app: whimsical, warm, adventurous, but still about Lizzie learning echo.
+- It should feel like a fun page from Lizzie’s Companion Journal after a study session.
+- 120 to 190 words.
+- Third-person story style, centered on Lizzie.
+- Include at least one concrete echo-study detail from today’s progress.
+- End with a hopeful line that makes Lizzie want to come back tomorrow.
+
+Return ONLY valid JSON, no markdown:
+{"title":"short poetic title","body":"the journal entry"}`;
+  }
+  async generateAiJournalEntry(reason) {
+    const key = this.today();
+    const h = this.hist();
+    const weak = this.computeWeakTopics ? this.computeWeakTopics() : [];
+    const fallback = this.generateJournalStory(key, h, weak);
+    if (!this.p.apiKey) return fallback;
+    const prompt = this.buildJournalAiPrompt(key, h, weak, reason);
+    const txt = await this.callClaude(prompt, 650);
+    let parsed = null;
+    try { parsed = JSON.parse(txt.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim()); } catch (e) {}
+    const title = parsed && parsed.title ? String(parsed.title).slice(0, 80) : "A Page in the TARDIS Log";
+    const body = parsed && parsed.body ? String(parsed.body).slice(0, 1800) : txt.slice(0, 1800);
+    return { id: key + "-ai-" + Date.now(), date: key, title, body, xp: h.xp || 0, ans: h.ans || 0, acc: h.ans ? Math.round(((h.cor || 0) / h.ans) * 100) : 0, rev: h.rev || 0, doctor: h.doctor || 0, ai: true };
+  }
+  async regenerateJournalAi() {
+    if (!this.p.apiKey) { this.toast("Claude key needed", "Add your Claude API key in Admin to generate AI story pages."); return; }
+    this.setState({ journalAiBusy: true });
+    this.p.journalAiStatus = "The TARDIS is asking The Doctor to write a better page..."; this.save(); this.forceUpdate();
+    try {
+      const entry = await this.generateAiJournalEntry("manual_regenerate");
+      this.addJournalEntry("manual_regenerate", entry);
+      this.p.journalAiStatus = "AI story page saved.";
+      this.save(); this.toast("Journal updated", "The Doctor wrote a fresh story page.");
+    } catch (e) {
+      this.p.journalAiStatus = "AI journal failed: " + (e.message || e);
+      this.save(); this.toast("AI journal failed", "The fallback page is still available.");
+    }
+    this.setState({ journalAiBusy: false });
+    this.forceUpdate();
   }
   computeWeakTopics() {
     const D = this.D || {}; const p = this.p || {}; const topicMap = {};
     for (const k in (p.q || {})) { const q = D.QUESTIONS && D.QUESTIONS[k]; if (!q) continue; const t = topicMap[q.topic] || (topicMap[q.topic] = { s: 0, c: 0 }); t.s += p.q[k].s; t.c += p.q[k].c; }
     return Object.keys(topicMap).map((t) => ({ topic: t, acc: Math.round((topicMap[t].c / topicMap[t].s) * 100) })).filter((w) => w.acc < 75).sort((a, b) => a.acc - b.acc).slice(0, 4);
   }
-  collectDailyReward() {
+  async collectDailyReward() {
     const h = this.hist();
     if (h.missionReward) { this.toast("Daily reward already collected", "The Companion Journal has it logged."); return; }
     h.missionReward = 1;
     this.gainXp(25);
     this.markActive();
     this.addJournalEntry("daily_reward");
+    this.p.journalAiStatus = this.p.apiKey ? "Writing an AI story page..." : "Local story page saved. Add a Claude key in Admin for AI-written entries.";
     this.save();
-    this.toast("Daily path complete", "+25 XP · story entry saved");
+    this.toast("Daily path complete", this.p.apiKey ? "+25 XP · writing story page" : "+25 XP · story entry saved");
     this.forceUpdate();
+    if (this.p.apiKey) {
+      try {
+        const entry = await this.generateAiJournalEntry("daily_reward");
+        this.addJournalEntry("daily_reward_ai", entry);
+        this.p.journalAiStatus = "AI story page saved.";
+        this.save(); this.toast("Companion Journal updated", "The Doctor wrote today’s story page.");
+      } catch (e) {
+        this.p.journalAiStatus = "AI journal failed: " + (e.message || e);
+        this.save(); this.toast("AI journal failed", "Kept the local story page instead.");
+      }
+      this.forceUpdate();
+    }
   }
   markActive() {
     const t = this.today();
@@ -2261,6 +2385,9 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
           tagShow: false, tag: "" };
       }),
       jNote, jTitle: todayEntry.title, jDate: this.storyDateLabel(todayEntry.date),
+      jAiButton: s.journalAiBusy ? "WRITING..." : (p.apiKey ? "REWRITE WITH AI" : "AI STORY NEEDS KEY"),
+      jAiStatus: p.journalAiStatus || (p.apiKey ? "Uses Claude to make this page more story-rich." : "Add a Claude API key in Admin for richer story entries."),
+      generateJournalAi: () => this.regenerateJournalAi(),
       jTimeline: journalTimeline.map((e) => ({ title: e.title || "EchoLab Entry", date: this.storyDateLabel(e.date), body: e.body || "The page is quiet today.", xp: String(e.xp || 0), ans: String(e.ans || 0), acc: String(e.acc || 0), rev: String(e.rev || 0), doctor: String(e.doctor || 0) })),
       jAns: String(ans), jAcc: String(acc), jMins: String(Math.floor(p.secToday / 60)),
       jDomains: D.DOMAINS.map((d) => {
