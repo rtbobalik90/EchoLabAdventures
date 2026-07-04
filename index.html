@@ -25,6 +25,7 @@ input,textarea,select,button{font-size:16px !important;touch-action:manipulation
 input[type="date"]{color-scheme:dark}
 x-dc{display:block}
 image-slot{display:block !important;width:100% !important;height:100% !important}
+.el-doctor-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%}
 </style>
 </helmet>
 
@@ -63,7 +64,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 <div data-screen-label="Onboarding" style="position:relative;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px 24px;overflow:hidden">
   <div style="position:absolute;left:50%;top:44%;width:820px;height:820px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 90deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 40%, rgba(245,184,74,.08) 65%, rgba(30,111,217,0));filter:blur(16px);animation:{{ vortexAnim }};pointer-events:none"></div>
   <div style="position:relative;width:104px;height:104px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.4), rgba(30,111,217,.28));border:4px solid rgba(59,214,198,.65);box-shadow:0 0 30px rgba(59,214,198,.28)">
-    <img src="{{ doctorHeadshot }}" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+    <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
   </div>
   <div style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;background:rgba(13,28,56,.72);border:1px solid rgba(122,180,255,.26);border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(3,8,20,.5);animation:popIn .3s ease">
     <span style="font-size:10px;font-weight:900;letter-spacing:2.2px;color:#FFD98F">{{ obSpeaker }}</span>
@@ -124,13 +125,13 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   </div>
 
   <!-- open console art space: pins removed -->
-  <div style="position:relative;z-index:2;flex:1;min-height:56dvh;pointer-events:none"></div>
+  <div style="position:relative;z-index:2;flex:1;min-height:40dvh;pointer-events:none"></div>
 
   <!-- lower stack -->
-  <div style="position:relative;z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px calc(128px + env(safe-area-inset-bottom));margin-top:auto">
+  <div style="position:absolute;left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom));z-index:3;display:flex;flex-direction:column;gap:11px;padding:0 16px;box-sizing:border-box">
     <div style="display:flex;gap:11px;align-items:center;background:rgba(9,19,38,.82);border:1px solid rgba(122,180,255,.26);border-radius:22px;padding:12px 13px;backdrop-filter:blur(8px)">
       <div style="flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(59,214,198,.5), rgba(30,111,217,.3));border:2px solid rgba(59,214,198,.55)">
-        <img src="{{ doctorHeadshot }}" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+        <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#7FE7DB">{{ doctorName }}</span>
@@ -156,7 +157,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== CURRICULUM MAP ===================== -->
 <sc-if value="{{ mapShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Curriculum Map" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom));overflow:hidden">
+<div data-screen-label="Curriculum Map" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom));overflow:hidden">
   <div style="position:absolute;left:50%;top:280px;width:900px;height:900px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 40deg, rgba(30,111,217,0), rgba(59,214,198,.1), rgba(30,111,217,0) 35%, rgba(245,184,74,.09) 60%, rgba(30,111,217,0) 80%, rgba(180,140,242,.08), rgba(30,111,217,0));filter:blur(18px);animation:{{ vortexAnim }};pointer-events:none"></div>
   <div style="position:relative;display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
     <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#7FE7DB">THE TIME VORTEX</span>
@@ -228,7 +229,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="display:flex;flex-direction:column;gap:12px;padding:4px 16px 0">
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.3);border-radius:20px;padding:13px">
       <div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
-        <img src="{{ doctorHeadshot }}" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
+        <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
       </div>
       <div style="display:flex;flex-direction:column;gap:3px">
         <span style="font-size:8.5px;font-weight:900;letter-spacing:1.6px;color:#FFD98F">{{ doctorName }}</span>
@@ -591,7 +592,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== ARCHIVE ===================== -->
 <sc-if value="{{ archiveShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Archive" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom));overflow:hidden">
+<div data-screen-label="Archive" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom));overflow:hidden">
   <div style="position:absolute;left:50%;top:180px;width:760px;height:760px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(50% 50% at 50% 50%, rgba(59,214,198,.12), transparent 70%);filter:blur(16px);pointer-events:none"></div>
   <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:16px">
     <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
@@ -619,7 +620,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== MEMORY CORE ===================== -->
 <sc-if value="{{ memShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Memory Core" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom))">
+<div data-screen-label="Memory Core" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom))">
   <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
     <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
@@ -667,7 +668,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== BADGE VAULT ===================== -->
 <sc-if value="{{ badgesShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Badge Vault" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom))">
+<div data-screen-label="Badge Vault" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom))">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
     <span onClick="{{ goArchive }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="display:flex;flex-direction:column">
@@ -692,7 +693,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== JOURNAL ===================== -->
 <sc-if value="{{ journalShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Companion Journal" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom))">
+<div data-screen-label="Companion Journal" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom))">
   <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
     <span onClick="{{ goArchive }}" style="flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
@@ -767,7 +768,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== CHARACTER ===================== -->
 <sc-if value="{{ charShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Companion File" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom));overflow:hidden">
+<div data-screen-label="Companion File" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom));overflow:hidden">
   <div style="position:absolute;top:-110px;left:50%;width:340px;height:300px;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 50%, rgba(245,184,74,.22), transparent 70%);filter:blur(10px);pointer-events:none"></div>
   <div style="position:relative;display:flex;align-items:center;gap:10px;margin-bottom:16px">
     <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
@@ -825,7 +826,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   <div style="position:relative;display:flex;align-items:center;gap:10px">
     <span onClick="{{ goHome }}" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:rgba(7,15,30,.7);border:1px solid rgba(122,180,255,.3);color:#CFE0FF;font-size:15px;cursor:pointer">←</span>
     <div style="flex:1;display:flex;align-items:center;gap:10px;min-width:0">
-      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.7);box-shadow:0 0 18px rgba(245,184,74,.25)"><img src="{{ doctorHeadshot }}" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+      <span style="flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid rgba(245,184,74,.7);box-shadow:0 0 18px rgba(245,184,74,.25)"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
       <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
         <span style="font-family:'Marcellus',serif;font-size:24px;color:#F4F8FF;line-height:1">The Doctor</span>
         <span style="font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7FE7DB">ECHOLAB STUDY MENTOR</span>
@@ -843,7 +844,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
     <sc-for list="{{ doctorMsgs }}" as="m" hint-placeholder-count="4">
       <div style="display:flex;gap:9px;align-items:flex-start;justify-content:{{ m.justify }}">
         <sc-if value="{{ m.doc }}" hint-placeholder-val="true">
-          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="{{ doctorHeadshot }}" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
+          <span style="flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(245,184,74,.6);background:#081226"><img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%"></span>
         </sc-if>
         <div style="max-width:78%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:{{ m.radius }};padding:11px 12px;box-shadow:{{ m.sh }}">
           <span style="display:block;font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:{{ m.nameC }};margin-bottom:4px">{{ m.name }}</span>
@@ -872,7 +873,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== BOSSES TAB ===================== -->
 <sc-if value="{{ bossesShow }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Boss Gallery" style="position:relative;min-height:100dvh;padding:16px 16px calc(128px + env(safe-area-inset-bottom))">
+<div data-screen-label="Boss Gallery" style="position:relative;min-height:100dvh;padding:16px 16px calc(88px + env(safe-area-inset-bottom))">
   <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
     <span style="font-size:10px;font-weight:900;letter-spacing:2.4px;color:#C9CFE4">THREATS DETECTED</span>
     <span style="font-family:'Marcellus',serif;font-size:26px;color:#F4F8FF">Boss Battles</span>
@@ -967,7 +968,7 @@ image-slot{display:block !important;width:100% !important;height:100% !important
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
           <sc-for list="{{ gmDoctors }}" as="gd" hint-placeholder-count="3">
             <div onClick="{{ gd.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:16px;border:1.5px solid {{ gd.bd }};background:{{ gd.bg }};padding:10px 7px;cursor:pointer;min-width:0">
-              <span style="width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid {{ gd.ring }};background:#081226;display:block"><img src="{{ gd.src }}" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
+              <span style="width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid {{ gd.ring }};background:#081226;display:block"><img src="{{ gd.src }}" onerror="this.onerror=null;this.src='{{ gd.fallback }}';" alt="The Doctor" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%"></span>
               <span style="font-size:10.5px;font-weight:900;color:{{ gd.c }};text-align:center">The Doctor</span>
               <span style="font-size:8px;font-weight:900;letter-spacing:.8px;color:{{ gd.subC }};text-align:center">{{ gd.label }}</span>
             </div>
@@ -1048,13 +1049,13 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 
 <!-- ===================== BOTTOM NAV ===================== -->
 <sc-if value="{{ navShow }}" hint-placeholder-val="{{ false }}">
-<div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:60;display:flex;height:calc(80px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(6,13,27,.35),#060D1B 42%);backdrop-filter:blur(10px);border-top:1px solid rgba(122,180,255,.16);padding-bottom:env(safe-area-inset-bottom);box-sizing:border-box">
+<div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:60;display:flex;height:calc(62px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(6,13,27,.18),#060D1B 52%);backdrop-filter:blur(8px);border-top:1px solid rgba(122,180,255,.16);padding-bottom:env(safe-area-inset-bottom);box-sizing:border-box">
   <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
-    <div onClick="{{ n.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;position:relative">
-      <span style="font-size:17px;line-height:1;color:{{ n.c }};text-shadow:{{ n.sh }}">{{ n.glyph }}</span>
-      <span style="font-size:8.5px;font-weight:900;letter-spacing:1.3px;color:{{ n.c }}">{{ n.label }}</span>
+    <div onClick="{{ n.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;position:relative">
+      <span style="font-size:15px;line-height:1;color:{{ n.c }};text-shadow:{{ n.sh }}">{{ n.glyph }}</span>
+      <span style="font-size:7.8px;font-weight:900;letter-spacing:1.05px;color:{{ n.c }}">{{ n.label }}</span>
       <sc-if value="{{ n.badgeShow }}" hint-placeholder-val="{{ false }}">
-        <span style="position:absolute;top:13px;right:18%;min-width:17px;height:17px;border-radius:99px;background:#F4795B;color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px;box-shadow:0 0 10px rgba(244,121,91,.6)">{{ n.badge }}</span>
+        <span style="position:absolute;top:7px;right:18%;min-width:17px;height:17px;border-radius:99px;background:#F4795B;color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px;box-shadow:0 0 10px rgba(244,121,91,.6)">{{ n.badge }}</span>
       </sc-if>
     </div>
   </sc-for>
@@ -2035,7 +2036,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       nextRank: nextRankRow ? nextRankRow[1] + " at Level " + nextRankRow[0] : "You hold the highest rank",
       doctors: D.DOCTORS.map((d) => {
         const active = this.doctorFor(li.level).n === d.n;
-        const src = d.n === 11 ? "art/11th%20doctor%20headshot.png" : d.n === 12 ? "art/12th%20doctor%20headshot.png" : "art/doctor-10-headshot.webp";
+        const src = d.n === 11 ? "art/doctor-11-headshot.png" : d.n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
         return { name: "The Doctor", src, act: d.act.toUpperCase(), tone: active ? "Current mentor" : "Locked",
           bg: active ? "rgba(13,28,56,.78)" : "rgba(10,20,40,.45)",
           bd: active ? d.color + "99" : "rgba(122,180,255,.14)",
@@ -2095,8 +2096,8 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       gmTogKnob: p.gameMaster ? "23px" : "2px",
       gmDoctors: [10,11,12].map((n) => {
         const active = (p.gmDoctor || 10) === n;
-        const src = n === 11 ? "art/11th%20doctor%20headshot.png" : n === 12 ? "art/12th%20doctor%20headshot.png" : "art/doctor-10-headshot.webp";
-        return { src, label: n === 10 ? "Style A" : n === 11 ? "Style B" : "Style C", pick: () => this.gmDoctorPick(n),
+        const src = n === 11 ? "art/doctor-11-headshot.png" : n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
+        return { src, fallback: "art/doctor-10-headshot.webp", label: n === 10 ? "Style A" : n === 11 ? "Style B" : "Style C", pick: () => this.gmDoctorPick(n),
           bg: active ? "rgba(245,184,74,.14)" : "rgba(6,13,27,.48)", bd: active ? "rgba(245,184,74,.75)" : "rgba(122,180,255,.18)", ring: active ? "#FFCB6B" : "rgba(122,180,255,.28)", c: active ? "#F4F8FF" : "rgba(200,220,250,.58)", subC: active ? "#FFD98F" : "rgba(190,212,245,.38)" };
       }),
       jMinsGoal: "20",
@@ -2164,7 +2165,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       { k: "doctor", label: "THE DOCTOR", glyph: "✚" },
     ];
     const activeDoc = this.doctorFor(li.level);
-    const doctorHeadshot = activeDoc.n === 11 ? "art/11th%20doctor%20headshot.png" : activeDoc.n === 12 ? "art/12th%20doctor%20headshot.png" : "art/doctor-10-headshot.webp";
+    const doctorHeadshot = activeDoc.n === 11 ? "art/doctor-11-headshot.png" : activeDoc.n === 12 ? "art/doctor-12-headshot.png" : "art/doctor-10-headshot.webp";
     return {
       doctorHeadshot,
       goHome: () => this.go("home"), goMap: () => this.go("map"), goBosses: () => this.go("bosses"),
