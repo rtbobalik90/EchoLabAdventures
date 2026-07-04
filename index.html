@@ -208,6 +208,36 @@ image-slot{display:block !important;width:100% !important;height:100% !important
 </div>
 </sc-if>
 
+<!-- ===================== UNIT MEDICAL BAY INTRO COMIC ===================== -->
+<sc-if value="{{ medComicShow }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="UNIT Medical Bay Intro Comic" style="position:relative;min-height:100dvh;background:radial-gradient(120% 55% at 50% -10%, rgba(59,214,198,.18), transparent 58%), linear-gradient(180deg,#040914,#081020);padding:calc(12px + env(safe-area-inset-top)) 12px calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:10px;z-index:2">
+    <span onClick="{{ medComicBack }}" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:13px;background:rgba(7,15,30,.78);border:1px solid rgba(122,180,255,.32);color:#CFE0FF;font-size:16px;cursor:pointer">←</span>
+    <div style="display:flex;flex-direction:column;min-width:0;flex:1">
+      <span style="font-size:9px;font-weight:900;letter-spacing:2px;color:#7FE7DB">UNIT MEDICAL BAY INTRO</span>
+      <span style="font-family:'Marcellus',serif;font-size:20px;color:#F4F8FF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ medComicTitle }}</span>
+    </div>
+    <span style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:#FFD98F;border:1px solid rgba(245,184,74,.42);border-radius:999px;padding:6px 9px;background:rgba(245,184,74,.08)">{{ medComicPageLabel }}</span>
+  </div>
+
+  <div style="position:relative;flex:1;min-height:0;border-radius:22px;overflow:hidden;background:#050913;border:1.5px solid rgba(59,214,198,.34);box-shadow:0 16px 42px rgba(0,0,0,.55), 0 0 34px rgba(59,214,198,.08)">
+    <img src="{{ medComicImg }}" alt="UNIT Medical Bay comic page" style="width:100%;height:100%;display:block;object-fit:contain;background:#02050C">
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;z-index:2">
+    <div style="display:flex;gap:6px;justify-content:center">
+      <sc-for list="{{ medComicDots }}" as="d" hint-placeholder-count="5">
+        <span style="width:8px;height:8px;border-radius:50%;background:{{ d.bg }};box-shadow:{{ d.sh }}"></span>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:9px">
+      <div onClick="{{ medComicSkip }}" style="flex:0 0 104px;display:flex;align-items:center;justify-content:center;height:50px;border-radius:16px;border:1.5px solid rgba(122,180,255,.32);background:rgba(13,28,56,.48);color:#CFE0FF;font-size:13px;font-weight:900;cursor:pointer">Skip</div>
+      <div onClick="{{ medComicNext }}" style="flex:1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:16px;background:linear-gradient(180deg,#FFCB6B,#F0A93C);color:#2A2008;font-size:14px;font-weight:900;box-shadow:0 8px 24px rgba(240,169,60,.28);cursor:pointer">{{ medComicNextLabel }}</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
 <!-- ===================== REGION ===================== -->
 <sc-if value="{{ regionShow }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Region" style="position:relative;min-height:100dvh;padding:0 0 40px">
@@ -231,6 +261,17 @@ image-slot{display:block !important;width:100% !important;height:100% !important
   </div>
 
   <div style="display:flex;flex-direction:column;gap:12px;padding:4px 16px 0">
+    <sc-if value="{{ rgHeroShow }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;border-radius:22px;overflow:hidden;border:1.5px solid {{ rgAccent }}55;background:rgba(7,15,30,.72);box-shadow:0 12px 34px rgba(0,0,0,.35)">
+        <img src="{{ rgHeroImg }}" alt="{{ rgName }} room art" style="width:100%;display:block;aspect-ratio:16/10;object-fit:cover;object-position:center">
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:34px 13px 12px;background:linear-gradient(180deg, transparent, rgba(3,7,16,.88))">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <span style="font-size:10px;font-weight:900;letter-spacing:1.8px;color:#7FE7DB">STORY ROOM READY</span>
+            <span onClick="{{ rgReplayIntro }}" style="flex:none;font-size:9px;font-weight:900;letter-spacing:1px;color:#FFD98F;border:1px solid rgba(245,184,74,.5);border-radius:999px;padding:6px 9px;background:rgba(245,184,74,.1);cursor:pointer">REPLAY INTRO</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
     <div style="display:flex;gap:11px;align-items:flex-start;background:rgba(13,28,56,.6);border:1px solid rgba(245,184,74,.3);border-radius:20px;padding:13px">
       <div style="flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:radial-gradient(60% 60% at 50% 35%, rgba(255,203,107,.45), rgba(30,111,217,.3));border:2px solid rgba(255,203,107,.55)">
         <img src="{{ doctorHeadshot }}" onerror="this.onerror=null;this.src='art/doctor-10-headshot.webp';" alt="The Doctor headshot" style="width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;object-position:center;clip-path:circle(50% at 50% 50%)">
@@ -1162,6 +1203,7 @@ class Component extends DCLogic {
         ];
       }
       if (D.REGIONS) D.REGIONS.forEach((r) => { if (r.unlock && r.unlock.label && String(r.unlock.label).toLowerCase().includes("regener")) r.unlock.label = "Locked for later"; });
+      this.installValvularCitadel(D);
       this.D = D;
       this.p = this.load();
       this.rollover();
@@ -1169,6 +1211,84 @@ class Component extends DCLogic {
       this._hb = setInterval(() => this.heartbeat(), 5000);
     });
   }
+
+  installValvularCitadel(D) {
+    if (!D || !D.REGIONS || !D.LESSONS || !D.QUESTIONS) return;
+    const cit = D.REGIONS.find((r) => r.id === "citadel");
+    if (cit) {
+      Object.assign(cit, {
+        domain: "C",
+        name: "Valvular Citadel",
+        weightLabel: "Domain C · 25% of exam",
+        accent: "#F4795B",
+        icon: "shield",
+        tagline: "Stenosis, regurgitation, and the logic of severity.",
+        doctorIntro: "The Citadel is where pretty pictures stop being enough, Lizzie. Here, the valve tells a story in velocity, gradients, chamber response, and the one clue the exam hopes you miss.",
+        npc: { name: "Lady Valvula", role: "Valve Severity Mentor", init: "LV", color: "#F4795B", intro: "Welcome to the Citadel. A jet can look dramatic and still be misleading. Severity is never one clue alone — it is the pattern that survives every window." },
+        lessons: ["c1", "c2", "c3", "c4", "c5"],
+        game: null,
+        unlock: { type: "lesson", lesson: "g5", label: "Complete Echo View Gallery" }
+      });
+    }
+    D.LESSONS.c1 = { id: "c1", region: "citadel", title: "Aortic Stenosis: The Gate Narrows", sub: "Velocity · gradients · valve area",
+      beats: [
+        { k: "CONCEPT", t: "AS is obstruction, not just a loud jet", b: "Aortic stenosis is a narrowed aortic valve. The left ventricle must push blood through a smaller opening, so velocity rises and the pressure gradient climbs. The core echo clues are peak velocity, mean gradient, valve area, valve appearance, LV function, and whether the Doppler beam is truly aligned with flow." },
+        { k: "WHY IT MATTERS", t: "The exam loves discordant clues", b: "A classic severe pattern is high velocity, high mean gradient, and small valve area. But echo questions often give one clue that does not match. Before you call severity, check Doppler alignment, LVOT measurement, stroke volume, rhythm, and LV function." },
+        { k: "MEMORY HOOK", t: "Speed, squeeze, size", b: "Aortic stenosis severity lives in three S words: Speed through the valve, Squeeze/pressure gradient across it, and Size of the opening." },
+        { k: "TRY IT", t: "Quick check", q: { stem: "Best Doppler tool to capture the highest aortic stenosis jet velocity?", ch: ["PW Doppler in the LVOT", "CW Doppler through the aortic valve", "Tissue Doppler at the annulus"], ans: 1, why: "CW Doppler records very high velocities without aliasing, which is why it is used for stenotic jets." } }
+      ], battle: ["vc_as_1", "vc_as_2", "vc_as_3", "vc_as_4"] };
+    D.LESSONS.c2 = { id: "c2", region: "citadel", title: "Aortic Regurgitation: The Backward River", sub: "Diastolic leak · pressure half-time · flow reversal",
+      beats: [
+        { k: "CONCEPT", t: "AR leaks in diastole", b: "Aortic regurgitation is backward flow from the aorta into the LV during diastole. Color Doppler shows the jet, but severity comes from an integrated pattern: jet width, pressure half-time, diastolic flow reversal in the descending aorta, LV size, valve anatomy, and clinical context." },
+        { k: "WHY IT MATTERS", t: "A dramatic jet can lie", b: "Color jet size changes with blood pressure, gain, angle, and chamber conditions. A narrow jet may be severe if eccentric, and a wide-looking jet may be overcalled if settings are wrong. Look for consequences: LV dilation, dense CW signal, and holodiastolic flow reversal." },
+        { k: "MEMORY HOOK", t: "AR returns when the valve should be closed", b: "Aortic valve open in systole, closed in diastole. If color runs backward during diastole, the gate did not seal." },
+        { k: "TRY IT", t: "Quick check", q: { stem: "Aortic regurgitation occurs during which part of the cardiac cycle?", ch: ["Systole", "Diastole", "Only isovolumic contraction"], ans: 1, why: "The aortic valve should be closed in diastole; AR is backward flow from the aorta into the LV during that phase." } }
+      ], battle: ["vc_ar_1", "vc_ar_2", "vc_ar_3", "vc_ar_4"] };
+    D.LESSONS.c3 = { id: "c3", region: "citadel", title: "Mitral Stenosis: The Fish-Mouth Door", sub: "Valve area · mean gradient · rhythm traps",
+      beats: [
+        { k: "CONCEPT", t: "MS blocks filling", b: "Mitral stenosis narrows the mitral valve, limiting flow from the LA to the LV during diastole. Key echo tools include 2D valve appearance, planimetry when possible, mean transmitral gradient, pressure half-time concepts, LA size, pulmonary pressures, and rhythm." },
+        { k: "WHY IT MATTERS", t: "Heart rate changes the gradient", b: "A fast heart rate shortens diastole and can make gradients look worse. Atrial fibrillation causes beat-to-beat variability. That is why mitral stenosis questions often test whether you know gradients depend on flow and rate, not only anatomic narrowing." },
+        { k: "MEMORY HOOK", t: "Mitral stenosis is a filling problem", b: "MS means the LV is waiting for blood through a tight door. Think diastole, left atrium, pressure buildup, and pulmonary congestion." },
+        { k: "TRY IT", t: "Quick check", q: { stem: "Mitral stenosis primarily obstructs flow during…", ch: ["LV filling in diastole", "LV ejection in systole", "Aortic diastolic runoff"], ans: 0, why: "The mitral valve opens in diastole so blood can move from LA to LV. Stenosis blocks that filling pathway." } }
+      ], battle: ["vc_ms_1", "vc_ms_2", "vc_ms_3", "vc_ms_4"] };
+    D.LESSONS.c4 = { id: "c4", region: "citadel", title: "Mitral Regurgitation: The Jet That Misleads", sub: "Color clues · pulmonary veins · eccentric jets",
+      beats: [
+        { k: "CONCEPT", t: "MR leaks in systole", b: "Mitral regurgitation is backward flow from the LV into the LA during systole. Color Doppler finds the jet, but severity depends on more than area: vena contracta/PISA concepts, jet density, pulmonary vein flow, LA/LV size, mechanism, blood pressure, and whether the jet is central or eccentric." },
+        { k: "WHY IT MATTERS", t: "Eccentric jets hide along walls", b: "A wall-hugging MR jet may look smaller than it really is because of the Coanda effect. CCI-style questions love that trap: a tiny-looking eccentric jet can be severe if the supporting clues line up." },
+        { k: "MEMORY HOOK", t: "MR moves back to the atrium", b: "Mitral Regurgitation: M back to A — from ventricle back into the left atrium during systole." },
+        { k: "TRY IT", t: "Quick check", q: { stem: "Mitral regurgitation flows from the LV into the LA during…", ch: ["Diastole", "Systole", "Only atrial contraction"], ans: 1, why: "The mitral valve should be closed during systole. MR is backward systolic flow into the left atrium." } }
+      ], battle: ["vc_mr_1", "vc_mr_2", "vc_mr_3", "vc_mr_4"] };
+    D.LESSONS.c5 = { id: "c5", region: "citadel", title: "Right-Sided Valves & Pressure Clues", sub: "TR · RVSP · pulmonic basics",
+      beats: [
+        { k: "CONCEPT", t: "TR is the pressure window", b: "Tricuspid regurgitation is often used to estimate RV systolic pressure. Measure the peak TR velocity with CW Doppler, apply the simplified Bernoulli equation, then add estimated RA pressure when appropriate. The result supports pulmonary pressure assessment, but only if the signal is real and well aligned." },
+        { k: "WHY IT MATTERS", t: "A weak envelope can fool you", b: "Under-tracing a faint TR envelope underestimates RVSP. Over-gaining or tracing noise overestimates it. Right-sided valve questions usually test Doppler alignment, signal quality, RA pressure estimate, and RV response." },
+        { k: "MEMORY HOOK", t: "TR velocity opens the pressure door", b: "TR V squared times four gives the RV-RA gradient. Add RA pressure to estimate RVSP when there is no pulmonic stenosis." },
+        { k: "TRY IT", t: "Quick check", q: { stem: "A peak TR velocity is used to estimate which pressure relationship?", ch: ["LVOT stroke volume", "RV-RA systolic gradient", "Mitral valve area"], ans: 1, why: "The TR jet reflects the systolic pressure difference between RV and RA." } }
+      ], battle: ["vc_tr_1", "vc_tr_2", "vc_tr_3", "vc_tr_4"] };
+    Object.assign(D.QUESTIONS, {
+      vc_as_1:{d:"C",topic:"Aortic stenosis",diff:1,stem:"Which Doppler mode is best for measuring a high-velocity aortic stenosis jet?",ch:["PW Doppler","CW Doppler","M-mode","Tissue Doppler"],ans:1,exp:"CW Doppler can record high velocities without aliasing, so it is used for stenotic valve jets.",ww:["PW localizes flow but aliases at high velocities.","","M-mode tracks motion, not peak jet velocity.","Tissue Doppler is for myocardial velocities, not aortic jet velocity."],pearl:"CW catches speed. PW picks place."},
+      vc_as_2:{d:"C",topic:"Aortic stenosis",diff:2,stem:"Aortic stenosis severity should be integrated using which core set of clues?",ch:["Peak velocity, mean gradient, valve area, valve appearance, and LV response","Color jet area alone","LA volume only","E/e′ ratio alone"],ans:0,exp:"AS grading is an integrated assessment. Velocity, gradients, AVA, valve appearance, flow state, and LV response all matter.",ww:["","Color is not the primary AS severity tool.","LA volume does not grade AS.","E/e′ estimates filling pressure; it does not grade AS."],pearl:"Speed, squeeze, size — then check the story."},
+      vc_as_3:{d:"C",topic:"Aortic stenosis",diff:2,stem:"A low measured aortic stenosis velocity can be falsely reassuring if…",ch:["The Doppler beam is poorly aligned with the jet","The ECG gain is too low","The LA is mildly enlarged","The patient is left lateral"],ans:0,exp:"Doppler underestimates velocity when the beam is not parallel to flow. AS requires careful alignment from multiple windows.",ww:["","ECG gain does not determine jet velocity.","LA size is not the reason velocity is underestimated.","Left lateral positioning often improves windows."],pearl:"Bad angle makes bad numbers."},
+      vc_as_4:{d:"C",topic:"Aortic stenosis",diff:3,stem:"Why can a small valve area with a low mean gradient require extra caution?",ch:["It may reflect low-flow/low-gradient physiology or measurement error","It always means mild AS","It proves the valve is normal","Gradients are unrelated to flow"],ans:0,exp:"Discordant AS data require evaluation of flow, LV function, LVOT measurement, Doppler alignment, and clinical context.",ww:["","A small valve area does not prove mild disease.","A small calculated AVA is not normal.","Gradients are flow-dependent."],pearl:"Discordant clues need investigation, not guessing."},
+      vc_ar_1:{d:"C",topic:"Aortic regurgitation",diff:1,stem:"Aortic regurgitation is backward flow from the aorta into the LV during…",ch:["Systole","Diastole","Atrial contraction","IVRT only"],ans:1,exp:"The aortic valve should be closed during diastole. AR leaks back into the LV in diastole.",ww:["Systole is when the aortic valve normally opens.","","Atrial contraction does not define AR.","AR is not limited to IVRT."],pearl:"AR is a diastolic leak."},
+      vc_ar_2:{d:"C",topic:"Aortic regurgitation",diff:2,stem:"Which finding supports more significant chronic aortic regurgitation?",ch:["LV dilation with a compatible AR jet","A tiny color jet with normal LV and no other clues","A normal descending aortic flow pattern only","Tissue Doppler e′ alone"],ans:0,exp:"Chronic significant AR commonly creates LV volume overload. Chamber response helps confirm severity.",ww:["","Color alone can mislead; no supporting clues weakens the case.","Normal flow reversal assessment alone does not support severe AR.","e′ does not grade AR severity."],pearl:"Regurgitation leaves footprints in chambers."},
+      vc_ar_3:{d:"C",topic:"Aortic regurgitation",diff:2,stem:"Holodiastolic flow reversal in the descending aorta is a clue for significant…",ch:["Aortic regurgitation","Mitral stenosis","Pulmonic stenosis","LV hypertrophy"],ans:0,exp:"Significant AR can cause reversed diastolic flow in the descending aorta.",ww:["","MS affects transmitral filling, not descending aortic diastolic reversal.","Pulmonic stenosis is a right-sided outflow obstruction.","LVH itself does not create holodiastolic aortic flow reversal."],pearl:"Backward diastolic aortic flow points toward AR."},
+      vc_ar_4:{d:"C",topic:"Aortic regurgitation",diff:3,stem:"Why should color jet area alone not be used to grade AR severity?",ch:["It depends on settings, pressure, jet direction, and loading conditions","It is always accurate","It only works in systole","It measures LVOT diameter"],ans:0,exp:"Color Doppler is important, but AR severity should be integrated because jet appearance changes with technique and hemodynamics.",ww:["","No single color area is always accurate.","AR is diastolic, but the issue is not that color only works in systole.","LVOT diameter is a measurement for stroke volume/AVA calculations."],pearl:"Color finds the leak. Integration grades it."},
+      vc_ms_1:{d:"C",topic:"Mitral stenosis",diff:1,stem:"Mitral stenosis primarily obstructs flow from…",ch:["LA to LV during diastole","LV to aorta during systole","RA to RV during systole","Aorta to LV during diastole"],ans:0,exp:"The mitral valve opens in diastole to fill the LV. MS obstructs that filling pathway.",ww:["","That describes aortic outflow.","That is not the mitral valve.","That describes aortic regurgitation."],pearl:"MS is a filling-door problem."},
+      vc_ms_2:{d:"C",topic:"Mitral stenosis",diff:2,stem:"Why can the mean transmitral gradient change with heart rate?",ch:["Faster rates shorten diastole and alter filling conditions","Heart rate changes the valve tissue into a different valve","Gradient is never flow-dependent","Heart rate only affects the aortic valve"],ans:0,exp:"Transmitral gradient is influenced by flow and diastolic filling time, so tachycardia can increase gradients.",ww:["","Valve tissue does not change instantly with heart rate.","Gradients are flow-dependent.","Heart rate affects diastolic filling too."],pearl:"MS gradient listens to flow and rate."},
+      vc_ms_3:{d:"C",topic:"Mitral stenosis",diff:2,stem:"Which view is classically useful for seeing the mitral valve 'fish-mouth' opening?",ch:["Parasternal short-axis at the mitral level","Subcostal IVC long-axis","Suprasternal arch","Apical five-chamber only"],ans:0,exp:"Parasternal short-axis at the mitral level shows the valve orifice opening pattern.",ww:["","Subcostal IVC evaluates venous size/collapse.","Suprasternal evaluates the arch.","A5C is not the classic fish-mouth view."],pearl:"Fish mouth lives in short axis."},
+      vc_ms_4:{d:"C",topic:"Mitral stenosis",diff:3,stem:"In atrial fibrillation, mitral stenosis Doppler measurements should be handled carefully because…",ch:["Beat-to-beat variability affects filling and gradients","The mitral valve disappears","CW Doppler cannot be used anywhere","Color Doppler becomes illegal"],ans:0,exp:"Irregular cycle lengths change filling. Measurements often require careful beat selection/averaging per lab protocol.",ww:["","The valve is still present.","CW Doppler may still be used.","Color Doppler is still used appropriately."],pearl:"Irregular rhythm means irregular gradients."},
+      vc_mr_1:{d:"C",topic:"Mitral regurgitation",diff:1,stem:"Mitral regurgitation is backward flow from the LV into the LA during…",ch:["Diastole","Systole","Atrial systole only","Isovolumic relaxation only"],ans:1,exp:"The mitral valve should be closed during systole. MR leaks backward into the left atrium then.",ww:["Diastole is normal mitral inflow direction.","","MR is not limited to atrial contraction.","MR can be holosystolic or variable, not only IVRT."],pearl:"MR is a systolic leak."},
+      vc_mr_2:{d:"C",topic:"Mitral regurgitation",diff:2,stem:"A wall-hugging eccentric MR jet can be underestimated because of…",ch:["Coanda effect","Nyquist theorem only","Pleural effusion","LVOT diameter"],ans:0,exp:"The Coanda effect describes a jet attaching to a wall, making color jet area appear smaller than severity might suggest.",ww:["","Nyquist affects aliasing but is not the wall-hugging jet phenomenon.","Pleural effusion is extracardiac fluid.","LVOT diameter is unrelated to the MR jet hugging the LA wall."],pearl:"Eccentric jets hide along walls."},
+      vc_mr_3:{d:"C",topic:"Mitral regurgitation",diff:2,stem:"Which supporting clue can suggest significant MR?",ch:["Pulmonary vein systolic flow reversal when technically valid","Normal LA and LV with no other findings","A single low-gain color image","Mitral annular e′ alone"],ans:0,exp:"Pulmonary vein systolic flow reversal can support significant MR when the sample and signal are reliable.",ww:["","No chamber response or other clues weakens the case.","Color settings can mislead.","e′ assesses myocardial relaxation, not MR severity alone."],pearl:"MR severity needs supporting witnesses."},
+      vc_mr_4:{d:"C",topic:"Mitral regurgitation",diff:3,stem:"Why is MR severity usually an integrated assessment?",ch:["Jet appearance, mechanism, Doppler data, pulmonary veins, and chamber response can disagree","Color area alone is perfect","PISA is never used","MR has no hemodynamic consequences"],ans:0,exp:"MR grading integrates multiple parameters because each one has limitations.",ww:["","Color area alone is not perfect.","PISA can be useful when appropriate but has limitations.","Significant MR can affect LA/LV size and pulmonary pressures."],pearl:"One MR clue is a rumor. Several clues make a case."},
+      vc_tr_1:{d:"C",topic:"Tricuspid regurgitation",diff:1,stem:"The peak TR velocity is commonly used to estimate…",ch:["RV-RA systolic gradient","LV ejection fraction","Mitral valve area","Aortic valve area"],ans:0,exp:"TR velocity reflects the pressure difference between RV and RA during systole.",ww:["","EF is a volume/function measurement.","Mitral valve area is assessed differently.","Aortic valve area uses LVOT and AV flow data."],pearl:"TR velocity opens the pressure door."},
+      vc_tr_2:{d:"C",topic:"RVSP estimation",diff:2,stem:"Simplified Bernoulli for a TR jet estimates pressure gradient as…",ch:["4V²","V/4","2πr","LVOT VTI × HR"],ans:0,exp:"The simplified Bernoulli equation estimates pressure gradient as 4 times velocity squared.",ww:["","That is not the Bernoulli equation.","That is circle circumference.","Stroke volume/cardiac output concepts use LVOT VTI, not TR gradient."],pearl:"Square the speed, multiply by four."},
+      vc_tr_3:{d:"C",topic:"RVSP estimation",diff:2,stem:"To estimate RVSP from TR velocity, what is commonly added to the RV-RA gradient?",ch:["Estimated RA pressure","LVOT diameter","LA volume index","Mitral valve pressure half-time"],ans:0,exp:"RVSP is commonly estimated as TR gradient plus estimated RA pressure, assuming no pulmonic stenosis.",ww:["","LVOT diameter is not added to TR gradient.","LA volume does not complete RVSP calculation.","PHT is not added to RVSP."],pearl:"TR gradient plus RA pressure."},
+      vc_tr_4:{d:"C",topic:"Right-sided valves",diff:3,stem:"A faint incomplete TR envelope may cause RVSP to be…",ch:["Underestimated","Perfectly measured","Unrelated to Doppler alignment","Converted to valve area"],ans:0,exp:"If the true peak velocity is missed because the envelope is incomplete or poorly aligned, the calculated gradient and RVSP can be underestimated.",ww:["","Poor signal is not a perfect measurement.","Alignment matters strongly.","TR velocity estimates pressure gradient, not valve area."],pearl:"Incomplete envelope, incomplete pressure story."}
+    });
+  }
+
   componentWillUnmount() { clearInterval(this._hb); clearInterval(this._bt); clearTimeout(this._tt); }
 
   // ---------- persistence ----------
@@ -1187,7 +1307,7 @@ class Component extends DCLogic {
       lessons: {}, beats: {}, q: {}, mem: {}, badges: {}, arts: {}, boss: {},
       games: { mm: 0, duel: 0 }, hist: {}, reviewsCleared: 0,
       apiKey: "", aiModel: "claude-haiku-4-5", aiTest: "", gmUnlocked: false, gameMaster: false, gmDoctor: 10,
-      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [] };
+      doctorLevel: "intermediate", doctorMsgs: [], journalEntries: [], intros: {} };
   }
   normalizeSave(s) {
     const b = this.blank();
@@ -1201,6 +1321,7 @@ class Component extends DCLogic {
     if (!Array.isArray(s.doctorMsgs)) s.doctorMsgs = [];
     if (!Array.isArray(s.journalEntries)) s.journalEntries = [];
     s.journalEntries = s.journalEntries.slice(0, 30);
+    s.intros = s.intros || {};
     if (!s.doctorLevel) s.doctorLevel = "intermediate";
     if (!s.gmUnlocked) s.gameMaster = false;
     s.gameMaster = !!(s.gmUnlocked && s.gameMaster);
@@ -1522,13 +1643,14 @@ Return ONLY valid JSON, no markdown:
     if (id === "medbay") return true;
     if (id === "engine") return this.lessonDone("mb1");
     if (id === "gallery") return this.lessonDone("ph1");
+    if (id === "citadel") return this.lessonDone("g5");
     return false;
   }
   mmUnlocked() { return this.isGM() || this.lessonDone("g1"); }
   duelUnlocked() { return this.isGM() || ["ph1", "ph2", "ph3"].filter((l) => this.lessonDone(l)).length >= 3; }
   bossUnlocked() { return this.isGM() || this.levelInfo().level >= 3; }
   nextLesson() {
-    const order = ["mb1", "mb2", "mb3", "ph1", "ph2", "ph3", "ph4", "ph5", "g1", "g2", "g3", "g4", "g5"];
+    const order = ["mb1", "mb2", "mb3", "ph1", "ph2", "ph3", "ph4", "ph5", "g1", "g2", "g3", "g4", "g5", "c1", "c2", "c3", "c4", "c5"];
     for (const id of order) { if (!this.lessonDone(id)) { if (this.regionUnlocked(this.D.LESSONS[id].region)) return id; } }
     return null;
   }
@@ -1537,6 +1659,7 @@ Return ONLY valid JSON, no markdown:
   go(screen, extra) { this.setState(Object.assign({ screen, sheet: false, resetArm: false }, extra || {})); window.scrollTo(0, 0); this.sClick(); }
   back() {
     const s = this.state.screen, b = this.state.battle;
+    if (s === "comicMedbay") return this.go("map");
     if (s === "region") return this.go("map");
     if (s === "lesson") return this.go("region");
     if (s === "battle") {
@@ -1547,6 +1670,65 @@ Return ONLY valid JSON, no markdown:
     if (s === "mm" || s === "duel") return this.go("region");
     if (s === "bossBrief" || s === "boss") { clearInterval(this._bt); return this.go("bosses"); }
     return this.go("home");
+  }
+
+
+  // ---------- UNIT Medical Bay intro comic ----------
+  medbayComicPages() {
+    return [
+      { title: "The Quietest Emergency", img: "art/comic-medbay-page-01-the-quietest-emergency.webp" },
+      { title: "The Wrong Story", img: "art/comic-medbay-page-02-the-wrong-story.webp" },
+      { title: "Order, Identity, Story", img: "art/comic-medbay-page-03-order-identity-story.webp" },
+      { title: "Prepare the Room", img: "art/comic-medbay-page-04-prepare-the-room.webp" },
+      { title: "Before the Probe Touches Skin", img: "art/comic-medbay-page-05-before-the-probe-touches-skin.webp" },
+    ];
+  }
+  openRegion(id, opts) {
+    opts = opts || {};
+    if (id === "medbay" && !opts.skipIntro && !(this.p.intros && this.p.intros.medbay)) {
+      return this.go("comicMedbay", { regionId: "medbay", medComicPage: 0 });
+    }
+    return this.go("region", { regionId: id });
+  }
+  replayMedbayIntro() {
+    this.go("comicMedbay", { regionId: "medbay", medComicPage: 0, replayingIntro: true });
+  }
+  finishMedbayIntro() {
+    this.p.intros = this.p.intros || {};
+    this.p.intros.medbay = true;
+    this.save();
+    this.go("region", { regionId: "medbay" });
+  }
+  medComicNext() {
+    const pages = this.medbayComicPages();
+    const i = Number(this.state.medComicPage || 0);
+    if (i + 1 < pages.length) {
+      this.setState({ medComicPage: i + 1 });
+      window.scrollTo(0, 0);
+      this.sClick();
+      return;
+    }
+    this.finishMedbayIntro();
+  }
+  medComicSkip() {
+    this.finishMedbayIntro();
+  }
+  rvMedComic(s, p, D) {
+    const show = s.screen === "comicMedbay";
+    const pages = this.medbayComicPages();
+    const i = Math.max(0, Math.min(pages.length - 1, Number(s.medComicPage || 0)));
+    const page = pages[i];
+    return {
+      medComicShow: show,
+      medComicBack: () => this.go("map"),
+      medComicTitle: page.title,
+      medComicImg: page.img,
+      medComicPageLabel: String(i + 1) + " / " + String(pages.length),
+      medComicNextLabel: i + 1 < pages.length ? "Next page →" : "Begin Mission →",
+      medComicNext: () => this.medComicNext(),
+      medComicSkip: () => this.medComicSkip(),
+      medComicDots: pages.map((_, j) => ({ bg: j <= i ? "#FFCB6B" : "rgba(190,212,245,.25)", sh: j === i ? "0 0 8px rgba(255,203,107,.9)" : "none" })),
+    };
   }
 
 
@@ -1735,9 +1917,11 @@ Return ONLY valid JSON, no markdown:
         if (id === "ph1") this.toast("Room unlocked — Echo View Gallery", "The gallery doors swing open.");
         if (["ph1", "ph2", "ph3"].every((l) => this.lessonDone(l)) && id.startsWith("ph")) this.toast("Mini-game unlocked — Doppler Duel", "The rogue console challenges you.");
         if (id === "g1") this.toast("Mini-game unlocked — Measure Match", "Forge the measurement chains.");
+        if (id === "g5") this.toast("Room unlocked — Valvular Citadel", "The valve gates are opening.");
       }
       if (["mb1", "mb2", "mb3"].every((l) => this.lessonDone(l))) { this.award("bedside"); this.artifact("sonic_case"); }
       if (id === "g1" && perfect) this.award("parasternal");
+      if (["c1", "c2", "c3", "c4", "c5"].every((l) => this.lessonDone(l))) { this.award("valve_guardian"); this.artifact("valve_citadel_key"); }
     }
     if (b.mode === "drill" || b.mode === "weak") { this.hist().drill = 1; this.spendEnergy(); }
     if (b.mode === "review") this.spendEnergy();
@@ -1752,7 +1936,7 @@ Return ONLY valid JSON, no markdown:
     this.startBattle(this.shuffle(pool).slice(0, 5), mode || "drill");
   }
   weakestDomain() {
-    const cands = ["A", "E", "B"];
+    const cands = ["A", "E", "B", "C"];
     let best = "A", bm = 2;
     for (const d of cands) { const m = this.domainMastery(d); if (m < bm) { bm = m; best = d; } }
     return best;
@@ -1861,7 +2045,7 @@ Return ONLY valid JSON, no markdown:
           masteryPct: String(Math.round(m * 100)),
           masteryLabel: answered ? ml : un ? "Unexplored" : "Locked",
           mlC: answered ? mc : "rgba(190,212,245,.45)",
-          open: () => { if (un) this.go("region", { regionId: r.id }); else { this.toast("Locked", "This study room is not open yet."); this.sBad(); } },
+          open: () => { if (un) this.openRegion(r.id); else { this.toast("Locked", "This study room is not open yet."); this.sBad(); } },
         };
       }),
       roadmap: D.ROADMAP_ROOMS.map((r) => ({ name: r.name, act: r.act.toUpperCase(), note: r.note })),
@@ -1888,6 +2072,7 @@ Return ONLY valid JSON, no markdown:
       rgMasteryPct: String(Math.round(m * 100)), rgMasteryLabel: ml, rgMlC: mc,
       rgDoctorIntro: r.doctorIntro,
       rgNpcBg: r.accent + "18", rgNpcInit: r.npc.init, rgNpcName: r.npc.name, rgNpcRole: r.npc.role, rgNpcIntro: r.npc.intro,
+      rgHeroShow: r.id === "medbay", rgHeroImg: r.id === "medbay" ? "art/unit-medbay-hub.webp" : "", rgReplayIntro: () => this.replayMedbayIntro(),
       rgLessons: r.lessons.map((id, i) => {
         const L = D.LESSONS[id], done = this.lessonDone(id);
         return { title: L.title, sub: L.sub, qCount: String(L.battle.length),
@@ -2519,7 +2704,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
       disclaimer: this.D ? this.D.DISCLAIMER : "",
       splashShow: false, obShow: false, sheetShow: false, toastShow: false, navShow: false,
       homeShow: false, mapShow: false, regionShow: false, lessonShow: false, battleShow: false,
-      mmShow: false, duelShow: false, bossBriefShow: false, bossShow: false, memShow: false,
+      mmShow: false, duelShow: false, bossBriefShow: false, bossShow: false, medComicShow: false, memShow: false,
       badgesShow: false, journalShow: false, charShow: false, doctorShow: false, adminShow: false, bossesShow: false,
       beginSplash: () => this.beginSplash(),
       beginLabel: "Knock four times",
@@ -2528,7 +2713,7 @@ If asked who you are, say: “I’m The Doctor — your EchoLab guide, tutor, an
 
     const s = this.state, p = this.p, D = this.D;
     const li = this.levelInfo();
-    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvBoss", "rvMemory", "rvMeta"];
+    const parts = ["rvChrome", "rvOnboard", "rvHome", "rvMap", "rvMedComic", "rvRegion", "rvLesson", "rvBattle", "rvGames", "rvBoss", "rvMemory", "rvMeta"];
     const out = Object.assign(base, {
       splashShow: s.screen === "splash",
       obShow: s.screen === "onboard",
